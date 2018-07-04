@@ -1,0 +1,16 @@
+.md { 
+  body {
+    font-family: Roboto,Noto,Helvetica,Arial,"Microsoft Yahei","微软雅黑",STXihei,"华文细黑",sans-serif;
+  }
+  .navbar {
+    background-color: #fff;
+    color: #3e3e3e;
+    .site-title {
+      font-weight: 200;
+      margin-right: 7px;
+    }
+    .content-title {
+      color: #6bd5c6;
+    }
+  }
+}

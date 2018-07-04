@@ -1,0 +1,73 @@
+@import url('font-icons.css');
+@import url('font-roboto.css');
+
+.text-center {
+  text-align: center;
+}
+.text-right {
+  text-align: right;
+}
+.text-left {
+  text-align: left;
+}
+
+.font-light {
+  font-weight: 200;
+}
+.font-normal {
+  font-weight: 400;
+}
+.font-bold {
+  font-weight: 600;
+}
+
+.b-0 {
+  border: 0;
+}
+.b-t-0 {
+  border-top: 0;
+}
+.b-r-0 {
+  border-right: 0;
+}
+.b-l-0 {
+  border-left: 0;
+}
+
+.b-b-0 {
+  border-bottom: 0;
+}
+
+$margin-collection: (0, 5, 10, 15, 20, 25, 30, 40, 50);
+@each $margin in $margin-collection {
+  .m-t-#{$margin} {
+    margin-top: $margin;
+  }
+  .m-b-#{$margin} {
+    margin-bottom: $margin;
+  }
+  .m-r-#{$margin} {
+    margin-right: $margin;
+  }
+  .m-l-#{$margin} {
+    margin-left: $margin;
+  }
+  .m-#{$margin} {
+    margin: $margin;
+  }
+  .p-t-#{$margin} {
+    padding-top: $margin;
+  }
+  .p-b-#{$margin} {
+    padding-bottom: $margin;
+  }
+  .p-r-#{$margin} {
+    padding-right: $margin;
+  }
+  .p-l-#{$margin} {
+    padding-left: $margin;
+  }
+  .p-#{$margin} {
+    padding: $margin;
+  }
+}
