@@ -757,6 +757,8 @@ gg_status_label{
   </f7-page>  
 </template>
 <style lang="scss" scoped>
-
+.block{
+  background: green;
+}
 </style>
 
