@@ -180,9 +180,6 @@
   .md .item-input-focused .item-label{
     color:#5F5F5F;
   }
-  li.item-content.item-input.item-input-focused{
-    //border-top:solid 1px #F9F9F9;
-  }
   .md .list input[type=text], .md .list input[type=password] {
     font-family: PingFangSC-Semibold;
     font-size: 16px;
