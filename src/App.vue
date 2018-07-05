@@ -9,7 +9,6 @@
     </f7-panel>
     <f7-view :pushState="true" main/>
     <v-menu></v-menu>
-    <v-login></v-login>
   </div>
 </template>
 
