@@ -67,6 +67,9 @@
 
 </script>
 <style lang="scss">
+  div.row.no-gap {
+    margin-top: 0px;
+  }
   div.list.text-list{
     margin-top: 80px;
     margin-left: 30px;

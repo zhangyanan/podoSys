@@ -1,7 +1,7 @@
 <template>
-  <f7-page>
+  <f7-page class="index-page">
     <form class="login" v-on:submit.prevent="submit" no-hairlines-md>
-      <f7-list class="list">
+      <f7-list class="welcome-list">
         <f7-list-item class="text-center b-0">
           <h1 class="white">WELCOME</h1>
         </f7-list-item>
@@ -12,20 +12,22 @@
           <h1 class="white">HOME</h1>
         </f7-list-item>
       </f7-list>
-     <div class="list media-list">
-      <ul class="down">
-        <li>
-          <div href="#" class="item-link item-content">
-            <div class="item-inner">
-              <div class="item-text"><img src="@/assets/icon_all/smiler.png" /></div>
-              <div class="item-subtitle1">BEING A SMILER</div>
-              <div class="item-subtitle2">永远微笑的活着</div>
-            </div>
-            <div class="item-media"><a href="/inputform/"><img src="@/assets/icon_all/Group@2x.png"/></a></div>
-          </div>
-        </li>
-      </ul>
-    </div>
+      <f7-row no-gap>
+        <f7-col width="70">
+          <f7-list class="smiler-list">
+            <f7-list-item><div class="item-text"><img src="@/assets/icon_all/smiler.png" /></div></f7-list-item>
+            <f7-list-item><div class="item-subtitle1">BEING A SMILER</div></f7-list-item>
+            <f7-list-item><div class="item-subtitle2">永远微笑的活着</div></f7-list-item>
+          </f7-list>
+        </f7-col>
+        <f7-col width="30">
+          <f7-list>
+            <f7-list-item>
+              <f7-link href="/inputform/"><img src="@/assets/icon_all/Group.png"/></f7-link>           
+            </f7-list-item>
+          </f7-list>
+        </f7-col>      
+      </f7-row>    
     </form>
   </f7-page>
 </template>
@@ -41,47 +43,41 @@
   .md .list .item-inner:after {
     background-color: rgba(0, 0, 0, 0)
   }
-  .page-content {
+  div.page.index-page.page-current {
     background-image: url("../../assets/icon_all/login_bg.png")
   }
   .md .login .list {
       margin: 0px;
   }
-  ul.down .item-content {
-    min-height: 48px;
-    padding-left: 0px;
+  .md div.list.smiler-list .item-content {
+    min-height: 20px;
+    margin: -10px 0px;
   }
-  .list ul{
-    margin-top: 70px;
-    margin-left: 35px;
+  .welcome-list ul{
+    margin-top: 74px;
+    margin-left: 40px;
   }
-  .list ul li{
-    border: 0;
+  .md .list .item-text{
+    padding-top: 35px;
+    padding-left: 35px;
   }
-  div.list ul.down{
-    margin-left: -100px;
-    margin-top: 280px;
-  }
-  ul.down .item-inner{
-    margin-top: 35px;
-    margin-left: 20px
-  }
-
   .md .list .item-subtitle1 {
-      font-size: 18px;
-      color: white;
-      line-height: 22px;
-      font-family: PFSquareSansPro-Medium;
-      letter-spacing: 2px;
-      padding-left: 75px;
+    font-size: 18px;
+    color: white;
+    line-height: 22px;
+    font-family: PFSquareSansPro-Medium;
+    letter-spacing: 2px;
+    padding-top: 45px;
+    padding-left: 35px;
   }
   .md .list .item-subtitle2 {
-      font-size: 18px;
-      color: white;
-      line-height: 22px;
-      font-family: PFSquareSansPro-Medium;
-      letter-spacing: 2px;
-      padding-left: 40px;
+    font-size: 18px;
+    color: white;
+    line-height: 22px;
+    font-family: PFSquareSansPro-Medium;
+    letter-spacing: 2px;
+    padding-top: 45px;
+    padding-left: 35px;
   }
   .login {
     padding: 0px;
@@ -127,18 +123,21 @@
     .button, .button.button-fill, .button.button-fill.active-state {
       background-color: #3cc8b4;
     }
-    .submit-button {
-      width: 100%;
-      font-size: 1.2rem;
-    }
   }
   .md .list ul:before, .md .list ul:after, .md .item-input-wrap:after, .md .list .item-inner:after {
     background-color: transparent;
   }
-  .item-media img{
-    width:130px;
-    height: 130px;
-    margin-right: -30px;
-    margin-bottom: 28px;
+
+  div.row.no-gap {
+      margin-top: 285px;
+  }
+  .md .row.no-gap .col-30 {
+   // padding-left: 35px;
+  }
+  .md .row.no-gap .col-70 {
+    //padding-left: 56px;
+  }
+  div.list.smiler-list ul li{
+    height: 30px;
   }
 </style>
