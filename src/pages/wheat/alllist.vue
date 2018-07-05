@@ -352,6 +352,10 @@
     background: -webkit-linear-gradient(top,rgba(0,0,0,0) 0,rgba(0,0,0,0) 40%,rgba(0,0,0,0) 50%,rgba(0,0,0,0) 80%,rgba(0,0,0,0) 100%);
     background: linear-gradient(to bottom,rgba(0,0,0,0) 0,rgba(0,0,0,0) 40%,rgba(0,0,0,0) 50%,rgba(0,0,0,0) 80%,rgba(0,0,0,0) 100%);
 }
+.md .button.button-raised {
+     -webkit-box-shadow: 0 0px 0px rgba(0,0,0,0), 0 0px 0px rgba(0,0,0,0);
+     box-shadow: 0 0px 0px rgba(0,0,0,0), 0 0px 0px rgba(0,0,0,0); 
+}
 </style>
 <script>
 import { mapState, mapGetters, mapActions, mapMutations, Store } from 'vuex'
