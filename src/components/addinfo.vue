@@ -1,21 +1,17 @@
 <style lang="scss" scoped>
-
-
+div.navbar-inner.sliding{
+  height: 65px;
+  background: #54BCBF;
+}
 </style>
 <template>
   <f7-navbar>
     <f7-nav-left>
+      <img src="@/assets/icon_all/back_white.png"/>
     </f7-nav-left>
     <f7-nav-title>
-      <label class="site-title">
-        <f7-link href="/" no-link-class>
-          <span class="pull-out-icon">
-            <a class="panel-open raised " data-panel="left" href="#"><img src="@/assets/icon_all/back_white@2x.png"/></a>
-          </span>
-        </f7-link>
-      </label>
       <label class="content-title">{{title}}</label>
-    </f7-nav-title>    
+    </f7-nav-title> 
   </f7-navbar>
 </template>
 <script>
