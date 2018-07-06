@@ -119,7 +119,14 @@ import { mapState, mapGetters, mapActions, mapMutations, Store } from 'vuex'
       ...mapActions('listdata',[
       'insertformvalues'
       ]),
+      ...mapActions('datainterchange',[
+      'setPageNavigation'
+      ]),
+
       goback()  {
+          //设置跳转来源
+          var str = '{"from":"快速注册","to":"蝈蝈列表"}'
+          this.setPageNavigation(str)
           this.$f7router.navigate('/allList/')
       },
 

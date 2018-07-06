@@ -162,6 +162,33 @@ export default {
 			})
     },
 
+    //得到个人藏单里的蝈蝈信息
+    //传入帐号名称
+    getPersonalFavoriteList(username)
+    {
+        const url = 'http://207.246.110.27/lifetree-0.1/callcenter/sp_get_form_values_top'
+			
+        return new Promise((resolve, reject) => {
+				axios.defaults.headers['Content-Type'] = "application/json;charset=UTF-8"
+				axios.post(url, JSON.stringify({ 	
+					"in_foldername":"GGAccount",
+					"in_formname":"收藏表单-ShowAll",
+					"in_username":username,
+					"in_keynames":"藏家关联表单,",
+					"in_keyvalues":username,
+					"in_fieldnames":"姓名,手机,微信,状态,阶段,性别,生日,涉外时间,引导人,引导人姓名,"
+				 }))
+					.then(response => {
+						//alert(response.data.userId);, 'application/json;charset=UTF-8;Access-Control-Allow-Origin:*'
+						resolve(response.data);
+					})
+					.catch((error) => {
+					 console.log(error)
+						reject(error)
+					})
+			})
+    },
+
     //2.1获得权限内的蝈蝈信息 传入此次登陆的账号名称
     getGGIMF_S(username)
     {
@@ -175,7 +202,7 @@ export default {
 					"in_username":"admin",
 					"in_keynames":"引导人,",
 					"in_keyvalues":username,
-					"in_fieldnames":"姓名,手机,微信,状态,阶段,性别,生日,涉外时间,"
+					"in_fieldnames":"姓名,手机,微信,状态,阶段,性别,生日,涉外时间,引导人,引导人姓名,"
 				 }))
 					.then(response => {
 						//alert(response.data.userId);, 'application/json;charset=UTF-8;Access-Control-Allow-Origin:*'
@@ -201,7 +228,7 @@ export default {
 					"in_username":"admin",
 					"in_keynames":"管理者,",
 					"in_keyvalues":username,
-					"in_fieldnames":"姓名,手机,微信,状态,阶段,性别,生日,涉外时间,"
+					"in_fieldnames":"姓名,手机,微信,状态,阶段,性别,生日,涉外时间,引导人,引导人姓名,"
 				 }))
 					.then(response => {
 						//alert(response.data.userId);, 'application/json;charset=UTF-8;Access-Control-Allow-Origin:*'

@@ -59,7 +59,7 @@
           </li>
         </ul>
       </div>
-      <f7-button big text="登录" fill></f7-button>
+      <f7-button href="/allList/" big text="登录" fill></f7-button>
   </form>  
 </f7-page>
 </template>

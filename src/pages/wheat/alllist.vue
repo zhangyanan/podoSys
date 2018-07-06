@@ -2,8 +2,8 @@
   <f7-page>
     <v-asideheader title='' back></v-asideheader>
     <div class="list media-list">
-      <ul>
-        <div v-for="(item, index) in this.l_ret_gg_imf_s.datas" :key="index">
+      <ul v-if="b_render == 2">
+        <div v-for="(item, index) in this.gg_list.datas" :key="index">
           <li>
              <a href = "javascript:;" class="item-link item-content" @click="local_setSelectedGG(item.键值, index)">
               <div class="item-media">
@@ -51,6 +51,7 @@
           </li>
         </div>
       </ul>
+      <f7-label v-else-if="b_render == 1">亲爱的佳人,您的{{jump_to}}为空,让我们一起努力吧^_^</f7-label>
     </div>
       <!-- Left Panel with Reveal effect -->
       <f7-panel left reveal>
@@ -364,7 +365,10 @@ export default {
             selectGender:"",
             selectStudyState:"",
             
-            inputname:""}
+            b_render:0,
+            inputname:"",
+            jump_to:"",
+            gg_list:[]}
   },
   computed: {
     
@@ -382,12 +386,28 @@ export default {
         'l_ret_personal_favorite_s'
     ]),
 
+     ...mapGetters('listdata',[
+        'l_ret_personal_favorite_list_s'
+    ]),
+
     ...mapGetters('listdata',[
       'l_ret_our_gg_imf_s'
     ]),
     
+    ...mapGetters('datainterchange',[
+      'pageNavigation'
+    ]),
+
   },
   created () {
+    //需要一个重加载标志表明是否需要刷新
+    this.b_render = 0
+    var jump = ""
+    if(this.pageNavigation != null)
+        jump = JSON.parse(this.pageNavigation)
+    this.jump_to = jump.to
+    console.log("I'm jump from " + jump.from + " to " + jump.to)
+
     //得到当前登陆用户的gg列表
     //如果是查看自己的gg 则以自己为引导人查看
     //this.get_my_gglist('约翰')
@@ -397,6 +417,42 @@ export default {
     this.getPersonalFavorite('cui')
     //如果是查看自己作为管理者的gg 则以自己为管理人查
     this.get_our_gglist('cui')
+
+    //1s以后进行刷新
+      this.timeout(1000).then(() => {
+                console.log('in vue.timeout')
+                if(jump.to == "收藏列表")
+                {
+                  if(this.l_ret_personal_favorite_list_s != null)
+                  {
+                    this.gg_list = this.l_ret_personal_favorite_list_s
+                    this.b_render = 2
+                  }
+                  else
+                    this.b_render = 1
+                }
+                  
+                else if (jump.to == "协力列表")
+                {
+                  if(this.l_ret_our_gg_imf_s != null)
+                  {
+                    this.gg_list = this.l_ret_our_gg_imf_s
+                    this.b_render = 2
+                  }
+                  else
+                    this.b_render = 1
+                }
+                else
+                {
+                  if(this.l_ret_gg_imf_s != null)
+                  {
+                    this.gg_list = this.l_ret_gg_imf_s
+                    this.b_render = 2
+                  }
+                  else
+                    this.b_render = 1
+                }
+      });
   },
   methods: {
     ...mapActions('datainterchange',[
@@ -423,26 +479,27 @@ export default {
       'getPersonalFavorite'
     ]),
 
+    ...mapActions('listdata',[
+      'getPersonalFavoriteList'
+    ]),
+
+    ...mapActions('datainterchange',[
+      'setPageNavigation'
+    ]),
+
+    timeout(ms) {
+          return new Promise((resolve) => {
+            setTimeout(resolve, ms);
+                })
+      },
+
     local_setSelectedGG(keyid, index){
       //全局设置 ggID
       this.setSelectedUser(index)
-      
-      //sessionStorage.setItem('selectedGGId', keyid)
-      //设置全局gg 21item简讯信息
-      //sessionStorage.setItem('selectedGG21ItemShort', JSON.stringify(this.l_ret_gg_imf_s.datas[index]))
+      //设置跳转来源
+      var str = '{"from":"' + this.jump_to + '","to":"蝈蝈信息"}'
+      this.setPageNavigation(str)
 
-      //保存个人信息数据
-      //sessionStorage.setItem('myPersonalItem', JSON.stringify(this.l_ret_personal_imf_s.datas[0]))
-      //保存藏单
-      //if(this.l_ret_personal_favorite_s.datas[0] != null)
-        //sessionStorage.setItem('myPersonalFavorite', JSON.stringify(this.l_ret_personal_favorite_s.datas[0]))
-      
-      //this.setSelectedUser(keyid)
-      //this.getformvaluesaccurate(keyid)
-      //this.USER_SIGNIN(this.form)
-      //this.$f7router.back('/userItem/')
-      //window.location.href ='/gglist/'
-   
       this.$f7router.navigate('/gglist/')
     },
   }

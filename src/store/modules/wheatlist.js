@@ -22,6 +22,8 @@ export const GET_OUR_GG_IMF_DATA = 'GET_OUR_GG_IMF_DATA'
 export const GET_PERSONAL_IMF_DATA = 'GET_PERSONAL_IMF_DATA'
 //得到个人藏单
 export const GET_PERSONAL_FAVORITE_DATA = 'GET_PERSONAL_FAVORITE_DATA'
+//得到个人藏单的蝈蝈信息
+export const GET_PERSONAL_FAVORITE_DATA_LIST = 'GET_PERSONAL_FAVORITE_DATA_LIST'
 //得到个人的阶段
 export const GET_PERSONAL_STEP = 'GET_PERSONAL_STEP'
 //更改信息
@@ -45,6 +47,8 @@ const state = {
 
     //个人藏单
     l_ret_personal_favorite_s:[],
+    //个人藏单的蝈蝈信息
+    l_ret_personal_favorite_list_s:[],
 
     //某个蝈蝈的21信息
     l_retdata:[],
@@ -82,6 +86,9 @@ const getters = {
     l_ret_personal_gg_s: state => state.l_ret_personal_gg_s,
     //个人藏单
     l_ret_personal_favorite_s: state => state.l_ret_personal_favorite_s,
+    //个人藏单的蝈蝈信息
+    l_ret_personal_favorite_list_s: state => state.l_ret_personal_favorite_list_s,
+    
     //基本信息
     l_retdata: state => state.l_retdata,
     l_retkeyname: state => state.l_retkeyname,
@@ -299,6 +306,18 @@ const actions = {
         //因为是异步 所以会立即返回 
         //alert(ret.userName)
       },
+      
+      //得到个人藏单下的蝈蝈信息
+      getPersonalFavoriteList({commit},data){
+        server_db.getPersonalFavoriteList(data).then(response => {
+          //response.userId = response.userId
+          commit(GET_PERSONAL_FAVORITE_DATA_LIST, response)
+          //alert(response.userName)
+          })
+        //因为是异步 所以会立即返回 
+        //alert(ret.userName)
+      },
+      
       //更新信息
       updateformvalues({commit}, data){
         server.updateformvalues(data)
@@ -362,7 +381,8 @@ const mutations = {
 
     //得到某引导人的gg列表
     [GET_GG_IMF_DATA](state, data) {
-    state.l_ret_gg_imf_s = data.data;
+      console.log('get GET_GG_IMF_DATA')
+      state.l_ret_gg_imf_s = data.data;
   },
     //得到某管理员的gg列表
     [GET_OUR_GG_IMF_DATA](state, data) {
@@ -382,6 +402,11 @@ const mutations = {
       state.l_ret_personal_favorite_s = data.data;
     },
 
+    //返回个人藏单中所有的蝈蝈信息
+    [GET_PERSONAL_FAVORITE_DATA_LIST](state, data) {
+      state.l_ret_personal_favorite_list_s = data.data;
+    },
+    
     //基本信息
     [TEST_CONN_RECEIVE_USER_21_MSG](state, data){ 
       state.l_retdata = data.data;

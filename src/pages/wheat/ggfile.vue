@@ -37,6 +37,11 @@ export default {
     ...mapGetters('listdata',[
       'l_ret_gg_imf_s'
     ]),
+
+    ...mapGetters('listdata',[
+      'l_ret_our_gg_imf_s'
+    ]),
+
     ...mapGetters('listdata',[
         'l_ret_personal_imf_s'
     ]),
@@ -44,13 +49,32 @@ export default {
     ...mapGetters('listdata',[
         'l_ret_personal_favorite_s'
     ]),
+
+    ...mapGetters('listdata',[
+        'l_ret_personal_favorite_list_s'
+    ]),
+
+    ...mapGetters('datainterchange',[
+    'pageNavigation'
+    ]),
   },
   
   created () {
     //得到选项
     var index = this.selectedUser
     //得到gg键值
-    this.in_21Item_Short = this.l_ret_gg_imf_s.datas[index]
+    var jumpFrom = this.getSourcePos()
+    if(jumpFrom == "收藏列表")
+    {
+      this.in_21Item_Short = this.l_ret_personal_favorite_list_s.datas[index]
+    }
+    else if(jumpFrom == "协力列表")
+    {
+      this.in_21Item_Short = this.l_ret_our_gg_imf_s.datas[index]
+    }
+    else
+      this.in_21Item_Short = this.l_ret_gg_imf_s.datas[index]
+
     var keyid = this.in_21Item_Short.键值
     //得到唯一表单
     this.getformvaluesaccurate(keyid).then((res) => {
@@ -66,63 +90,33 @@ export default {
                 this.b_load_21Item = 1
                 this.b_load_activity = 1
       });
-
-    //得到gg状态纪录
-    //this.getGGStatus(keyid)
+      
     //得到当前帐户信息
     this.in_self_msg = this.l_ret_personal_imf_s.datas[0]
     
-    //得到个人藏单
-    if(this.l_ret_personal_favorite_s.datas[0])
+    //得到个人藏单 
+    if(JSON.stringify(this.l_ret_personal_favorite_s.datas[0]) != '{}')
+    {
       this.in_self_favorite = this.l_ret_personal_favorite_s.datas[0]
+      console.log(this.in_self_favorite)
+    }
+    else
+      this.in_self_favorite = null
     
-    console.log(this.in_self_favorite.收藏内容)
 
-    if(this.in_21Item_Short.引导人 == this.in_self_msg.姓名)
+    if(this.in_21Item_Short.引导人 == this.in_self_msg.个人表单)
       this.relation_of_this_one = 3
-    else if (this.in_21Item_Short.管理者 != this.in_self_msg.姓名)
+    else if (this.in_21Item_Short.管理者 == this.in_self_msg.姓名)
       this.relation_of_this_one = 2
-    else if (this.is_my_favorite(this.in_21Item_Short.键值, this.in_self_favorite.收藏内容))
+    else if (this.in_self_favorite != null && 
+            this.is_my_favorite(this.in_21Item_Short.键值, this.in_self_favorite.收藏内容))
       this.relation_of_this_one = 1
     else
       this.relation_of_this_one = 0
 
     //this.relation_of_this_one = 0
     console.log('relation_of_this_one = ' + this.relation_of_this_one)
-    //判断激活的属性页
-    //var hotPage = sessionStorage.getItem('hotPageAtGGFile')
-    //console.log("this.l_retdata.datas[0].状态")
-    //
-    /*if(hotPage == 1)
-    {
-        this.class_link_1 = "button tab-link"
-        this.class_link_2 = "button tab-link  tab-link-active"
-        this.class_link_3 = "button tab-link"
-
-        this.class_tab_1 = "tab"
-        this.class_tab_2 = "tab tab-active"
-        this.class_tab_3 = "tab"
-    }
-    else if(hotPage == 2)
-    {
-        this.class_link_1 = "button tab-link"
-        this.class_link_2 = "button tab-link"
-        this.class_link_3 = "button tab-link  tab-link-active"
-
-        this.class_tab_1 = "tab"
-        this.class_tab_2 = "tab"
-        this.class_tab_3 = "tab tab-active"
-    }
-    else{
-        this.class_link_1 = "button tab-link  tab-link-active"
-        this.class_link_2 = "button tab-link"
-        this.class_link_3 = "button tab-link"
-
-        this.class_tab_1 = "tab tab-active"
-        this.class_tab_1 = "tab"
-        this.class_tab_1 = "tab"
-    }*/
-  },
+ },
   methods: {
     ...mapActions('listdata',[
       'getactivityformvalues'
@@ -149,6 +143,27 @@ export default {
     ...mapActions('datainterchange',[
       'setSelectedGGStatus'
     ]),
+
+    ...mapActions('datainterchange',[
+    'setPageNavigation'
+    ]),
+
+    getSourcePos() {
+      var jump = ""
+      jump = JSON.parse(this.pageNavigation)
+      
+      console.log("It is from " + jump.from)
+      return jump.from
+    },
+
+    getDesPos() {
+      var jump = ""
+      jump = JSON.parse(this.pageNavigation)
+      
+      console.log("I'm at " + jump.to)
+      return jump.to
+    },
+
     timeout(ms) {
           return new Promise((resolve) => {
             setTimeout(resolve, ms);
@@ -200,8 +215,11 @@ export default {
 
     goBack()    {
         //取消激活的tab
-        sessionStorage.removeItem('hotPageAtGGFile')
-        window.location.href ='/alllist/'
+        //设置跳转来源
+        var str = '{"from":"' + this.getDesPos() + '","to":"' + this.getSourcePos() + '"}'
+        console.log(str)
+        this.setPageNavigation(str)
+        this.$f7router.navigate('/allList/')
     },
 
     getGGStatus(ggid)  {
@@ -757,8 +775,6 @@ gg_status_label{
   </f7-page>  
 </template>
 <style lang="scss" scoped>
-.block{
-  background: green;
-}
+
 </style>
 

@@ -49,7 +49,7 @@
     </f7-nav-left>
     <f7-nav-title>
       <label class="site-title">
-        <f7-link href="/" no-link-class>
+        <f7-link href="/myItem/" no-link-class>
           <span class="pull-out-icon">
             <a class="panel-open raised " data-panel="left" href="#"><img src="@/assets/icon_all/pull_out@2x.png"/></a>
           </span>
