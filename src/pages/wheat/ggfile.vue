@@ -1,4 +1,4 @@
-
+<!-- 当前页面名称： 蝈蝈信息-->
 <script>
 import { mapState, mapGetters, mapActions, mapMutations, Store } from 'vuex'
 export default {
@@ -23,11 +23,13 @@ export default {
             b_load_21Item:0,
             //加载活动列表成功
             b_load_activity:0,
+            //得到该蝈蝈的21项字段
+            l_the_gg_title:[],
             }
   },
   computed: {
     ...mapGetters('listdata',['l_retdata']),
-    ...mapGetters('listdata',['l_retkeyname']),
+    //...mapGetters('listdata',['l_retkeyname']),
     ...mapGetters('datainterchange', ['selectedUser']),
     
     ...mapGetters('listdata',['l_retactivitydata']),
@@ -57,10 +59,14 @@ export default {
     ...mapGetters('datainterchange',[
     'pageNavigation'
     ]),
+
+    ...mapGetters('configdata',[
+    'l_showggtitle_data'
+    ]),
   },
   
   created () {
-    //得到选项
+    //得到所选用户
     var index = this.selectedUser
     //得到gg键值
     var jumpFrom = this.getSourcePos()
@@ -87,6 +93,8 @@ export default {
     //1s以后进行刷新
     this.timeout(1000).then(() => {
                 console.log('in vue.timeout')
+                //设置显示内容
+                this.getGGTitle(this.relation_of_this_one)
                 this.b_load_21Item = 1
                 this.b_load_activity = 1
       });
@@ -114,6 +122,8 @@ export default {
     else
       this.relation_of_this_one = 0
 
+    //得到21项普通选项
+    this.get_l_showggtitle_datalist(this.relation_of_this_one)
     //this.relation_of_this_one = 0
     console.log('relation_of_this_one = ' + this.relation_of_this_one)
  },
@@ -148,6 +158,10 @@ export default {
     'setPageNavigation'
     ]),
 
+    ...mapActions('configdata',[
+    'get_l_showggtitle_datalist'
+    ]),
+    
     getSourcePos() {
       var jump = ""
       jump = JSON.parse(this.pageNavigation)
@@ -164,48 +178,73 @@ export default {
       return jump.to
     },
 
+    /****************************得到描述这个蝈蝈的具体的21项********************************** */
+    //权限描述：所有人都不能看到键值、引导人、蝈蝈关联表单；
+    getGGTitle(ggAuthority)  {
+                                /*if (ggAuthority == 3 || ggAuthority == 2){
+                                  //自己作为管理员或者引导人时 可以看见全部
+                                  var msg = this.l_retdata.datas[0];
+                                  var i = 0;
+                                  for (var key in msg)
+                                  {
+                                      //console.log("key:" + key + ", value:" ,data.data.datas[0][key]);
+                                      if(key != '键值' && key != '蝈蝈关联表单' && key != '引导人')
+                                      {
+                                        this.l_the_gg_title[i] = key;
+                                        i = i + 1;
+                                      }
+                                  }
+                                }
+                                else{
+                                  //其他用户只能看到指定的内容
+                                  this.l_the_gg_title = this.l_showggtitle_data
+                                }*/
+    },
+    /****************************得到描述这个蝈蝈的具体的21项********************************** */
+
     timeout(ms) {
           return new Promise((resolve) => {
             setTimeout(resolve, ms);
                 })
       },
 
-    
-
     //-x-x-x-
-  is_my_favorite(anyid, favoritelist)  {
-    var findid = "-" + anyid + "-"
-    if (favoritelist.indexOf(findid) == -1)
-        return false
-    
-    return true
-  },
+    //这个蝈蝈在我的收藏夹吗
+    is_my_favorite(anyid, favoritelist)  {
+      var findid = "-" + anyid + "-"
+      if (favoritelist.indexOf(findid) == -1)
+          return false
+      
+      return true
+    },
 
-  delete_my_favorite(anyid, favoritelist) {
-    var findid = "-" + anyid + "-"
-    return favoritelist.replace(findid,'-')
-    /*var pos = favoritelist.indexOf(findid)
-    var header = favoritelist.substring(0,pos)
-    pos = pos+findid.length
-    var len = favoritelist.length-pos-findid.length
-    var tail = favoritelist.subString(pos,len)
-    console.log(tail)
-    
-    return header + tail*/
-  },
+    //从我的收藏夹里删除
+    delete_my_favorite(anyid, favoritelist) {
+      var findid = "-" + anyid + "-"
+      return favoritelist.replace(findid,'-')
+      /*var pos = favoritelist.indexOf(findid)
+      var header = favoritelist.substring(0,pos)
+      pos = pos+findid.length
+      var len = favoritelist.length-pos-findid.length
+      var tail = favoritelist.subString(pos,len)
+      console.log(tail)
+      
+      return header + tail*/
+    },
 
-  add_my_favorite(anyid, favoritelist) {
-    var str
-    if(favoritelist.length == 0)
-    {
-      return "-" + anyid + "-"
-    }
-    else 
-    {
-      return favoritelist + anyid + "-"
-    } 
+    //添加我的收藏夹
+    add_my_favorite(anyid, favoritelist) {
+      var str
+      if(favoritelist.length == 0)
+      {
+        return "-" + anyid + "-"
+      }
+      else 
+      {
+        return favoritelist + anyid + "-"
+      } 
 
-  },
+    },
 
     hitTab(param) {
         //console.log("hitTab = ", param)
@@ -321,7 +360,7 @@ export default {
           //window.location.href ='/21ItemList/'
           this.$f7router.navigate('/21ItemList/')
       }
-      if (this.relation_of_this_one == 1)
+      else if (this.relation_of_this_one == 1)
       {
           //取消收藏
           tempValues = this.delete_my_favorite(this.in_21Item_Short.键值, this.in_self_favorite.收藏内容)
@@ -336,8 +375,9 @@ export default {
 
           console.log(sqldata)
           this.updateformvalues(sqldata)
+          this.relation_of_this_one = 0
       }
-      if (this.relation_of_this_one == 0)
+      else if (this.relation_of_this_one == 0)
       {
           if(this.in_self_favorite == null)
           {
@@ -354,6 +394,8 @@ export default {
                       })
               console.log(sqldata)
               this.insertformvalues(sqldata)
+
+              this.relation_of_this_one = 1
           }
           else{
               //添加收藏
@@ -369,22 +411,14 @@ export default {
 
               console.log(sqldata)
               this.updateformvalues(sqldata)
+
+              this.relation_of_this_one = 1
           }
           
       }
     }
   }
 }
-
-/*function showValue()
-{
-  document.getElementById("price-value").value=document.getElementById("my-range").value;
-  console.log(document.getElementById("price-value").value);
-}
-var $$ = Dom7;
-$$('#my-range').on('range:change', function (e, range) {
-  $$('.price-value').text('$'+(range.value));
-});*/
 </script>
 <style>
 
@@ -403,13 +437,33 @@ $$('#my-range').on('range:change', function (e, range) {
             background: #FF6D7F;
 }
 
+.md .navbar {
+            background: #FF6D7F;
+}
+.md .button.tab-link-active {
+            background-color: #FF6D7F
+}
+
+.md .button {
+            width: 33%;
+            padding-left: 25px;
+}
+
+.button, .button.button-fill, .button.button-fill.active-state {
+            background-color: #FF6D7F;
+            margin-top: 0px;
+}
+
+.md .subnavbar {
+            height: 38px;
+}
 #mybar  {
             position: absolute;
             width: 100%;
-            height: calc(21px + 8.5*2px);
+            height: 38px;
             left:0px;
             top:256px;
-            background: #FF6D7F;
+            border-top: #ffffff solid 0.5px
 }
 
 .back_img{
@@ -589,6 +643,10 @@ gg_status_label{
             top:295px;
 }
 
+.mylabelfont {
+
+}
+
 .md .block {
             margin-top:  0px; 
             margin-bottom: 0px;
@@ -627,9 +685,9 @@ gg_status_label{
 </style>
 <template>
   <f7-page>
-          <div class = "page">
+          <div>
                 <div class="navbar-inner" id = "divheader">
-                  <div class = "divheader_ggimg">
+                  <div>
                         <a href = "#" @click="goBack()">
                           <img  class = "back_img" src="@/assets/icon_all/back_white.png"/>
                         </a>
@@ -655,15 +713,22 @@ gg_status_label{
                             <label class = "namescolor_2">{{b_load_21Item == 0?'稍等':l_retdata.datas[0].微信}}</label>
                         </div>
                   </div>
-                  <div class="subnavbar" id = "mybar">
+                  <div id = "mybar">
+                  <f7-navbar class = "subnavbar">
+                    <f7-nav-left :class="class_link_1" href="#tab1">基本信息</f7-nav-left>
+                    <f7-nav-center :class="class_link_2" href="#tab2">活动记录</f7-nav-center>
+                    <f7-nav-right :class="class_link_3" href="#tab3">修改历史</f7-nav-right>
+                  </f7-navbar>
+                  </div>
+                  <!--<div class="subnavbar" id = "mybar">
                         <a :class="class_link_1" href="#tab1">基本信息</a>
                         <a :class="class_link_2" href="#tab2">活动记录</a>
                         <a :class="class_link_3" href="#tab3">修改历史</a>
-                  </div>
+                  </div>-->
                 </div>
-              </div>
+             
           
-              <div class="page-content hide-navbar-on-scroll" id = "msgbody">
+              <div id = "msgbody">
                 <!-- 右推菜单 -->
                 <div class="panel panel-right panel-cover">
                     <div v-if="b_load_21Item == 1" class="block">
@@ -721,12 +786,12 @@ gg_status_label{
                     <div class="block">
                       <f7-list v-if="b_load_21Item == 1">
                           <f7-list-item 
-                              v-for="(item, index) in this.l_retkeyname"
+                              v-for="(item, index) in this.l_showggtitle_data"
                                 :key="index"
-                                v-if="l_retdata.datas[0][item] != 'NULL'">
+                                v-if="l_retdata.datas[0][item.value] != null">
                               <div>
-                                  <f7-label><font class = "mylabelfont">{{item}}</font></f7-label>
-                                  <f7-label>{{l_retdata.datas[0][item]}}</f7-label>
+                                  <f7-label><font class = "mylabelfont">{{item.value}}</font></f7-label>
+                                  <f7-label>{{l_retdata.datas[0][item.value]}}</f7-label>
                               </div>
                           </f7-list-item>
                       </f7-list>
@@ -735,9 +800,9 @@ gg_status_label{
                       <div class = "footfont">
                         <a href = "#" @click="add21Item()">
                             <label v-if="relation_of_this_one == 3" class = "footnamecolor">添加信息</label>
-                            <label v-if="relation_of_this_one == 2" class = "footnamecolor">添加信息</label>
-                            <label v-if="relation_of_this_one == 1" class = "footnamecolor">取消收藏</label>
-                            <label v-if="relation_of_this_one == 0" class = "footnamecolor">收藏</label>
+                            <label v-else-if="relation_of_this_one == 2" class = "footnamecolor">添加信息</label>
+                            <label v-else-if="relation_of_this_one == 1" class = "footnamecolor">取消收藏</label>
+                            <label v-else class = "footnamecolor">收藏</label>
                         </a>
                       </div>
                     </div>
@@ -772,6 +837,7 @@ gg_status_label{
                   </div>
                 </div>
           </div>  
+          </div>
   </f7-page>  
 </template>
 <style lang="scss" scoped>

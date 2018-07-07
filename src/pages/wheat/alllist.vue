@@ -1,9 +1,12 @@
+<!-- 当前页面名称： 蝈蝈列表 收藏列表 协力列表-->
 <template>
   <f7-page>
     <v-asideheader title='' back></v-asideheader>
+    
+    
     <div class="list media-list">
       <ul v-if="b_render == 2">
-        <div v-for="(item, index) in this.gg_list.datas" :key="index">
+        <div v-for="(item, index) in this.l_ret_gg_imf_s.datas" :key="index">
           <li>
              <a href = "javascript:;" class="item-link item-content" @click="local_setSelectedGG(item.键值, index)">
               <div class="item-media">
@@ -53,6 +56,7 @@
       </ul>
       <f7-label v-else-if="b_render == 1">亲爱的佳人,您的{{jump_to}}为空,让我们一起努力吧^_^</f7-label>
     </div>
+ 
       <!-- Left Panel with Reveal effect -->
       <f7-panel left reveal>
         <img src="@/assets/img1.jpg"/>
@@ -367,8 +371,8 @@ export default {
             
             b_render:0,
             inputname:"",
-            jump_to:"",
-            gg_list:[]}
+            jump_to:""
+            }
   },
   computed: {
     
@@ -416,16 +420,16 @@ export default {
     this.getPersonalAccount('cui')
     this.getPersonalFavorite('cui')
     //如果是查看自己作为管理者的gg 则以自己为管理人查
-    this.get_our_gglist('cui')
+    //this.get_our_gglist('cui')
 
     //1s以后进行刷新
       this.timeout(1000).then(() => {
                 console.log('in vue.timeout')
                 if(jump.to == "收藏列表")
                 {
-                  if(this.l_ret_personal_favorite_list_s != null)
+                  if(this.l_ret_gg_imf_s != null)
                   {
-                    this.gg_list = this.l_ret_personal_favorite_list_s
+                    
                     this.b_render = 2
                   }
                   else
@@ -434,9 +438,9 @@ export default {
                   
                 else if (jump.to == "协力列表")
                 {
-                  if(this.l_ret_our_gg_imf_s != null)
+                  if(this.l_ret_gg_imf_s != null)
                   {
-                    this.gg_list = this.l_ret_our_gg_imf_s
+                    
                     this.b_render = 2
                   }
                   else
@@ -446,7 +450,7 @@ export default {
                 {
                   if(this.l_ret_gg_imf_s != null)
                   {
-                    this.gg_list = this.l_ret_gg_imf_s
+                    
                     this.b_render = 2
                   }
                   else
@@ -487,6 +491,10 @@ export default {
       'setPageNavigation'
     ]),
 
+    reflash() {
+        console.log("I'm back!")
+    },
+
     timeout(ms) {
           return new Promise((resolve) => {
             setTimeout(resolve, ms);
@@ -501,7 +509,7 @@ export default {
       this.setPageNavigation(str)
 
       this.$f7router.navigate('/gglist/')
-    },
+    }
   }
 }
 </script>

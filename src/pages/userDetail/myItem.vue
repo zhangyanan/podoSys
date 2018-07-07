@@ -16,6 +16,7 @@ export default {
 
         //搜索信息
         search_msg:"",
+        
     }
   },
   computed: {
@@ -31,7 +32,9 @@ export default {
     ...mapGetters('listdata',[
         'l_ret_personal_gg_s'
     ]),
-    
+    ...mapGetters('listdata',[
+        'l_ret_gg_imf_s'
+    ]),
   },
   created () {
     //自动生成2.
@@ -66,7 +69,7 @@ export default {
                     setTimeout(resolve, ms);
                   });
     },
-    
+
     onSearch(param) {
       if(param != "")
       {
