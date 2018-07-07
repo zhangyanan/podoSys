@@ -109,9 +109,9 @@ export default {
               
     },
 
-    goNext(param1, param2, param3)  {
+    /*goNext(param1, param2, param3)  {
       this.$f7router.navigate('/userItem/')
-    },
+    },*/
 
     gotoFavoriteGGList()  {
       console.log('in gotoFavoriteGGList')
@@ -140,9 +140,9 @@ export default {
       <f7-page>
     <div class = "myItem_div">
         <div v-if="b_render == 1">
-            <a href="#" @click="goNext('cui',l_ret_personal_gg_s.datas[0].引导人, l_ret_personal_gg_s.datas[0].阶段)">
+            <f7-link panel-close href="/userItem/">
               <img  class = "di_icon" src="@/assets/icon_all/yang.png" />
-            </a>
+            </f7-link>
             <div class = "headidentity">
                 <p class = "rcorners1"></p>
                 <label class = "useridentity_font">{{l_ret_personal_gg_s.datas[0].阶段}}</label>                
