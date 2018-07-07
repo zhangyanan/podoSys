@@ -643,10 +643,6 @@ gg_status_label{
             top:295px;
 }
 
-.mylabelfont {
-
-}
-
 .md .block {
             margin-top:  0px; 
             margin-bottom: 0px;

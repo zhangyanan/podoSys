@@ -72,6 +72,18 @@ export default {
       'get_our_gglist'
     ]),
 
+    ...mapActions('datainterchange',[
+      'setPageNavigation'
+    ]),
+
+    ...mapActions('listdata',[
+      'getPersonalFavoriteList'
+    ]),
+
+    ...mapActions('listdata',[
+      'get_our_gglist'
+    ]),
+
     timeout(ms) {
                   return new Promise((resolve) => {
                     setTimeout(resolve, ms);
