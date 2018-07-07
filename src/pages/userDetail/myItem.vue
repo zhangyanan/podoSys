@@ -16,7 +16,7 @@ export default {
 
         //搜索信息
         search_msg:"",
-        
+
     }
   },
   computed: {
@@ -314,7 +314,6 @@ export default {
 </style>
 <template>
   <f7-page>
-    <v-header title='hello' back></v-header>
     <div class = "myItem_div">
             <a href="#" @click="goNext('cui',l_ret_personal_gg_s.datas[0].引导人, l_ret_personal_gg_s.datas[0].阶段)">
               <img  class = "di_icon" src="@/assets/icon_all/yang.png" />

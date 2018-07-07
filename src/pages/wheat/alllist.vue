@@ -1,9 +1,7 @@
 <!-- 当前页面名称： 蝈蝈列表 收藏列表 协力列表-->
 <template>
   <f7-page>
-    <v-asideheader title='' back></v-asideheader>
-    
-    
+    <v-asideheader title='' addPage noMenu></v-asideheader>
     <div class="list media-list">
       <ul v-if="b_render == 2">
         <div v-for="(item, index) in this.l_ret_gg_imf_s.datas" :key="index">
