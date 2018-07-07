@@ -1,8 +1,10 @@
+<!-- 当前页面名称： 个人主页-->
 <script>
 import { mapState, mapGetters, mapActions, mapMutations, Store } from 'vuex'
 
 export default {
   name: 'App',
+  
   data() {
     return {
         concert_url:"/allList/",
@@ -17,31 +19,38 @@ export default {
 
         //搜索信息
         search_msg:"",
+        search_none:0,
+        b_render:0,
     }
   },
   computed: {
     ...mapGetters('listdata',[
         'l_ret_personal_imf_s'
     ]),
-    ...mapGetters('listdata',[
-        'l_retdata'
-    ]),
+
     ...mapGetters('listdata',[
         'l_ret_search_data'
     ]),
     ...mapGetters('listdata',[
         'l_ret_personal_gg_s'
     ]),
-    
+    ...mapGetters('listdata',[
+        'l_ret_gg_imf_s'
+    ]),
+    ...mapGetters('listdata',[
+        'l_ret_search_none'
+    ]),
   },
   created () {
     //自动生成2.
-    //this.getGenderList()   
-    /*create lines are created by machine @ 2018-06-12 16:44:50*/
-    //this.getPersonalAccount('cui')
-    //this.getformvaluesaccurate('65')
-
+    console.log('in app.vue')
+    //this.get_my_gglist('cui')
     this.getPersonalAccount('cui')
+
+    this.timeout(1000).then(() => {
+            console.log("in timeout of App.vue")
+            this.b_render = 1
+        });
   },
   methods: {
     ...mapActions('listdata',[
@@ -57,53 +66,74 @@ export default {
       'getFormValuesByName'
     ]),
 
+    ...mapActions('datainterchange',[
+      'setPageNavigation'
+    ]),
+
+    ...mapActions('listdata',[
+      'getPersonalFavoriteList'
+    ]),
+
+    ...mapActions('listdata',[
+      'get_our_gglist'
+    ]),
+
     timeout(ms) {
-          return new Promise((resolve) => {
+                  return new Promise((resolve) => {
                     setTimeout(resolve, ms);
                   });
     },
-
+    
     onSearch(param) {
       if(param != "")
       {
         this.getFormValuesByName(param)
         this.timeout(1000).then(() => {
-            
-            if(this.l_ret_gg_imf_s.num > 0)
-              this.$f7router.navigate('/searchList/')
+            console.log('this.l_ret_gg_imf_s.num = ' + this.l_ret_gg_imf_s.num)
+            if(this.l_ret_search_none > 0)
+              {
+                //设置跳转来源
+                var str = '{"from":"个人主页","to":"搜索列表"}'
+                this.setPageNavigation(str)
+              }
             else
-              this.search_none = 1
+              this.search_msg = 'none'
         });
       }
               
     },
 
     goNext(param1, param2, param3)  {
-      //传入自己的帐户名称
-      //sessionStorage.setItem('selfUserName', param1)
-      
-      //传入yz名称
-      //sessionStorage.setItem('selfYZName', param2)
-
-      //传入自己的状态
-      //sessionStorage.setItem('selfStatus', param3)
-
-      //传入个人信息
-      //sessionStorage.setItem('selfUserData',JSON.stringify(this.l_ret_personal_imf_s))
-
-      //window.location.href ='/userItem/'
       this.$f7router.navigate('/userItem/')
+    },
+
+    gotoFavoriteGGList()  {
+      console.log('in gotoFavoriteGGList')
+      this.getPersonalFavoriteList(this.l_ret_personal_imf_s.datas[0].个人表单)
+      //设置跳转来源
+      var str = '{"from":"个人主页","to":"收藏列表"}'
+      this.setPageNavigation(str)
+    },
+
+    gotoOurGGList() {
+      this.get_our_gglist(this.l_ret_personal_imf_s.datas[0].个人表单)
+      //设置跳转来源
+      var str = '{"from":"个人主页","to":"协力列表"}'
+      this.setPageNavigation(str)
+      //this.$f7router.navigate('/allList/')
     }
   }
 }
 
 </script>
+
 <template>
   <div id="app">
     <f7-panel left reveal>
       <f7-block-title>我是左侧面板</f7-block-title>
       <f7-page>
     <div class = "myItem_div">
+        <div v-if="b_render == 1">
             <a href="#" @click="goNext('cui',l_ret_personal_gg_s.datas[0].引导人, l_ret_personal_gg_s.datas[0].阶段)">
               <img  class = "di_icon" src="@/assets/icon_all/yang.png" />
             </a>
@@ -119,18 +149,20 @@ export default {
             </div>
             <div class = "mysearchbox">
                 <div class = "searchbody" >
-                    <input type="text" placeholder="搜索" v-model="search_msg">
+                    <input type="text" placeholder="手机/微信/姓名" v-model="search_msg">
                 </div>
                 <div class = "searchicon">
                     <a href="#" @click="onSearch(search_msg)"><img  src="@/assets/icon_all/search_green.png"/></a>
                 </div>
             </div>
             <img class = "menuicon_1" src="@/assets/icon_all/panel_concert.png" />
-            <a class = "menutitle_1" v-bind:href="concert_url">协力</a>
+          
+            <f7-link panel-close class = "menutitle_1"  @click="gotoOurGGList()">协力
+            </f7-link>
 
             <img class = "menuicon_2" src="@/assets/icon_all/panel_favorite.png" />
-            <a class = "menutitle_2" v-bind:href="favorite_url">收藏</a>
-
+            <f7-link panel-close class = "menutitle_2" @click="gotoFavoriteGGList()">收藏
+            </f7-link>
             <img class = "menuicon_3" src="@/assets/icon_all/panel_notification.png" />
             <a class = "menutitle_3" v-bind:href="notification_url">通知</a>
 
@@ -140,6 +172,7 @@ export default {
 
             <img class = "menuicon_5" src="@/assets/icon_all/panel_logout.png" />
             <a class = "menutitle_5" href="/list/">退出</a>
+        </div>
     </div>
   </f7-page>  
     </f7-panel>
@@ -147,9 +180,21 @@ export default {
     <v-menu></v-menu>
   </div>
 </template>
-
-
-
+<!--
+<template>
+  <div id="app">
+    <f7-panel left reveal>
+      <f7-block-title>我是左侧面板</f7-block-title>
+      <f7-block>
+        <f7-link panel-close>close me</f7-link>
+        <p>左侧面板</p>
+      </f7-block>
+    </f7-panel>
+    <f7-view :pushState="true" main/>
+    <v-menu></v-menu>
+  </div>
+</template>
+-->
 <style>
 .myItem_div{
     background-color: #54bcbf;
@@ -353,6 +398,10 @@ export default {
             font-size: 16px;
             font-weight: 600;
             text-decoration:none;
+}
+
+.md a {
+    color: #ffffff
 }
 </style>
 

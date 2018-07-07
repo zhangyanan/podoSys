@@ -180,7 +180,7 @@ export default {
 				 }))
 					.then(response => {
 						//alert(response.data.userId);, 'application/json;charset=UTF-8;Access-Control-Allow-Origin:*'
-						resolve(response.data);
+                        resolve(response.data);
 					})
 					.catch((error) => {
 					 console.log(error)

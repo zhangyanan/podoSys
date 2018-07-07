@@ -1,4 +1,4 @@
-
+<!-- 当前页面名称： 蝈蝈信息-->
 <script>
 import { mapState, mapGetters, mapActions, mapMutations, Store } from 'vuex'
 export default {
@@ -321,7 +321,7 @@ export default {
           //window.location.href ='/21ItemList/'
           this.$f7router.navigate('/21ItemList/')
       }
-      if (this.relation_of_this_one == 1)
+      else if (this.relation_of_this_one == 1)
       {
           //取消收藏
           tempValues = this.delete_my_favorite(this.in_21Item_Short.键值, this.in_self_favorite.收藏内容)
@@ -336,8 +336,9 @@ export default {
 
           console.log(sqldata)
           this.updateformvalues(sqldata)
+          this.relation_of_this_one = 0
       }
-      if (this.relation_of_this_one == 0)
+      else if (this.relation_of_this_one == 0)
       {
           if(this.in_self_favorite == null)
           {
@@ -354,6 +355,8 @@ export default {
                       })
               console.log(sqldata)
               this.insertformvalues(sqldata)
+
+              this.relation_of_this_one = 1
           }
           else{
               //添加收藏
@@ -369,6 +372,8 @@ export default {
 
               console.log(sqldata)
               this.updateformvalues(sqldata)
+
+              this.relation_of_this_one = 1
           }
           
       }
@@ -735,9 +740,9 @@ gg_status_label{
                       <div class = "footfont">
                         <a href = "#" @click="add21Item()">
                             <label v-if="relation_of_this_one == 3" class = "footnamecolor">添加信息</label>
-                            <label v-if="relation_of_this_one == 2" class = "footnamecolor">添加信息</label>
-                            <label v-if="relation_of_this_one == 1" class = "footnamecolor">取消收藏</label>
-                            <label v-if="relation_of_this_one == 0" class = "footnamecolor">收藏</label>
+                            <label v-else-if="relation_of_this_one == 2" class = "footnamecolor">添加信息</label>
+                            <label v-else-if="relation_of_this_one == 1" class = "footnamecolor">取消收藏</label>
+                            <label v-else class = "footnamecolor">收藏</label>
                         </a>
                       </div>
                     </div>

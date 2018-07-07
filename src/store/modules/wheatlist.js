@@ -33,6 +33,8 @@ export const RECEIVE_UPDATE_ACTIVITY_MSG_IN_STORE = 'RECEIVE_UPDATE_ACTIVITY_MSG
 
 //返回查询值
 export const TEST_CONN_RECEIVE_SEARCH_FORM_VALUE = 'TEST_CONN_RECEIVE_SEARCH_FORM_VALUE'
+//返回查询标示
+export const TEST_CONN_RECEIVE_SEARCH_STATUS = 'TEST_CONN_RECEIVE_SEARCH_STATUS'
 
 const state = {
     l_tempStr:"",
@@ -71,7 +73,8 @@ const state = {
 
     //搜索的返回值
     l_ret_search_data:[],
-
+    //搜索的标示
+    l_ret_search_none:"",
 }
 
 const getters = {
@@ -107,6 +110,9 @@ const getters = {
 
     //搜索的返回值
     l_ret_search_data: state => state.l_ret_search_data,
+
+    //搜索的标示
+    l_ret_search_none: state => state.l_ret_search_none,
 }
 
 const actions = { 
@@ -130,11 +136,9 @@ const actions = {
     //按照名字或微信进行查询
     getFormValuesByName({commit}, data){   
       server.get21FormValuesByName(data).then(response => {
-        console.log('444444')
         var num = response.data.num
         if(num > 0)
         {
-          console.log('555555')
             commit(TEST_CONN_RECEIVE_SEARCH_FORM_VALUE, response)
             //直接跳转到搜索结果页面
             //设置查询结果集
@@ -164,6 +168,8 @@ const actions = {
                     commit(TEST_CONN_RECEIVE_SEARCH_FORM_VALUE, response)
                     //this.$f7router.navigate('/searchList/')
                 }
+                else
+                    commit(TEST_CONN_RECEIVE_SEARCH_STATUS, response)
               })
             }
             })
@@ -270,7 +276,7 @@ const actions = {
         //alert(ret.userName)
       },
 
-      //得到个人信息
+      //得到个人信息 及自己的21项信息
       getPersonalAccount({commit},data){
         server_db.getPersonalAccount(data).then(response => {
           //response.userId = response.userId
@@ -386,7 +392,9 @@ const mutations = {
   },
     //得到某管理员的gg列表
     [GET_OUR_GG_IMF_DATA](state, data) {
+      console.log('get GET_OUR_GG_IMF_DATA')
       state.l_ret_our_gg_imf_s = data.data;
+      state.l_ret_gg_imf_s = data.data;
     },
     //返回个人补充信息
     [GET_PERSONAL_IMF_DATA](state, data) {
@@ -397,13 +405,15 @@ const mutations = {
       state.l_ret_personal_gg_s = data.data;
     },
     
-    //返回个人藏单
+    //返回个人藏单 只是藏单描述
     [GET_PERSONAL_FAVORITE_DATA](state, data) {
       state.l_ret_personal_favorite_s = data.data;
     },
 
     //返回个人藏单中所有的蝈蝈信息
     [GET_PERSONAL_FAVORITE_DATA_LIST](state, data) {
+      console.log('get GET_PERSONAL_FAVORITE_DATA_LIST')
+      state.l_ret_gg_imf_s = data.data;
       state.l_ret_personal_favorite_list_s = data.data;
     },
     
@@ -445,9 +455,19 @@ const mutations = {
 
     //得到查询的返回值
     [TEST_CONN_RECEIVE_SEARCH_FORM_VALUE](state, data){ 
+      console.log('get TEST_CONN_RECEIVE_SEARCH_FORM_VALUE')
+      state.l_ret_gg_imf_s = data.data;
       state.l_ret_search_data = data.data;
+      state.l_ret_search_none = 1;
     //console.log("json key name is ", state.l_retkeyname[4])
   },
+
+  [TEST_CONN_RECEIVE_SEARCH_STATUS](state, data){ 
+    console.log('get TEST_CONN_RECEIVE_SEARCH_STATUS')
+    state.l_ret_search_none = 0;
+  //console.log("json key name is ", state.l_retkeyname[4])
+},
+  
 
     //更改表单时的返回值
     [TEST_CONN_RECEIVE_UPDATE_MSG](state, data){ 
