@@ -47,7 +47,7 @@ const state = {
     //个人阶段
     l_ret_personal_gg_s:[],
 
-    //个人藏单
+    //当前帐户的个人藏单
     l_ret_personal_favorite_s:[],
     //个人藏单的蝈蝈信息
     l_ret_personal_favorite_list_s:[],
@@ -66,15 +66,18 @@ const state = {
     //gg状态标签
     l_ret_gg_status_data:[],
 
-    //gg列表数据
-    l_ret_gg_imf_s:[],
-    //作为管理员的gg列表
+    //当前帐户的gg列表数据
+    l_ret_my_gg_imf_s:[],
+    //当前帐户作为管理员的gg列表
     l_ret_our_gg_imf_s:[],
 
     //搜索的返回值
     l_ret_search_data:[],
     //搜索的标示
     l_ret_search_none:"",
+
+    //gg列表的显示数组 各类的蝈蝈列表都通过这个列表来呈现
+    l_ret_gg_imf_s:[],
 }
 
 const getters = {
@@ -107,6 +110,9 @@ const getters = {
 
     //gg列表数据
     l_ret_gg_imf_s: state => state.l_ret_gg_imf_s,
+    l_ret_my_gg_imf_s: state => state.l_ret_my_gg_imf_s,
+    //作为管理员的gg列表
+    l_ret_our_gg_imf_s: state => state.l_ret_our_gg_imf_s,
 
     //搜索的返回值
     l_ret_search_data: state => state.l_ret_search_data,
@@ -388,6 +394,7 @@ const mutations = {
     //得到某引导人的gg列表
     [GET_GG_IMF_DATA](state, data) {
       console.log('get GET_GG_IMF_DATA')
+      state.l_ret_my_gg_imf_s = data.data;
       state.l_ret_gg_imf_s = data.data;
   },
     //得到某管理员的gg列表

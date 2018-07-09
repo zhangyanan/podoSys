@@ -202,7 +202,7 @@ export default {
 					"in_username":"admin",
 					"in_keynames":"引导人,",
 					"in_keyvalues":username,
-					"in_fieldnames":"姓名,手机,微信,状态,阶段,性别,生日,涉外时间,引导人,引导人姓名,"
+					"in_fieldnames":"姓名,手机,微信,状态,阶段,性别,生日,涉外时间,引导人,引导人姓名,管理者,"
 				 }))
 					.then(response => {
 						//alert(response.data.userId);, 'application/json;charset=UTF-8;Access-Control-Allow-Origin:*'
@@ -228,7 +228,7 @@ export default {
 					"in_username":"admin",
 					"in_keynames":"管理者,",
 					"in_keyvalues":username,
-					"in_fieldnames":"姓名,手机,微信,状态,阶段,性别,生日,涉外时间,引导人,引导人姓名,"
+					"in_fieldnames":"姓名,手机,微信,状态,阶段,性别,生日,涉外时间,引导人,引导人姓名,管理者,"
 				 }))
 					.then(response => {
 						//alert(response.data.userId);, 'application/json;charset=UTF-8;Access-Control-Allow-Origin:*'

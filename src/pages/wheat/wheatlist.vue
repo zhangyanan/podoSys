@@ -67,6 +67,8 @@ export default {
     ...mapGetters('configdata',['l_prayers_data']),
     ...mapGetters('configdata',['l_selfservice_data']),
     ...mapGetters('configdata',['l_vigilant_data']),
+
+    ...mapGetters('listdata',['l_ret_personal_imf_s']),
   },
   created () {
     //自动生成2.

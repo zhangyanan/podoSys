@@ -39,9 +39,17 @@ export default {
     ...mapGetters('listdata',[
       'l_ret_gg_imf_s'
     ]),
-
+    
+    ...mapGetters('listdata',[
+      'l_ret_my_gg_imf_s'
+    ]),
+    
     ...mapGetters('listdata',[
       'l_ret_our_gg_imf_s'
+    ]),
+
+    ...mapGetters('listdata',[
+      'l_ret_search_data'
     ]),
 
     ...mapGetters('listdata',[
@@ -68,6 +76,7 @@ export default {
   created () {
     //得到所选用户
     var index = this.selectedUser
+    
     //得到gg键值
     this.jumpFrom = this.getSourcePos()
     if(this.jumpFrom == "收藏列表")
@@ -78,10 +87,14 @@ export default {
     {
       this.in_21Item_Short = this.l_ret_our_gg_imf_s.datas[index]
     }
-    else //无论是搜索还是蝈蝈列表 都是同样的
-      this.in_21Item_Short = this.l_ret_gg_imf_s.datas[index]
-
+    else if(this.jumpFrom == "搜索列表")
+      this.in_21Item_Short = this.l_ret_search_data.datas[index]
+    else
+      this.in_21Item_Short = this.l_ret_my_gg_imf_s.datas[index]
+    
     var keyid = this.in_21Item_Short.键值
+
+    console.log('this.isMyGG(keyid)' + JSON.stringify(this.isMyGG(keyid))) 
     //得到唯一表单
     this.getformvaluesaccurate(keyid).then((res) => {
                 console.log('in vue.getformvaluesaccurate')
@@ -111,15 +124,15 @@ export default {
     else
       this.in_self_favorite = null
 
-    if(this.in_21Item_Short.引导人 == this.in_self_msg.个人表单)
-      this.relation_of_this_one = 3
-    else if (this.in_21Item_Short.管理者 == this.in_self_msg.姓名)
-      this.relation_of_this_one = 2
+    if(this.isMyGG(keyid))
+                          this.relation_of_this_one = 3
+    else if (this.isOurGG(keyid))
+                          this.relation_of_this_one = 2
     else if (this.in_self_favorite != null && this.in_self_favorite.收藏内容 != null && 
-            this.is_my_favorite(this.in_21Item_Short.键值, this.in_self_favorite.收藏内容))
-      this.relation_of_this_one = 1
+            this.is_my_favorite(keyid, this.in_self_favorite.收藏内容))
+                          this.relation_of_this_one = 1
     else
-      this.relation_of_this_one = 0
+                          this.relation_of_this_one = 0
 
     //得到需要显示的21项 选项字段列表
     this.get_l_showggtitle_datalist(this.relation_of_this_one)
@@ -168,7 +181,7 @@ export default {
     ...mapActions('listdata',[
       'getPersonalFavorite'
     ]),
-
+    
     getSourcePos() {
       var jump = ""
       jump = JSON.parse(this.pageNavigation)
@@ -184,6 +197,38 @@ export default {
       console.log("I'm at " + jump.to)
       return jump.to
     },
+
+    /******************************当前帐户与当前蝈蝈的权限判断********************************* */
+    //判断其是否是当前帐号的蝈蝈 传入gg的键值
+    isMyGG(ggid){
+      
+      for (var i=0; i<this.l_ret_my_gg_imf_s.datas.length; i++)
+      {
+          //console.log("key:" + key + ", value:" ,data.data.datas[0][key]);
+          if(this.l_ret_my_gg_imf_s.datas[i].键值 == ggid)
+          {
+            return true
+          }
+      }
+
+      return false
+    },
+    //判断其是否是当前帐号下需管理的蝈蝈
+    isOurGG(ggid){
+      
+      for (var i=0; i<this.l_ret_our_gg_imf_s.datas.length; i++)
+      {
+          //console.log("key:" + key + ", value:" ,data.data.datas[0][key]);
+          if(this.l_ret_our_gg_imf_s.datas[i].键值 == ggid)
+          {
+            return true
+          }
+      }
+
+      return false
+    },
+    //判断其是否是被收藏的蝈蝈
+    /************************************************************************************* */
 
     /****************************得到描述这个蝈蝈的具体的21项********************************** */
     //权限描述：所有人都不能看到键值、引导人、蝈蝈关联表单；
