@@ -16,6 +16,8 @@ import searchListPage  from '@/pages/wheat/searchList'
 import panelPage from '@/pages/dashboard/panel'
 import inputformPage from '@/pages/dashboard/inputform'
 import quickPage from '@/pages/dashboard/quick'
+import ggPage from '@/pages/wheat/gg'
+
 export default [
   {
     path: '/',
@@ -28,6 +30,10 @@ export default [
       {
         path: 'quick/',
         component: quickPage
+      },
+      {
+        path: 'gg/',
+        component: ggPage
       },
       {
         path: 'panel/',
