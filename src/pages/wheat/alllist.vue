@@ -1,8 +1,9 @@
+<!-- 当前页面名称： 蝈蝈列表 收藏列表 协力列表 搜索列表 -->
 <template>
   <f7-page>
-    <v-asideheader title='' back></v-asideheader>
+    <v-asideheader title='' addPage noMenu></v-asideheader>
     <div class="list media-list">
-      <ul>
+      <ul v-if="this.l_ret_gg_imf_s != null">
         <div v-for="(item, index) in this.l_ret_gg_imf_s.datas" :key="index">
           <li>
              <a href = "javascript:;" class="item-link item-content" @click="local_setSelectedGG(item.键值, index)">
@@ -51,7 +52,9 @@
           </li>
         </div>
       </ul>
+      <f7-label v-else>亲爱的佳人,您的{{jump_to}}为空,让我们一起努力吧^_^</f7-label>
     </div>
+ 
       <!-- Left Panel with Reveal effect -->
       <f7-panel left reveal>
         <img src="@/assets/img1.jpg"/>
@@ -364,7 +367,10 @@ export default {
             selectGender:"",
             selectStudyState:"",
             
-            inputname:""}
+            b_render:0,
+            inputname:"",
+            jump_to:""
+            }
   },
   computed: {
     
@@ -382,21 +388,93 @@ export default {
         'l_ret_personal_favorite_s'
     ]),
 
+     ...mapGetters('listdata',[
+        'l_ret_personal_favorite_list_s'
+    ]),
+
     ...mapGetters('listdata',[
       'l_ret_our_gg_imf_s'
     ]),
     
+    ...mapGetters('listdata',[
+        'l_ret_search_data'
+    ]),
+
+    ...mapGetters('datainterchange',[
+      'pageNavigation'
+    ]),
   },
   created () {
+    //需要一个重加载标志表明是否需要刷新
+    this.b_render = 0
+    var jump = ""
+    if(this.pageNavigation != null)
+        jump = JSON.parse(this.pageNavigation)
+    this.jump_to = jump.to
+    console.log("I'm jump from " + jump.from + " to " + jump.to)
+
     //得到当前登陆用户的gg列表
     //如果是查看自己的gg 则以自己为引导人查看
     //this.get_my_gglist('约翰')
     //cui 是个唯一值
-    this.get_my_gglist('cui')
-    this.getPersonalAccount('cui')
-    this.getPersonalFavorite('cui')
+    //根据来源页面的期望加载不同的数据集
+   if(jump.to == "蝈蝈列表"){
+                              this.get_my_gglist(this.l_ret_personal_imf_s.datas[0].个人表单)
+        }else if(jump.to == "协力列表"){
+                              this.get_our_gglist(this.l_ret_personal_imf_s.datas[0].个人表单)
+        }
+        else if(jump.to == "收藏列表"){
+                              this.getPersonalFavoriteList(this.l_ret_personal_imf_s.datas[0].个人表单)
+        }
+
+    //this.getPersonalAccount('cui')
     //如果是查看自己作为管理者的gg 则以自己为管理人查
-    this.get_our_gglist('cui')
+    //this.get_our_gglist('cui')
+    
+    //1s以后进行刷新
+      this.timeout(1000).then(() => {
+                console.log('in vue.timeout')
+                if(jump.to == "收藏列表")
+                {
+                  console.log('in 1')
+                  if(this.l_ret_personal_favorite_list_s != null)
+                  {
+                    this.b_render = 2
+                  }
+                  else
+                    this.b_render = 1
+                }
+                  
+                else if (jump.to == "协力列表")
+                {
+                  console.log('in 2')
+                  if(this.l_ret_our_gg_imf_s != null)
+                  {
+                    this.b_render = 2
+                  }
+                  else
+                    this.b_render = 1
+                }
+                else if (jump.to == "搜索列表")
+                {
+                    if(this.l_ret_search_data != null)
+                    {
+                      this.b_render = 2
+                    }
+                    else
+                      this.b_render = 1
+                }
+                else 
+                {
+                  if(this.l_ret_gg_imf_s != null)
+                  {
+                    
+                    this.b_render = 2
+                  }
+                  else
+                    this.b_render = 1
+                }
+      });
   },
   methods: {
     ...mapActions('datainterchange',[
@@ -420,31 +498,36 @@ export default {
     ]),
 
     ...mapActions('listdata',[
-      'getPersonalFavorite'
+      'getPersonalFavoriteList'
     ]),
+
+    ...mapActions('datainterchange',[
+      'setPageNavigation'
+    ]),
+
+    ...mapActions('datainterchange',[
+    'gotoPodosysAnyPage'
+    ]),
+
+    reflash() {
+        console.log("I'm back!")
+    },
+
+    timeout(ms) {
+          return new Promise((resolve) => {
+            setTimeout(resolve, ms);
+                })
+      },
 
     local_setSelectedGG(keyid, index){
       //全局设置 ggID
       this.setSelectedUser(index)
-      
-      //sessionStorage.setItem('selectedGGId', keyid)
-      //设置全局gg 21item简讯信息
-      //sessionStorage.setItem('selectedGG21ItemShort', JSON.stringify(this.l_ret_gg_imf_s.datas[index]))
-
-      //保存个人信息数据
-      //sessionStorage.setItem('myPersonalItem', JSON.stringify(this.l_ret_personal_imf_s.datas[0]))
-      //保存藏单
-      //if(this.l_ret_personal_favorite_s.datas[0] != null)
-        //sessionStorage.setItem('myPersonalFavorite', JSON.stringify(this.l_ret_personal_favorite_s.datas[0]))
-      
-      //this.setSelectedUser(keyid)
-      //this.getformvaluesaccurate(keyid)
-      //this.USER_SIGNIN(this.form)
-      //this.$f7router.back('/userItem/')
-      //window.location.href ='/gglist/'
-   
+      //设置跳转来源
+      /*var str = '{"from":"' + this.jump_to + '","to":"蝈蝈信息"}'
+      this.setPageNavigation(str)*/
+      this.gotoPodosysAnyPage('蝈蝈信息')
       this.$f7router.navigate('/gglist/')
-    },
+    }
   }
 }
 </script>

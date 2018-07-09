@@ -114,17 +114,58 @@ import { mapState, mapGetters, mapActions, mapMutations, Store } from 'vuex'
       ...mapGetters('listdata',[
         'l_ret_personal_imf_s'
     ]),
+      ...mapGetters('listdata',[
+        'l_ret_search_none'
+    ]),
     },
     methods: {
       ...mapActions('listdata',[
       'insertformvalues'
       ]),
+      ...mapActions('datainterchange',[
+      'setPageNavigation'
+      ]),
+
+      ...mapActions('datainterchange',[
+      'gotoPodosysAnyPage'
+      ]),
+
+      ...mapActions('listdata',[
+      'getFormValuesByName'
+      ]),
+
+      onSearch(param) {
+                        if(param != "")
+                        {
+                          this.getFormValuesByName(param)
+                          this.timeout(2000).then(() => {
+                              console.log('this.l_ret_gg_imf_s.num = ' + this.l_ret_gg_imf_s.num)
+                              if(this.l_ret_search_none > 0)
+                                {
+                                  //添加重复 请确认
+
+                                }
+                              else
+                              {
+                                  //可以添加
+                                  this.local_insert21Data()
+                              }
+                          });
+                        }
+              
+      },
+
       goback()  {
+          //设置跳转来源
+          var str = '{"from":"快速注册","to":"蝈蝈列表"}'
+          this.setPageNavigation(str)
+          //this.gotoPodosysAnyPage('蝈蝈列表')
           this.$f7router.navigate('/allList/')
       },
 
       submitForm()  {
-          this.local_insert21Data()
+          this.onSearch(this.s_phone)
+          
       },
       local_insert21Data()    {
         var tempNames = ""
@@ -164,6 +205,8 @@ import { mapState, mapGetters, mapActions, mapMutations, Store } from 'vuex'
             tempValues = tempValues + this.s_phone + ","
         }    
 
+        //是否有了重复
+
         if(bInsert == true)
         {
             //默认填入的信息部分
@@ -185,7 +228,7 @@ import { mapState, mapGetters, mapActions, mapMutations, Store } from 'vuex'
 
             var sqldata = JSON.stringify({
                     "in_tablename":"21项表单",
-                    "in_username":"ivy",
+                    "in_username":this.l_ret_personal_imf_s.datas[0].个人表单,
                     "in_fieldnames":tempNames,
                     "in_fieldvalues":tempValues,
 					})

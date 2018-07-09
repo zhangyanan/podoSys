@@ -16,6 +16,7 @@ export default {
 
         //搜索信息
         search_msg:"",
+
     }
   },
   computed: {
@@ -31,7 +32,9 @@ export default {
     ...mapGetters('listdata',[
         'l_ret_personal_gg_s'
     ]),
-    
+    ...mapGetters('listdata',[
+        'l_ret_gg_imf_s'
+    ]),
   },
   created () {
     //自动生成2.
@@ -57,46 +60,51 @@ export default {
       'getFormValuesByName'
     ]),
 
+    ...mapActions('datainterchange',[
+      'setPageNavigation'
+    ]),
+
+    timeout(ms) {
+                  return new Promise((resolve) => {
+                    setTimeout(resolve, ms);
+                  });
+    },
+
     onSearch(param) {
       if(param != "")
       {
-        /*this.getFormValuesByName(param)
-        this.$f7router.navigate('/searchList/')*/
-          console.log('111111')
-          return new Promise((resolve, reject) => {
-              console.log('222222')
-				      this.getFormValuesByName(param).then(response => {
-              console.log('333333')
-              if(this.l_ret_search_data.data.num > 0)
-              {
-                console.log('On Search')
-                console.log(this.l_ret_search_data)
-                this.$f7router.navigate('/searchList/')
-              }
-                
-					  })
-					  .catch((error) => {
-						  reject(error)
-					})
-			})
+        this.getFormValuesByName(param)
+        this.timeout(1000).then(() => {
+            
+            if(this.l_ret_gg_imf_s.num > 0)
+            {
+              var str = '{"from":"个人主页","to":"搜索列表"}'
+              this.setPageNavigation(str)
+              this.$f7router.navigate('/allList/')
+            }   
+            else
+              this.search_none = 1
+        });
       }
+              
     },
 
     goNext(param1, param2, param3)  {
-      //传入自己的帐户名称
-      //sessionStorage.setItem('selfUserName', param1)
-      
-      //传入yz名称
-      //sessionStorage.setItem('selfYZName', param2)
-
-      //传入自己的状态
-      //sessionStorage.setItem('selfStatus', param3)
-
-      //传入个人信息
-      //sessionStorage.setItem('selfUserData',JSON.stringify(this.l_ret_personal_imf_s))
-
-      //window.location.href ='/userItem/'
       this.$f7router.navigate('/userItem/')
+    },
+
+    gotoFavoriteGGList()  {
+      //设置跳转来源
+      var str = '{"from":"个人主页","to":"收藏列表"}'
+      this.setPageNavigation(str)
+      this.$f7router.navigate('/allList/')
+    },
+
+    gotoOurGGList() {
+      //设置跳转来源
+      var str = '{"from":"个人主页","to":"协力列表"}'
+      this.setPageNavigation(str)
+      this.$f7router.navigate('/allList/')
     }
   }
 }
@@ -310,7 +318,6 @@ export default {
 </style>
 <template>
   <f7-page>
-    <v-header title='hello' back></v-header>
     <div class = "myItem_div">
             <a href="#" @click="goNext('cui',l_ret_personal_gg_s.datas[0].引导人, l_ret_personal_gg_s.datas[0].阶段)">
               <img  class = "di_icon" src="@/assets/icon_all/yang.png" />
