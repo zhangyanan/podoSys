@@ -4,4 +4,4 @@ import menu from './Menu'
 import asideheader from './asideheader'
 import addinfo from './addinfo'
 
-export default {header, menu, asideheader,addinfo}
+export default {header,menu,asideheader,addinfo}

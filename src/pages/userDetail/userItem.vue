@@ -124,7 +124,7 @@ export default {
         //this.$f7router.back(concerturl)
         //window.location.replace(this.concerturl) 
         //window.location.href ='/myItem/'
-        this.$f7router.navigate('/myItem/')
+        this.$f7router.navigate('/allList/')
     },
     ...mapActions('listdata',[
       'getPersonalAccount'

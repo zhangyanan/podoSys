@@ -1,4 +1,4 @@
-
+<!-- 当前页面名称： 活动编辑-->
 <script>
 import { mapState, mapGetters, mapActions, mapMutations, Store } from 'vuex'
 export default {
@@ -24,6 +24,8 @@ export default {
     
     ...mapGetters('listdata',['l_retactivitydata']),
     ...mapGetters('listdata',['l_retdata']),
+    ...mapGetters('listdata',['l_ret_personal_imf_s']),
+
   },
   created () {
     //自动生成2.
@@ -72,10 +74,15 @@ export default {
       'getSelectedActivity'
     ]),
 
+    ...mapActions('datainterchange',[
+    'gotoPodosysAnyPage'
+    ]),
+
     goBack()    {
         //设置激活的tab
         //sessionStorage.setItem('hotPageAtGGFile',1)
         //window.location.href ='/gglist/'
+        this.gotoPodosysAnyPage('蝈蝈信息')
         this.$f7router.navigate('/gglist/')
     },
 
@@ -135,7 +142,7 @@ export default {
 
             var sqldata = JSON.stringify({
                     "in_tablename":"活动通知",
-					"in_username":"ivy",
+					"in_username":this.l_ret_personal_imf_s.datas[0].个人表单,
 					"in_fieldnames":tempNames,
 					"in_fieldvalues":tempValues,
 					})
@@ -186,7 +193,7 @@ export default {
             var msgid = this.in_activity_datas.键值
             var sqldata = JSON.stringify({
 					"in_formdataid":msgid,
-					"in_username":"ivy",
+					"in_username":this.l_ret_personal_imf_s.datas[0].个人表单,
 					"in_fieldnames":tempNames,
 					"in_fieldvalues":tempValues,
 					})
@@ -400,7 +407,7 @@ $$('#my-range').on('range:change', function (e, range) {
             width: 40px;
             height: 28px;
             left:157px;
-            top:16px;
+            top:30px;
 }
 
 .inputname  {
@@ -509,6 +516,11 @@ $$('#my-range').on('range:change', function (e, range) {
     min-height: 48px;
     padding-right: 0px;
     padding-top: 0px;
+}
+
+.md a.link {
+    padding-left: 0px;
+    height: 0px;
 }
 
 </style>

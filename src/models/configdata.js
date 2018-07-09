@@ -30,7 +30,8 @@ service             30200
 vigilant            30300
 value        30350
 
-
+//other parts
+ggtitle             40000
 getGenderList
 */
 export default {
@@ -267,7 +268,70 @@ export default {
     })
     
     return result
+  },
+
+  
+  get_l_showggtitle_datalist(param) {
+    var result = instance.get(api.get_l_showggtitle_datalist)
+    if(param < 2){
+                //姓名,微信,手机,状态,引导人姓名,性别,阶段,涉外时间,
+                result = new Promise(function (resolve, reject) {
+                  resolve({data: {
+                    40000: {value: '姓名'},
+                    40001: {value: '性别'},
+                    40002: {value: '涉外时间'},
+                    40003: {value: '状态'},
+                    40004: {value: '阶段'},
+                    40005: {value: '微信'},
+                    40006: {value: '手机'},
+                    40007: {value: '引导人姓名'}
+                  }})
+                })
+    }
+    else{
+                /*
+                姓名,微信,手机,引导人,状态,引导人姓名,性别,阶段,引导人会属,引导人区域,管理者,涉外时间,涉外类型,涉外田地,生日,
+                会属,婚恋,学历,职业,就业,负债,健康,学习计划,信仰年数,读经情况,祷告情况,服侍情况,戒备情况,状态变更原因"
+                 */
+                result = new Promise(function (resolve, reject) {
+                  resolve({data: {
+                    40000: {value: '姓名'},
+                    40001: {value: '性别'},
+                    40002: {value: '生日'},
+                    40003: {value: '涉外时间'},
+                    40004: {value: '状态'},
+                    40005: {value: '阶段'},
+                    40006: {value: '微信'},
+                    40007: {value: '手机'},
+                    40008: {value: '会属'},
+                    40009: {value: '婚恋'},
+                    40010: {value: '学历'},
+                    40011: {value: '职业'},
+                    40012: {value: '就业'},
+                    40013: {value: '负债'},
+                    40014: {value: '健康'},
+                    40015: {value: '学习计划'},
+
+                    40016: {value: '引导人姓名'},
+                    40017: {value: '引导人会属'},
+                    40018: {value: '引导人区域'},
+                    40019: {value: '管理者'},
+
+                    40020: {value: '涉外类型'},
+                    40021: {value: '涉外田地'},
+                    40022: {value: '信仰年数'},
+                    40023: {value: '读经情况'},
+                    40024: {value: '祷告情况'},
+                    40025: {value: '服侍情况'},
+                    40026: {value: '戒备情况'},
+                    40027: {value: '状态变更原因'}
+                  }})
+                })
+    }
+    
+    return result
   }
+  
   /*getUrgentList () {
     var result = instance.get(api.getUrgentList)
 

@@ -164,7 +164,7 @@ export default {
 
             var sqlDataOfPersonal = JSON.stringify({
                                 "in_formdataid":itemId,
-                                "in_username":"ivy",
+                                "in_username":this.in_myPersonalItem.个人表单,
                                 "in_fieldnames":tempNames,
                                 "in_fieldvalues":tempValues,
                                 })
@@ -247,7 +247,6 @@ $$('#my-range').on('range:change', function (e, range) {
 </style>
 <template>
   <f7-page>
-    <v-header title='hello' back></v-header>
     <f7-list accordion>
         <f7-list-item accordion-item title="个人资料">
             <f7-accordion-content>
