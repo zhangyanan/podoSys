@@ -41,7 +41,8 @@ export const GET_CONFIG_VIGILANT_DATA = 'GET_CONFIG_VIGILANT_DATA'
 export const SET_CONFIG_VIGILANT_DATA = 'SET_CONFIG_VIGILANT_DATA'
 export const GET_CONFIG_ACTIVITYTYPE_DATA = 'GET_CONFIG_ACTIVITYTYPE_DATA'
 export const SET_CONFIG_ACTIVITYTYPE_DATA = 'SET_CONFIG_ACTIVITYTYPE_DATA'
-
+export const GET_CONFIG_SHOWGGTITLE_DATA = 'GET_CONFIG_SHOWGGTITLE_DATA'
+export const SET_CONFIG_SHOWGGTITLE_DATA = 'SET_CONFIG_SHOWGGTITLE_DATA'
 
 const state = {
         /*declare var are created by machine @ 2018-06-26 11:07:56*/
@@ -65,6 +66,7 @@ const state = {
         l_selfservice_data:[],
         l_vigilant_data:[],
         l_activitytype_data:[],
+        l_showggtitle_data:[],
 }
 
 const getters = {
@@ -89,6 +91,7 @@ const getters = {
         l_selfservice_data: state => state.l_selfservice_data,
         l_vigilant_data: state => state.l_vigilant_data,
         l_activitytype_data: state => state.l_activitytype_data,
+        l_showggtitle_data: state => state.l_showggtitle_data,
 }
 
 const actions = {
@@ -133,6 +136,8 @@ const actions = {
         set_l_vigilant_datalist({commit}, data){  commit(SET_CONFIG_VIGILANT_DATA,data)},
         get_l_activitytype_datalist({commit}){server_c.get_l_activitytype_datalist().then(response => { commit(GET_CONFIG_ACTIVITYTYPE_DATA,response)})},
         set_l_activitytype_datalist({commit}, data){  commit(SET_CONFIG_ACTIVITYTYPE_DATA,data)},
+        get_l_showggtitle_datalist({commit}, param){server_c.get_l_showggtitle_datalist(param).then(response => { commit(GET_CONFIG_SHOWGGTITLE_DATA,response)})},
+        set_l_showggtitle_datalist({commit}, data){  commit(SET_CONFIG_SHOWGGTITLE_DATA,data)},
 }
 
 const mutations = {
@@ -177,6 +182,9 @@ const mutations = {
         [SET_CONFIG_VIGILANT_DATA](state, data){ state.l_vigilant_data = data.data;},
         [GET_CONFIG_ACTIVITYTYPE_DATA](state, data){ state.l_activitytype_data = data.data;},
         [SET_CONFIG_ACTIVITYTYPE_DATA](state, data){ state.l_activitytype_data = data.data;},
+        [GET_CONFIG_SHOWGGTITLE_DATA](state, data){ state.l_showggtitle_data = data.data;},
+        [SET_CONFIG_SHOWGGTITLE_DATA](state, data){ state.l_showggtitle_data = data.data;},
+        
 }
 
 export default {

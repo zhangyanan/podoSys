@@ -19,7 +19,9 @@
  .add_21profile-icon img{
     width: 28px;
     height: 28px;
+    
   }
+
   .header {
     position: relative;
     line-height: 38px;
@@ -49,18 +51,17 @@
     </f7-nav-left>
     <f7-nav-title>
       <label class="site-title">
-        <f7-link href="/" no-link-class>
           <span class="pull-out-icon">
             <a class="panel-open raised " data-panel="left" href="#"><img src="@/assets/icon_all/pull_out@2x.png"/></a>
           </span>
-        </f7-link></label>
+      </label>
       <label class="site-title">|</label>
       <label class="content-title">{{title}}</label>
     </f7-nav-title>
     <f7-nav-right>
-      <f7-link icon-f7="undo" back v-if="back">
+      <f7-link addPage v-if="addPage" href="/quick/">
         <span class="add_21profile-icon">
-          <a href="/quick/"><img src="@/assets/icon_all/add_21profile@2x.png"/></a>
+          <img src="@/assets/icon_all/add_21profile@2x.png"/>
         </span>
       </f7-link>
       <f7-link icon-material="menu" panel-open="right" v-else-if="!noMenu" popup-open data-popup=".popup-menu"></f7-link>
@@ -74,7 +75,7 @@ export default {
       type: String,
       default: ''
     },
-    back: {
+    addPage: {
       type: Boolean,
       default: false
     },

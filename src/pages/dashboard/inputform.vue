@@ -1,20 +1,23 @@
+<!-- 当前页面名称： 登陆页面-->
 <template>
 <f7-page>
+    <f7-row no-gap>
+      <f7-col width="40">
+        <f7-list>
+          <f7-list-item class="shape-li">
+            <img class="shape" src="@/assets/icon_all/SHAPE-2.png"/>
+          </f7-list-item>
+        </f7-list>
+      </f7-col>
+      <f7-col width="60">
+        <f7-list class="text-list">
+          <f7-list-item><div class="item-subtitle1-green">LOG IN</div></f7-list-item>
+          <div class="item-subtitle2-green">系统登录</div>
+          <div class="item-text-green-img"><img src="@/assets/icon_all/Rectangle.png" /></div>
+        </f7-list>
+      </f7-col>
+    </f7-row>    
   <form class="login" v-on:submit.prevent="submit" no-hairlines-md>
-    <div class="list media-list">
-        <ul class="down">
-          <li>
-            <a href="#" class="item-link item-content">
-            <div class="item-media"><a href="/input"><img src="@/assets/icon_all/SHAPE-2.png"/></a></div>
-            <div class="item-inner">
-              <div class="item-subtitle1-green">LOG IN</div>
-              <div class="item-subtitle2-green">系统登录</div>
-              <div class="item-text-green-img"><img src="@/assets/icon_all/Rectangle.png" /></div>
-            </div>
-            </a>
-          </li>
-        </ul>
-      </div>
       <div class="list inline-labels">
         <ul>
           <li class="item-content item-input">
@@ -56,41 +59,39 @@
           </li>
         </ul>
       </div>
-  </form>
-  <div class="list links-list">
-    <ul>
-        <li>
-            <a href="/allList/">登录</a>
-        </li>
-    </ul>
-  </div>
+      <f7-button href="#" big text="登录" fill @click="loginIn()"></f7-button>
+  </form>  
 </f7-page>
 </template>
 <script>
 
 </script>
 <style lang="scss">
-  .item-subtitle1-green {
-      font-size: 19px;
+  div.list.text-list{
+    margin-top: 80px;
+    margin-left: 30px;
+  }
+  div.item-subtitle1-green {
       color: #54BCBF;
       font-family: PFSquareSansPro-Light;
       font-size: 26px;
       letter-spacing: 0.8px;
       line-height: 19px;
-      padding-right: 5px;
+      margin-left: 40px;
+      margin-bottom: -10px;
   }
-  .item-subtitle2-green {
+  div.item-subtitle2-green {
     font-family: PingFangSC-Semibold;
     font-size: 30px;
     color: #54BCBF;
-    padding-top: 10px;
+    padding-top: 2px;
+    padding-left: 20px;
     letter-spacing: 4.9px;
     line-height: 19px;
   }
-  .item-text-green-img{
-    padding-top: 15px;
-    margin-top: 10px;
-    padding-right: 5px;
+  div.item-text-green-img{
+    margin-left: 60px;
+    padding-top: 10px;
   }
   .md .list {
       margin: 0px;
@@ -117,24 +118,34 @@
         border: 0px;
       }
     }
-    .md .list .item-content {
-      min-height: 48px;
-      padding-left: -20px;
-    }
+
     .item-content item-input {
       border: 1px solid red;
       margin-bottom: 0px;
     }
-    .button, .button.button-fill, .button.button-fill.active-state {
-      background-color: #3cc8b4;
-    }
-    .submit-button {
-      width: 100%;
-      font-size: 1.2rem;
-    }
   }
   .md .list ul:before, .md .list ul:after, .md .item-input-wrap:after, .md .list .item-inner:after {
     background-color: transparent;
+  }
+  .button, .button.button-fill, .button.button-fill.active-state {
+    background-color: #54BCBF;
+    margin-top: 100px;
+  }
+  .md .button.button-big, .md .button.button-big-md {
+    height: 60px;
+    line-height: 60px;
+    border-radius: 0px;
+  }
+  .md .button.button-active, .md .button.button-fill, .md .button.button-fill-md, .md .button.tab-link-active {
+  background-color: #54BCBF;
+  color: #fff;
+  }
+  .md .button-big.button span{
+    font-family: PingFangSC-Semibold;
+    font-size: 20px;
+    color: #FFFFFF;
+    letter-spacing: 0;
+    padding-left: 70px;
   }
   .item-media img{
     width:200px;
@@ -150,14 +161,24 @@
   span.icon-image{
     margin-right: 10px;
   }
-  img{
-   margin-bottom: -3px;
+  li.shape-li{
+    width: 150px;
+  }
+  li.text-li{
+    width: 150px;
+  }
+  img.shape{
+    margin-bottom: -3px;
+    width: 200px;
+    height: 200px;
+    margin-left: -70px;
+    margin-top: 40px;
   }
   .md .item-input-focused .item-label{
     color:#5F5F5F;
   }
   li.item-content.item-input.item-input-focused{
-    border-top:solid 1px #F9F9F9;
+    //border-top:solid 1px #F9F9F9;
   }
   .md .list input[type=text], .md .list input[type=password] {
     font-family: PingFangSC-Semibold;
@@ -197,7 +218,7 @@
     margin-top: 112px;
     margin-bottom: 0px;
   }
-  .md .links-list a {
+  .md a.link {
     height: 60px;
     background: #53BBBE;
     font-family: PingFangSC-Semibold;
@@ -206,5 +227,75 @@
     letter-spacing: 0;
     padding-left: 160px;
   }
+  .md .input-focused:after,.md .item-input-focused .item-input-wrap:after{
+    background:#FFFFFF;
+  }
 </style>
 
+
+<script>
+import { mapState, mapGetters, mapActions, mapMutations, Store } from 'vuex'
+
+export default {
+  name: 'App',
+  
+  data() {
+    return {
+    }
+  },
+  computed: {
+    ...mapGetters('listdata',[
+        'l_ret_personal_imf_s'
+    ]),
+
+    ...mapGetters('listdata',[
+        'l_ret_personal_gg_s'
+    ]),
+  },
+  created () {
+  },
+  methods: {
+    ...mapActions('listdata',[
+      'getPersonalAccount'
+    ]),
+    
+    ...mapActions('datainterchange',[
+      'setloginSuccess'
+    ]),
+
+    ...mapActions('datainterchange',[
+      'setPageNavigation'
+    ]),
+
+    ...mapActions('datainterchange',[
+    'gotoPodosysAnyPage'
+    ]),
+
+    ...mapActions('listdata',[
+      'getPersonalFavorite'
+    ]),
+ 
+    timeout(ms) {
+                  return new Promise((resolve) => {
+                    setTimeout(resolve, ms);
+                  });
+    },
+
+    loginIn() {
+      //得到个人信息
+      this.getPersonalAccount('ivy')
+      //得到个人藏单
+      this.getPersonalFavorite('ivy')
+
+      this.timeout(1000).then(() => {
+            console.log("in timeout of inputform.vue")
+            //设置登陆成功标示
+
+            this.setloginSuccess('1')
+            this.$f7router.navigate('/alllist/')
+        });
+    }
+  }
+}
+
+</script>
