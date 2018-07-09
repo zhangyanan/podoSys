@@ -40,17 +40,12 @@ export default {
     ...mapGetters('listdata',[
         'l_ret_search_none'
     ]),
+    ...mapGetters('datainterchange',[
+        'loginSuccess'
+    ]),
   },
   created () {
-    //自动生成2.
-    console.log('in app.vue')
-    //this.get_my_gglist('cui')
-    this.getPersonalAccount('cui')
-
-    this.timeout(1000).then(() => {
-            console.log("in timeout of App.vue")
-            this.b_render = 1
-        });
+    console.log('in App.created()')
   },
   methods: {
     ...mapActions('listdata',[
@@ -84,6 +79,10 @@ export default {
       'get_our_gglist'
     ]),
 
+    ...mapActions('datainterchange',[
+    'gotoPodosysAnyPage'
+    ]),
+
     timeout(ms) {
                   return new Promise((resolve) => {
                     setTimeout(resolve, ms);
@@ -95,12 +94,13 @@ export default {
       {
         this.getFormValuesByName(param)
         this.timeout(1000).then(() => {
-            console.log('this.l_ret_gg_imf_s.num = ' + this.l_ret_gg_imf_s.num)
+            //console.log('this.l_ret_gg_imf_s.num = ' + this.l_ret_gg_imf_s.num)
             if(this.l_ret_search_none > 0)
               {
                 //设置跳转来源
                 var str = '{"from":"个人主页","to":"搜索列表"}'
                 this.setPageNavigation(str)
+                //this.gotoPodosysAnyPage('搜索列表')
               }
             else
               this.search_msg = 'none'
@@ -114,11 +114,14 @@ export default {
     },*/
 
     gotoFavoriteGGList()  {
-      console.log('in gotoFavoriteGGList')
+      console.log('in gotoFavoriteGGList ')
       this.getPersonalFavoriteList(this.l_ret_personal_imf_s.datas[0].个人表单)
-      //设置跳转来源
-      var str = '{"from":"个人主页","to":"收藏列表"}'
-      this.setPageNavigation(str)
+              {
+                //设置跳转来源
+                var str = '{"from":"个人主页","to":"收藏列表"}'
+                this.setPageNavigation(str)
+                //this.gotoPodosysAnyPage('收藏列表')
+              }
     },
 
     gotoOurGGList() {
@@ -126,6 +129,7 @@ export default {
       //设置跳转来源
       var str = '{"from":"个人主页","to":"协力列表"}'
       this.setPageNavigation(str)
+      //this.gotoPodosysAnyPage('协力列表')
       //this.$f7router.navigate('/allList/')
     }
   }
@@ -137,53 +141,64 @@ export default {
   <div id="app">
     <f7-panel left reveal>
       <f7-block-title>我是左侧面板</f7-block-title>
-      <f7-page>
-    <div class = "myItem_div">
-        <div v-if="b_render == 1">
-            <f7-link panel-close href="/userItem/">
-              <img  class = "di_icon" src="@/assets/icon_all/yang.png" />
-            </f7-link>
-            <div class = "headidentity">
-                <p class = "rcorners1"></p>
-                <label class = "useridentity_font">{{l_ret_personal_gg_s.datas[0].阶段}}</label>                
-            </div>
-            <div class = "username_1">
-                <label class = "namescolor_1">{{l_ret_personal_imf_s.datas[0].姓名}}</label>
-            </div>
-            <div class = "username_2">
-                <label class = "namescolor_2">{{l_ret_personal_imf_s.datas[0].微信}}</label>
-            </div>
-            <div class = "mysearchbox">
-                <div class = "searchbody" >
-                    <input type="text" placeholder="手机/微信/姓名" v-model="search_msg">
-                </div>
-                <div class = "searchicon">
-                    <a href="#" @click="onSearch(search_msg)"><img  src="@/assets/icon_all/search_green.png"/></a>
-                </div>
-            </div>
-            <img class = "menuicon_1" src="@/assets/icon_all/panel_concert.png" />
-          
-            <f7-link panel-close class = "menutitle_1"  @click="gotoOurGGList()">协力
-            </f7-link>
+          <f7-page>
+            <div class = "myItem_div">
+              <div v-if="this.loginSuccess == 1">
+                  <f7-link panel-close href="/userItem/">
+                    <img  class = "di_icon" src="@/assets/icon_all/yang.png" />
+                  </f7-link>
+                  <div class = "headidentity">
+                      <p class = "rcorners1"></p>
+                      <label class = "useridentity_font">{{l_ret_personal_gg_s.datas[0].阶段}}</label>                
+                  </div>
+                  <div class = "username_1">
+                      <label class = "namescolor_1">{{l_ret_personal_imf_s.datas[0].姓名}}</label>
+                  </div>
+                  <div class = "username_2">
+                      <label class = "namescolor_2">{{l_ret_personal_imf_s.datas[0].微信}}</label>
+                  </div>
+                  <div class = "mysearchbox">
+                      <div class = "searchbody" >
+                          <input type="text" placeholder="手机/微信/姓名" v-model="search_msg">
+                      </div>
+                      <div class = "searchicon">
+                          <a href="#" @click="onSearch(search_msg)"><img  src="@/assets/icon_all/search_green.png"/></a>
+                      </div>
+                  </div>
+                  <img class = "menuicon_1" src="@/assets/icon_all/panel_concert.png" />
+                
+                  <f7-link  class = "menutitle_1"  @click="gotoOurGGList()">协力
+                  </f7-link>
 
-            <img class = "menuicon_2" src="@/assets/icon_all/panel_favorite.png" />
-            <f7-link panel-close class = "menutitle_2" @click="gotoFavoriteGGList()">收藏
-            </f7-link>
-            <img class = "menuicon_3" src="@/assets/icon_all/panel_notification.png" />
-            <a class = "menutitle_3" v-bind:href="notification_url">通知</a>
+                  <img class = "menuicon_2" src="@/assets/icon_all/panel_favorite.png" />
+                  <f7-link  class = "menutitle_2" @click="gotoFavoriteGGList()">收藏
+                  </f7-link>
+                  <img class = "menuicon_3" src="@/assets/icon_all/panel_notification.png" />
+                  <a class = "menutitle_3" v-bind:href="notification_url">通知</a>
 
 
-            <img class = "menuicon_4" src="@/assets/icon_all/panel_setting.png" />
-            <a class = "menutitle_4" v-bind:href="setting_url">设置</a>
+                  <img class = "menuicon_4" src="@/assets/icon_all/panel_setting.png" />
+                  <a class = "menutitle_4" v-bind:href="setting_url">设置</a>
 
-            <img class = "menuicon_5" src="@/assets/icon_all/panel_logout.png" />
-            <a class = "menutitle_5" href="/list/">退出</a>
-        </div>
-    </div>
-  </f7-page>  
+                  <img class = "menuicon_5" src="@/assets/icon_all/panel_logout.png" />
+                  <a class = "menutitle_5" href="/list/">退出</a>
+              </div>
+          </div>
+      </f7-page>  
     </f7-panel>
+    
+      <f7-panel right cover>
+        <f7-block-title>我是右侧面板</f7-block-title>
+            <f7-page>
+              <div class="bottom_part">
+              <img src="@/assets/icon_all/selection_green.png" />
+              </div>
+            </f7-page>  
+      </f7-panel>
+   
+    
     <f7-view :pushState="true" main/>
-    <v-menu></v-menu>
+    <!--<v-menu></v-menu>-->
   </div>
 </template>
 <!--
@@ -404,6 +419,21 @@ export default {
             font-size: 16px;
             font-weight: 600;
             text-decoration:none;
+}
+
+.top_part{
+            position: absolute;
+            top:0px;
+            height: 285px;
+            width: 100%;
+            opacity:1;
+}
+
+.bottom_part{
+            position: absolute;
+            top:285px;
+            width: 100%;
+            opacity:1;
 }
 
 .md a {

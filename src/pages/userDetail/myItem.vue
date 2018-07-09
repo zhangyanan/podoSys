@@ -77,7 +77,11 @@ export default {
         this.timeout(1000).then(() => {
             
             if(this.l_ret_gg_imf_s.num > 0)
-              this.$f7router.navigate('/searchList/')
+            {
+              var str = '{"from":"个人主页","to":"搜索列表"}'
+              this.setPageNavigation(str)
+              this.$f7router.navigate('/allList/')
+            }   
             else
               this.search_none = 1
         });

@@ -1,9 +1,39 @@
 <template>
   <f7-page>
-    <v-header title='error' back></v-header>
-    <div default @click="kick()">
-      页面建设中...
+    <!-- Panels Overlay -->
+  <div class="panel-overlay"></div>
+ 
+  <!-- Left Panel with Reveal effect -->
+  <div class="panel panel-left panel-reveal">
+    <div class="content-block">
+      <p>Left Panel content here</p>
+      <!-- Click on link with "close-panel" class will close panel -->
+      <p><a href="#" class="close-panel">Close me</a></p>
+      <!-- Click on link with "open-panel" and data-panel="right" attribute will open Right panel -->
+      <p><a href="#" data-panel="right" class="open-panel">Open Right Panel</a></p>
     </div>
+  </div>
+ 
+  <!-- Right Panel with Cover effect -->
+  <div class="panel panel-right panel-cover">
+    <div class="content-block">
+      <p>Right Panel content here</p>
+      <!-- Click on link with "close-panel" class will close panel -->
+      <p><a href="#" class="close-panel">Close me</a></p>
+      <!-- Click on link with "open-panel" and data-panel="left" attribute will open Left panel -->
+      <p><a href="#" data-panel="left" class="open-panel">Open Left Panel</a></p>
+    </div>
+  </div>
+ 
+
+  <div class="page-content">
+    <div class="content-block">
+      <!-- If no data-panel attribute, Left panel will be opened by default -->
+      <p><a href="#" class="open-panel">Open Left Panel</a></p>
+      <!-- Click on link with "open-panel" and data-panel="right" attribute will open Right panel -->
+      <p><a href="#" data-panel="right" class="open-panel">Open Right Panel</a></p>
+    </div>
+  </div>
   </f7-page>
 </template>
 

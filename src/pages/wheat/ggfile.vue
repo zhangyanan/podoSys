@@ -5,17 +5,17 @@ export default {
   data() {
     return {
             jobIsDone: false,
-            class_link_1:"button tab-link tab-link-active",
-            class_link_2:"button tab-link",
-            class_link_3:"button tab-link",
+            class_link_active:"button tab-link tab-link-active",
+            class_link_inactive:"button tab-link",
 
-            class_tab_1:"tab tab-active",
-            class_tab_2:"tab",
-            class_tab_3:"tab",
+            class_tab_active:"tab tab-active",
+            class_tab_inactive:"tab",
 
             in_self_msg:"",
+            //保存蝈蝈信息 这部分信息在这个页面上是不会更改的
             in_21Item_Short:"",
             in_self_favorite:"",
+            jumpFrom:"",
             //判断当前帐户与该gg的关系  0:没有关系  1:收藏关系  2.协力关系  3.母子关系
             relation_of_this_one:0,
 
@@ -69,16 +69,16 @@ export default {
     //得到所选用户
     var index = this.selectedUser
     //得到gg键值
-    var jumpFrom = this.getSourcePos()
-    if(jumpFrom == "收藏列表")
+    this.jumpFrom = this.getSourcePos()
+    if(this.jumpFrom == "收藏列表")
     {
       this.in_21Item_Short = this.l_ret_personal_favorite_list_s.datas[index]
     }
-    else if(jumpFrom == "协力列表")
+    else if(this.jumpFrom == "协力列表")
     {
       this.in_21Item_Short = this.l_ret_our_gg_imf_s.datas[index]
     }
-    else
+    else //无论是搜索还是蝈蝈列表 都是同样的
       this.in_21Item_Short = this.l_ret_gg_imf_s.datas[index]
 
     var keyid = this.in_21Item_Short.键值
@@ -98,7 +98,7 @@ export default {
                 this.b_load_21Item = 1
                 this.b_load_activity = 1
       });
-      
+    
     //得到当前帐户信息
     this.in_self_msg = this.l_ret_personal_imf_s.datas[0]
     
@@ -110,19 +110,18 @@ export default {
     }
     else
       this.in_self_favorite = null
-    
 
     if(this.in_21Item_Short.引导人 == this.in_self_msg.个人表单)
       this.relation_of_this_one = 3
     else if (this.in_21Item_Short.管理者 == this.in_self_msg.姓名)
       this.relation_of_this_one = 2
-    else if (this.in_self_favorite != null && 
+    else if (this.in_self_favorite != null && this.in_self_favorite.收藏内容 != null && 
             this.is_my_favorite(this.in_21Item_Short.键值, this.in_self_favorite.收藏内容))
       this.relation_of_this_one = 1
     else
       this.relation_of_this_one = 0
 
-    //得到21项普通选项
+    //得到需要显示的21项 选项字段列表
     this.get_l_showggtitle_datalist(this.relation_of_this_one)
     //this.relation_of_this_one = 0
     console.log('relation_of_this_one = ' + this.relation_of_this_one)
@@ -162,6 +161,14 @@ export default {
     'get_l_showggtitle_datalist'
     ]),
     
+    ...mapActions('datainterchange',[
+    'gotoPodosysAnyPage'
+    ]),
+
+    ...mapActions('listdata',[
+      'getPersonalFavorite'
+    ]),
+
     getSourcePos() {
       var jump = ""
       jump = JSON.parse(this.pageNavigation)
@@ -246,18 +253,13 @@ export default {
 
     },
 
-    hitTab(param) {
-        //console.log("hitTab = ", param)
-        //sessionStorage.setItem('hotPageAtGGFile', param)
-        console.log(this.l_retactivitydata.datas[0].活动反馈)
-    },
-
     goBack()    {
         //取消激活的tab
         //设置跳转来源
-        var str = '{"from":"' + this.getDesPos() + '","to":"' + this.getSourcePos() + '"}'
-        console.log(str)
-        this.setPageNavigation(str)
+        //var str = '{"from":"' + this.getDesPos() + '","to":"' + this.getSourcePos() + '"}'
+        //console.log(str)
+        //this.setPageNavigation(str)
+        this.gotoPodosysAnyPage('')
         this.$f7router.navigate('/allList/')
     },
 
@@ -287,7 +289,7 @@ export default {
       var sqldata = JSON.stringify({
 					"in_foldername":"GGAccount",
 					"in_formname":formname,
-					"in_username":"ivy",
+					"in_username":this.l_ret_personal_imf_s.datas[0].个人表单,
 					"in_keynames":keynames,
 					"in_keyvalues":keyvalues,
 					"in_fieldnames":fieldname})
@@ -307,6 +309,7 @@ export default {
       //sessionStorage.setItem('selectedActivityData', JSON.stringify(this.l_retactivitydata.datas[actindex]))
 
       //window.location.href ='/activityItems/'
+      this.gotoPodosysAnyPage('活动编辑')
       this.setSelectedActivity(actindex)
       this.$f7router.navigate('/activityItems/')
     },
@@ -342,6 +345,7 @@ export default {
 
       //window.location.href ='/activityItems/'
       //console.log("addActivity")
+      this.gotoPodosysAnyPage('活动编辑')
       this.setSelectedActivity('－1')
       this.$f7router.navigate('/activityItems/')
     },
@@ -363,12 +367,13 @@ export default {
       else if (this.relation_of_this_one == 1)
       {
           //取消收藏
-          tempValues = this.delete_my_favorite(this.in_21Item_Short.键值, this.in_self_favorite.收藏内容)
+          tempValues = this.delete_my_favorite(this.in_21Item_Short.键值, 
+                                            this.l_ret_personal_favorite_s.datas[0].收藏内容)
 
-          var msgid = this.in_self_favorite.键值
+          var msgid = this.l_ret_personal_favorite_s.datas[0].键值
             var sqldata = JSON.stringify({
 					"in_formdataid":msgid,
-					"in_username":"ivy",
+					"in_username":this.l_ret_personal_imf_s.datas[0].个人表单,
 					"in_fieldnames":tempNames,
 					"in_fieldvalues":tempValues,
 					})
@@ -376,19 +381,25 @@ export default {
           console.log(sqldata)
           this.updateformvalues(sqldata)
           this.relation_of_this_one = 0
+
+          //重新获得一次收藏表单
+          this.getPersonalFavorite(this.l_ret_personal_imf_s.datas[0].个人表单)
       }
       else if (this.relation_of_this_one == 0)
       {
           if(this.in_self_favorite == null)
           {
+              //连收藏表单都不存在
+              favorite = this.add_my_favorite(this.in_21Item_Short.键值, '')
+
               tempNames = "藏家关联表单," + tempNames
-              tempValues = this.in_self_msg.姓名 + ","
+              tempValues = this.l_ret_personal_imf_s.datas[0].个人表单 + ","
               tempValues = tempValues + favorite
               tempValues = tempValues + ","
 
               var sqldata = JSON.stringify({
-                      "in_tablename":"收藏内容",
-                      "in_username":"ivy",
+                      "in_tablename":"收藏表单",
+                      "in_username":this.l_ret_personal_imf_s.datas[0].个人表单,
                       "in_fieldnames":tempNames,
                       "in_fieldvalues":tempValues,
                       })
@@ -398,15 +409,19 @@ export default {
               this.relation_of_this_one = 1
           }
           else{
-              //添加收藏
-              favorite = this.add_my_favorite(this.in_21Item_Short.键值, this.in_self_favorite.收藏内容)
+              if(this.in_self_favorite.收藏内容 == null)
+                  favorite = this.add_my_favorite(this.in_21Item_Short.键值, '')
+              else
+                  //添加收藏
+                  favorite = this.add_my_favorite(this.in_21Item_Short.键值, 
+                                              this.l_ret_personal_favorite_s.datas[0].收藏内容)
 
-              var msgid = this.in_self_favorite.键值
+              var msgid = this.l_ret_personal_favorite_s.datas[0].键值
                 var sqldata = JSON.stringify({
               "in_formdataid":msgid,
-              "in_username":"ivy",
+              "in_username":this.l_ret_personal_imf_s.datas[0].个人表单,
               "in_fieldnames":tempNames,
-              "in_fieldvalues":tempValues,
+              "in_fieldvalues":favorite,
               })
 
               console.log(sqldata)
@@ -415,6 +430,8 @@ export default {
               this.relation_of_this_one = 1
           }
           
+          //重新获得一次收藏表单
+          this.getPersonalFavorite(this.l_ret_personal_imf_s.datas[0].个人表单)
       }
     }
   }
@@ -690,10 +707,10 @@ gg_status_label{
                         <img  class = "yz_img" src="@/assets/icon_all/sheep.png" />
                         <img  class = "yz_icon" src="@/assets/icon_all/sheep.png" />
                         <div class = "yz_name">
-                            <label class = "namescolor_2">ivy</label>
+                            <label class = "namescolor_2">{{this.in_21Item_Short.引导人姓名}}</label>
                         </div>
                         
-                        <a class="panel-open" data-panel="right" href="#"> <!--@click="goto_ggstatus()-->
+                        <a class="panel-open raised " data-panel="right" href="#"> <!--@click="goto_ggstatus()-->
                           <img  class = "more_icon" src = "@/assets/icon_all/more.png">
                         </a>
                         <div class = "gg_headidentity">
@@ -711,9 +728,10 @@ gg_status_label{
                   </div>
                   <div id = "mybar">
                   <f7-navbar class = "subnavbar">
-                    <f7-nav-left :class="class_link_1" href="#tab1">基本信息</f7-nav-left>
-                    <f7-nav-center :class="class_link_2" href="#tab2">活动记录</f7-nav-center>
-                    <f7-nav-right :class="class_link_3" href="#tab3">修改历史</f7-nav-right>
+                    <f7-nav-left v-if="relation_of_this_one > 1" :class="class_link_active" href="#tab1">基本信息</f7-nav-left>
+                    <f7-nav-center v-else :class="class_link_active" href="#tab1">基本信息</f7-nav-center>
+                    <f7-nav-center v-if="relation_of_this_one > 1" :class="class_link_inactive" href="#tab2">活动记录</f7-nav-center>
+                    <f7-nav-right v-if="relation_of_this_one > 1" :class="class_link_inactive" href="#tab3">修改历史</f7-nav-right>
                   </f7-navbar>
                   </div>
                   <!--<div class="subnavbar" id = "mybar">
@@ -725,60 +743,8 @@ gg_status_label{
              
           
               <div id = "msgbody">
-                <!-- 右推菜单 -->
-                <div class="panel panel-right panel-cover">
-                    <div v-if="b_load_21Item == 1" class="block">
-                          <p>状态变更</p>
-                          <div @click="goto_ggstatus('正常')">
-                              <p> 
-                                <a class="panel-open" data-panel="left" >正常</a>
-                              </p>
-                              <p>
-                                <img v-if="l_retdata.datas[0].状态 == '正常'" src="@/assets/icon_all/selection_green.png" />
-                                <img v-if="l_retdata.datas[0].状态 != '正常'" src="@/assets/icon_all/selection_gray.png" />
-                              </p>
-                          </div>
-                          <div>
-                              <p> 
-                                <a class="panel-open" href="#" data-panel="left" @click="goto_ggstatus('脱落')">脱落</a>
-                              </p>
-                              <p>
-                                <img v-if="l_retdata.datas[0].状态 == '脱落'" src="@/assets/icon_all/selection_green.png" />
-                                <img v-if="l_retdata.datas[0].状态 != '脱落'" src="@/assets/icon_all/selection_gray.png" />
-                              </p> 
-                          </div>
-                          <div> 
-                              <p> 
-                                <a class="panel-open" href="#" data-panel="left" @click="goto_ggstatus('宣教')">宣教</a>
-                              </p>
-                              <p>
-                                <img v-if="l_retdata.datas[0].状态 == '宣教'" src="@/assets/icon_all/selection_green.png" />
-                                <img v-if="l_retdata.datas[0].状态 != '宣教'" src="@/assets/icon_all/selection_gray.png" />
-                              </p>
-                          </div>
-                          <div> 
-                              <p> 
-                                <a class="panel-open" href="#" data-panel="left" @click="goto_ggstatus('黑名单')">黑名单</a>
-                              </p>
-                              <p>
-                                <img v-if="l_retdata.datas[0].状态 == '黑名单'" src="@/assets/icon_all/selection_green.png" />
-                                <img v-if="l_retdata.datas[0].状态 != '黑名单'" src="@/assets/icon_all/selection_gray.png" />
-                              </p>
-                          </div>
-                          <div> 
-                              <p> 
-                                <a class="panel-open" href="#" data-panel="left" @click="goto_ggstatus('不做跟进')">不做跟进</a>
-                              </p>
-                              <p>
-                                <img v-if="l_retdata.datas[0].状态 == '不做跟进'" src="@/assets/icon_all/selection_green.png" />
-                                <img v-if="l_retdata.datas[0].状态 != '不做跟进'" src="@/assets/icon_all/selection_gray.png" />
-                              </p> 
-                          </div>
-                    </div>
-                </div>
-
                 <div class="tabs">
-                  <div :class="class_tab_1" id="tab1" >
+                  <div :class="[(jumpFrom != '活动编辑')?class_tab_active:class_tab_inactive]" id="tab1" >
                     <div class="block">
                       <f7-list v-if="b_load_21Item == 1">
                           <f7-list-item 
@@ -803,9 +769,9 @@ gg_status_label{
                       </div>
                     </div>
                   </div>
-                  <div :class="class_tab_2" id="tab2">
+                  <div :class="[(jumpFrom == '活动编辑')?class_tab_active:class_tab_inactive]" id="tab2">
                     <div class="block">
-                      <f7-list v-if="b_load_activity == 1">
+                      <f7-list v-if="b_load_activity == 1 && relation_of_this_one > 1">
                             <f7-list-item
                                 v-for="(item, index) in l_retactivitydata.datas"
                                 :key="index">
@@ -818,7 +784,7 @@ gg_status_label{
                             </f7-list-item>
                       </f7-list>
                     </div>
-                    <div v-if="relation_of_this_one > 1" class = "footbox">
+                    <div class = "footbox">
                       <div class = "footfont">
                         <a href = "#" @click="addActivity()">
                             <label class = "footnamecolor">添加记录</label>
@@ -826,7 +792,7 @@ gg_status_label{
                       </div>
                     </div>
                   </div>
-                  <div v-if="relation_of_this_one > 1" :class="class_tab_3" id="tab3" @click="hitTab(2)">
+                  <div v-if="relation_of_this_one > 1" :class="class_tab_inactive" id="tab3">
                     <div class="block">
                       <p>版面制作中,敬请期待...</p>
                     </div>

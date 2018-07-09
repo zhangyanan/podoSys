@@ -221,7 +221,7 @@ const actions = {
           JSON.stringify({ 	
 					"in_foldername":"GGAccount",
 					"in_formname":"21项信息",
-					"in_username":"ivy",
+					"in_username":"admin",
 					"in_keynames":"键值,",
 					"in_keyvalues":data,
           "in_fieldnames":"姓名,微信,手机,引导人,状态,引导人姓名,性别,阶段,引导人会属,引导人区域,管理者,涉外时间,涉外类型,涉外田地,生日,会属,婚恋,学历,职业,就业,负债,健康,学习计划,信仰年数,读经情况,祷告情况,服侍情况,戒备情况,状态变更原因,"
@@ -241,7 +241,7 @@ const actions = {
         JSON.stringify({ 	
         "in_foldername":"GGAccount",
         "in_formname":"21项信息",
-        "in_username":"ivy",
+        "in_username":"admin",
         "in_keynames":"键值,",
         "in_keyvalues":data,
         "in_fieldnames":"姓名,微信,手机,引导人,状态,阶段,性别,"
@@ -287,7 +287,7 @@ const actions = {
             JSON.stringify({ 	
             "in_foldername":"GGAccount",
             "in_formname":"21项信息",
-            "in_username":"ivy",
+            "in_username":"admin",
             "in_keynames":"键值,",
             "in_keyvalues":ggid,
             "in_fieldnames":"姓名,微信,手机,引导人,状态,阶段,性别,"

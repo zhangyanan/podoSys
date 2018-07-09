@@ -1,4 +1,4 @@
-
+<!-- 当前页面名称： 登陆页面-->
 <template>
 <f7-page>
     <f7-row no-gap>
@@ -59,7 +59,7 @@
           </li>
         </ul>
       </div>
-      <f7-button href="/allList/" big text="登录" fill></f7-button>
+      <f7-button href="#" big text="登录" fill @click="loginIn()"></f7-button>
   </form>  
 </f7-page>
 </template>
@@ -232,3 +232,70 @@
   }
 </style>
 
+
+<script>
+import { mapState, mapGetters, mapActions, mapMutations, Store } from 'vuex'
+
+export default {
+  name: 'App',
+  
+  data() {
+    return {
+    }
+  },
+  computed: {
+    ...mapGetters('listdata',[
+        'l_ret_personal_imf_s'
+    ]),
+
+    ...mapGetters('listdata',[
+        'l_ret_personal_gg_s'
+    ]),
+  },
+  created () {
+  },
+  methods: {
+    ...mapActions('listdata',[
+      'getPersonalAccount'
+    ]),
+    
+    ...mapActions('datainterchange',[
+      'setloginSuccess'
+    ]),
+
+    ...mapActions('datainterchange',[
+      'setPageNavigation'
+    ]),
+
+    ...mapActions('datainterchange',[
+    'gotoPodosysAnyPage'
+    ]),
+
+    ...mapActions('listdata',[
+      'getPersonalFavorite'
+    ]),
+ 
+    timeout(ms) {
+                  return new Promise((resolve) => {
+                    setTimeout(resolve, ms);
+                  });
+    },
+
+    loginIn() {
+      //得到个人信息
+      this.getPersonalAccount('ivy')
+      //得到个人藏单
+      this.getPersonalFavorite('ivy')
+
+      this.timeout(1000).then(() => {
+            console.log("in timeout of inputform.vue")
+            //设置登陆成功标示
+
+            this.setloginSuccess('1')
+            this.$f7router.navigate('/alllist/')
+        });
+    }
+  }
+}
+
+</script>

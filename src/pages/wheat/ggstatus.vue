@@ -92,7 +92,7 @@ export default {
           
             var sqldata = JSON.stringify({
 					"in_formdataid":statusid,
-					"in_username":"ivy",
+					"in_username":this.l_ret_personal_imf_s.datas[0].个人表单,
 					"in_fieldnames":tempNames,
 					"in_fieldvalues":tempValues,
 					})

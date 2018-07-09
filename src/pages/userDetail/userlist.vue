@@ -164,7 +164,7 @@ export default {
 
             var sqlDataOfPersonal = JSON.stringify({
                                 "in_formdataid":itemId,
-                                "in_username":"ivy",
+                                "in_username":this.in_myPersonalItem.个人表单,
                                 "in_fieldnames":tempNames,
                                 "in_fieldvalues":tempValues,
                                 })

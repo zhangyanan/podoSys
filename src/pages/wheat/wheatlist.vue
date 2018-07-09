@@ -411,7 +411,7 @@ local_update21Data()    {
             var msgid = this.in_gg21Item.键值
             var sqldata = JSON.stringify({
 					"in_formdataid":msgid,
-					"in_username":"ivy",
+					"in_username":this.l_ret_personal_imf_s.datas[0].个人表单,
 					"in_fieldnames":tempNames,
 					"in_fieldvalues":tempValues,
 					})
