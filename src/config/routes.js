@@ -17,6 +17,8 @@ import panelPage from '@/pages/dashboard/panel'
 import inputformPage from '@/pages/dashboard/inputform'
 import quickPage from '@/pages/dashboard/quick'
 import ggPage from '@/pages/wheat/gg'
+import gglibrary from '@/pages/wheat/gglibrary'
+import itemPage from '@/pages/wheat/item'
 
 export default [
   {
@@ -34,6 +36,14 @@ export default [
       {
         path: 'gg/',
         component: ggPage
+      },
+      {
+        path: 'gglibrary/',
+        component: gglibrary
+      },
+      {
+        path: 'item/',
+        component: itemPage
       },
       {
         path: 'panel/',
