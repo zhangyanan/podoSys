@@ -3,7 +3,6 @@
       height: 67px;
       color: #fff;
   }
- 
 
   .header {
     position: relative;
@@ -27,14 +26,22 @@
       right: 10px;
     }
   }
-    .md .navbar:after{
-      background: linear-gradient(to bottom,rgba(0,0,0,0) 0,rgba(0,0,0,0) 0,rgba(0,0,0,0) 0,rgba(0,0,0,0) 0,rgba(0,0,0,0) 0); 
-    }
+    div.navbar-inner.sliding{
+    background: #FFFFFF;
+    border:solid 1px red;
+  }
+  .md .navbar:after{
+    background: linear-gradient(to bottom,rgba(0,0,0,0) 0,rgba(0,0,0,0) 0,rgba(0,0,0,0) 0,rgba(0,0,0,0) 0,rgba(0,0,0,0) 0); 
+  }
+
+  .md a.link{
+    background: #FFFFFF;
+  }
 </style>
 <template>
   <f7-navbar>
   <f7-nav-left>
-    <f7-link href="/myItem/" raised panel-open="left"><img src="@/assets/icon_all/pull_out.png"/></f7-link>
+    <f7-link href="#" raised panel-open="left"><img src="@/assets/icon_all/pull_out.png"/></f7-link>
   </f7-nav-left>
   <f7-nav-title></f7-nav-title>
   <f7-nav-right>
