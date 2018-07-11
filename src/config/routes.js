@@ -19,6 +19,7 @@ import quickPage from '@/pages/dashboard/quick'
 import ggPage from '@/pages/wheat/gg'
 import gglibrary from '@/pages/wheat/gglibrary'
 import itemPage from '@/pages/wheat/item'
+import editinfoPage from '@/pages/userDetail/editinfo'
 
 export default [
   {
@@ -44,6 +45,11 @@ export default [
       {
         path: 'item/',
         component: itemPage
+      },
+      // page: 2.4 yn      
+      {
+        path: 'editinfo/',
+        component: editinfoPage
       },
       {
         path: 'panel/',
