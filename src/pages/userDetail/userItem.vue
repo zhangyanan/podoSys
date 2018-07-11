@@ -33,7 +33,7 @@
                 <hr class="line_style_2"> 
                             
                 <span class="menu_2">性别</span>
-                <span class="value_2">男</span> 
+                <span class="value_2">{{l_ret_personal_imf_s.datas[0].性别}}</span> 
                 
                 <hr class="line_style_3"> 
 
