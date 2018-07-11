@@ -321,4 +321,13 @@ div.search-div{
 li.panel_menu{
     padding-top: 15px;
 }
+.md .list ul:before{
+    background-color: #54BCBF;
+}
+.md .list ul:after{
+    background-color: #54BCBF;
+}
+.md .item-input-wrap:after{
+    background-color: #54BCBF;
+}
 </style>
