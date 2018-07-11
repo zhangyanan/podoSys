@@ -6,12 +6,14 @@ export default {
     return {
             inputname:"",
             inputdate:"",
-            selectOption:"",
+            selectOption:null,
+            selectPC:true,
             inputresponse:"",
             in_activity_datas:"",
             in_ggId:"",
             in_ggName:"",
-            l_title_name:""}
+            l_title_name:"",
+            l_loadItem:false,}
   },
   computed: {
     ...mapGetters('configdata', [
@@ -51,7 +53,12 @@ export default {
         //console.log(this.selectOption)
         //当前处于编辑状态
         this.l_title_name = "编辑记录"
-    }    
+    }  
+    
+    //1s以后进行刷新
+    this.timeout(1000).then(() => {
+                this.l_loadItem = true
+      });
   },
   methods: {
     ...mapActions('listdata',[
@@ -209,7 +216,13 @@ export default {
             this.updateActivityInStore(JSON.stringify(storedata))
         }
         
-    }
+    },
+
+    timeout(ms) {
+          return new Promise((resolve) => {
+            setTimeout(resolve, ms);
+                })
+      },
   }
 }
 
@@ -440,20 +453,6 @@ $$('#my-range').on('range:change', function (e, range) {
 .mylist{
             margin-bottom: 12px;
 }
-.mybox{
-            border-style:solid; 
-            border-width:1px;
-            border-color:rgb(194, 191, 191);
-            margin-top: 6px;
-}
-
-.mylabelfont{
-            color:black;
-}
-.mylabelbox{
-            text-align:left;
-            font-size: 3em;
-            }
 
 .editbtn{
             width: 40px;
@@ -488,159 +487,229 @@ $$('#my-range').on('range:change', function (e, range) {
             background: #FF6D7F;
 }
 
-.md .list {
-    margin: 0 0;
+
+.activity-row-header{
+            background: #FF6D7F;
 }
 
-.md .list .item-content {
+.activity-row-body{
+            background:#EFF0F4;
+            margin-top: 19px;
+}
+.back-ground {
+            background:#EFF0F4;
+}
+.md .list .liststyle-item .item-content{
+            padding-left: 19px;
+}       
+
+.md .list .liststyle{
+            margin: 0px;
+}
+
+.md .liststyle-item a.link{
+            padding-left: 0px;
+            background: #FF6D7F;
+}
+
+.md .list .activity-col-header-title .item-content {
     padding-left: 0px;
 }
 
-.md .list ul ul {
-    padding-left: 12px;
+.title-pos{
+    padding-left: 35%;
+    width: 100px;
 }
 
-.md .inline-labels .item-label {
-    font-size: 14px;
-    width: 104px;
+.activity-row-body .list{
+    width: 100%
 }
 
-.list .item-input-wrap {
-    width: 130px;
-}
-.md .inline-labels .item-label+.item-input-wrap {
-    margin-left: 68px;
+.activitylist {
+    background: #ffffff;
+    width: 100%;
+    margin-right: 3.2%;
+    margin-left: 3.2%;
+    list-style-type: none;
 }
 
-.md .list .item-inner {
-    min-height: 48px;
+.md .list .activitylist .item-content {
+    padding-left: 0px;
+}
+
+.md .list .list-2-item-1 .item-content {
+    padding-left: 0px;
+}
+
+.md .list .list-3-item-1 .item-content {
+    padding-left: 0px;
+}
+
+.md .list .list3item1 .item-content{
+    padding-left: 0px;
+}
+
+.md .list .list3item1 .item-inner{
     padding-right: 0px;
-    padding-top: 0px;
 }
 
-.md a.link {
+.md .list .list-3-3-item-3 .item-content{
     padding-left: 0px;
-    height: 0px;
 }
 
+.md .list .list-3-3-item-3 .item-inner{
+    padding-right: 0px;
+}
+
+
+
+.mybox{
+    border-style:solid; 
+    border-width:1px;
+    border-color:rgb(194, 191, 191);
+    margin-top: 6px;
+    margin-left:12px;
+    margin-right:12px;
+    padding-left: 13px;
+    width: 100%;
+    height:37px;
+    }
+
+.mybox2{
+    border-style:solid; 
+    border-width:1px;
+    border-color:rgb(194, 191, 191);
+    margin-top: 6px;
+    margin-left:12px;
+    margin-right:12px;
+    padding-left: 13px;
+    width: 100%;
+    height:37px;
+    background: #54BCBF;
+    }
+.mybox2labelfont{
+    color:#ffffff;
+    font-family: PingFangSC-Semibold;
+    font-size: 14px;
+    letter-spacing: 0;
+    line-height: 21px;
+}
+
+.mylabelfont{
+    color:black;
+    font-family: PingFangSC-Semibold;
+    font-size: 14px;
+    color: #4A4A4A;
+    letter-spacing: 0;
+    line-height: 21px;
+    }
+.mylabelbox{
+    display: inline-block;
+    text-align:left;
+    font-size: 3em;
+    width: 110px;
+    }
+.myinputbox{
+    display: inline-block;
+    border-width:0px;
+    font-size: 2em;
+    text-align: right;
+    margin-right: 9px;
+    }
 </style>
 <template>
   <f7-page>
-    <div class = "ggfile_div">
-        <div class = "divheader">
-            <a href = "#" @click="goBack()">
-                <img  class = "back_img" src="@/assets/icon_all/back_white.png" />
-            </a>
-            <div class = "title_position">
-                <f7-label id = "title_font_big">{{l_title_name}}</f7-label>
-            </div>
-        </div>
-        <div class = "divbody">
-            <div class = "divitems">
-                <f7-list>
-                    <f7-list-item>
+      <f7-block class="back-ground">
+        <f7-row no-gap class="activity-row-header">
+                <f7-col class="activity-col-header" width="20">
+                    <f7-list class = "liststyle">
+                    <f7-list-item class = "liststyle-item">
+                        <f7-link class = "link-item" href = "#" @click="goBack()">
+                        <img src="@/assets/icon_all/back_white.png"/>
+                        </f7-link>
+                    </f7-list-item>            
+                </f7-list>
+                </f7-col>
+                <f7-col width="80">
+                    <f7-list>
+                        <f7-list-item class="activity-col-header-title">
+                            <div class="title-pos">{{l_title_name}}</div>
+                        </f7-list-item>
+                </f7-list>
+                </f7-col>
+        </f7-row>
+        <f7-row no-gap class="activity-row-body">
+            <div class = "activitylist">
+            <f7-list class="list-2">
+                    <f7-list-item class="list-2-item-1">
                         <f7-label id = "menu_font_1">活动记录</f7-label>
                     </f7-list-item>
-                    <f7-list-item>
-                            <div class="list inline-labels no-hairlines-md">
-                                <f7-list>
-                                    <f7-list-item  class="item-content item-input">  
-                                        <div class="item-inner">
-                                            <div class="item-title item-label">
-                                                活动名称
+            </f7-list>
+            <f7-list class="list-3">
+                    
+                                 
+                                    <f7-list-item class="list3item1">  
+                                        <div class="mybox">
+                                            <div class="mylabelbox">
+                                                <f7-label><font class="mylabelfont">活动名称</font></f7-label>
                                             </div>
-                                            <div class="item-input-wrap">
-                                                <f7-input type="text" dir="rtl" :value="inputname" @input="inputname = $event.target.value" clear-button></f7-input>
-                                            </div>
-                                        </div>
-                                    </f7-list-item>
-                                    <f7-list-item  class="item-content item-input">  
-                                        <div class="item-inner">
-                                            <div class="item-title item-label">
-                                                活动类型
-                                            </div>
-                                            <div class="item-input-wrap">
-                                                <!--<f7-input type="select" :value="selectOption" @change="selectOption = $event.target.value">
-                                                    <option  v-for="(itemmenu, index) in this.l_activitytype_data" :key="index">
-                                                    {{itemmenu.value}}</option>
-                                                </f7-input>-->
-                                                <select v-model="selectOption">
-                                                    <option v-for="(itemmenu) in this.l_activitytype_data" :key="itemmenu.value">
-                                                    {{itemmenu.value}}</option>
-                                                </select>
+                                            <div class="myinputbox">
+                                                <input type="tel" dir="rtl" v-model="inputname" clear-button>
                                             </div>
                                         </div>
+                                        
                                     </f7-list-item>
+                                
+                                 
+                                    <f7-list-item smart-select title="活动类型" class="activity-type-list">
+                                        <!-- Select with values inside -->
+                                        <select v-model="selectOption" name="activityType">
+                                                <option disabled>{{selectOption}}</option>
+                                                <option v-for="itemmenu in this.l_activitytype_data" 
+                                                :key="itemmenu.value" :value="itemmenu.value">
+                                                {{itemmenu.value}}</option>
+                                        </select>
+                                    </f7-list-item>
+                                                 
+                        <f7-list-item class="list3item1">
+                            <div class="mybox">
+                                <div class="mylabelbox">
+                                    <f7-label><font class="mylabelfont">活动日期</font></f7-label>
+                                </div>
+                                <div class="myinputbox">
+                                    <input type="date" :value="inputdate" @change="inputdate = $event.target.value">
+                                </div>
+                            </div>  
+                        </f7-list-item>    
                                     
-                                    <f7-list-item  class="item-content item-input">
-                                        <div class="item-inner">
-                                            <div class="item-title item-label">
-                                                活动日期
-                                            </div>
-                                            <div class="item-input-wrap">
-                                                <f7-input type="date" :value="inputdate" @change="inputdate = $event.target.value">
-                                                </f7-input>
-                                            </div>
-                                        </div>
-                                    </f7-list-item>
-                                </f7-list>
-                            </div>
+                           
+                                
+            
+
+                    <f7-list-item class="list3item1">
+                        <div class="mybox2">
+                                <div class="mylabelbox">
+                                    <f7-label><font class="mybox2labelfont">活动反馈</font></f7-label>
+                                </div>
+                        </div>  
                     </f7-list-item>
-                    <f7-list-item>
-                        <div class = "menu_box_5">
-                            <f7-label id = "title_font_small">活动反馈</f7-label>
-                        </div>   
+
+                    <f7-list-item class="list3item1"> 
                         <div class = "divresponse"> 
                             <!--<div class = "divresponse2">-->
                                 <textarea type="text" :value="inputresponse" @input="inputresponse = $event.target.value"></textarea>             
                             <!--</div>-->
                         </div>
                     </f7-list-item>
-                                    
-                                
-                            
-                            <!--
-                            <div class = "divitems">
-                                <f7-label id = "menu_font_1">活动记录</f7-label>
-                                <div class = "menu_box_2">
-                                    <f7-label class = "menu_font_2">活动名称</f7-label>
-                                    <f7-input type="text" dir="rtl" :value="inputname" @input="inputname = $event.target.value"></f7-input>
-                                </div>
-                                <div class = "menu_box_3">
-                                    <f7-label class = "menu_font_3">活动类型</f7-label>
-                                    <f7-input class = "inputtype" type="select" :value="selectOption" @change="selectOption = $event.target.value">
-                                        <option  v-for="(itemmenu, index) in this.l_activitytype_data" :key="index">
-                                            {{itemmenu.value}}</option>
-                                    </f7-input>
-                                </div>
-                                <div class = "menu_box_4">
-                                    <f7-label class = "menu_font_4">活动日期</f7-label>
-                                    
-                                    <div class="item-content item-input">
-                                        <div class="item-inner">
-                                        <div class="item-input-wrap">
-                                            <input type="text" readonly="readonly" id="demo-calendar-default"/>
-                                        </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class = "divresponse">
-                                    <div class = "divtitle">
-                                        <f7-label id = "title_font_small" class = "menu_font_5">活动反馈</f7-label>
-                                    </div>
-                                    <div class = "divmsgbody">
-                                        <f7-input type="text" dir="rtl" :value="inputresponse" @input="inputresponse = $event.target.value"></f7-input>
-                                    </div>
-                                </div>    
-                            </div>
-                            -->
-                </f7-list>
+                 
+                    <f7-list-item>                
+                        <f7-link href="#" class="menu_foot" id = "title_font_middle" @click="comfirmActivityData()">完成</f7-link>             
+                    </f7-list-item>     
+
+            </f7-list>
             </div>
-            <div class = "divfoot">
-                <f7-link href="#" class="menu_foot" id = "title_font_middle" @click="comfirmActivityData()">完成</f7-link>
-            </div>
-        </div>
-    </div>
+        </f7-row>
+      </f7-block>
   </f7-page>  
 </template>
 <style lang="scss" scoped>

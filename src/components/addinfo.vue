@@ -7,7 +7,8 @@ div.navbar-inner.sliding{
 <template>
   <f7-navbar>
     <f7-nav-left>
-      <img src="@/assets/icon_all/back_white.png"/>
+      
+      <img @click="goBack()" src="@/assets/icon_all/back_white.png">
     </f7-nav-left>
     <f7-nav-title>
       <label class="content-title">{{title}}</label>
@@ -16,6 +17,19 @@ div.navbar-inner.sliding{
 </template>
 <script>
 export default {
+  methods: {
+    goBack(){
+      console.log("come from " + this.title)
+      if(this.title == "编辑资料")
+      {
+        this.$f7router.navigate('/userItem/')
+      }
+      else if(this.title == "添加信息")
+      {
+        this.$f7router.navigate('/gglist/')
+      }
+    },
+  },
   props: {
     title: {
       type: String,

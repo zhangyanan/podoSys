@@ -591,6 +591,10 @@ div.gap{
     letter-spacing: 3px;
     margin-top: 210px;
   }
+
+  .md .list .select-box .item-content {
+    padding-left: 0px;
+}
 </style>
 <template>
   <f7-page>
@@ -643,7 +647,7 @@ div.gap{
             </f7-block>
             <f7-block>
               <div class="mybox">
-                <div class="mylabelbox">
+                <!--<div class="mylabelbox">
                   <f7-label><font class="mylabelfont">阶段</font></f7-label>
                 </div>
                 <div class="myinputbox">
@@ -651,7 +655,16 @@ div.gap{
                         <option v-for="(itemmenu) in this.l_ggstudystatus_data" :key="itemmenu.value">
                         {{itemmenu.value}}</option>
                     </select>
-                </div>
+                </div>-->
+                <f7-list-item smart-select title="阶段" class="select-box">
+                    <!-- Select with values inside -->
+                    <select v-model="selectStudyState" name="activityType">
+                        <option disabled>{{selectStudyState}}</option>
+                        <option v-for="itemmenu in this.l_ggstudystatus_data" 
+                                                :key="itemmenu.value" :value="itemmenu.value">
+                                                {{itemmenu.value}}</option>
+                    </select>
+                </f7-list-item>
               </div>
             </f7-block>
             </f7-accordion-content>
@@ -717,7 +730,7 @@ div.gap{
               </f7-block>
               <f7-block>
                   <div class="mybox">
-                      <div class="mylabelbox">
+                      <!--<div class="mylabelbox">
                           <f7-label><font class="mylabelfont">涉外类型</font></f7-label>
                       </div>
                       <div class="myinputbox">
@@ -725,12 +738,21 @@ div.gap{
                                 <option v-for="(itemmenu) in this.l_swtype_data" :key="itemmenu.value">
                                 {{itemmenu.value}}</option>
                             </select>
-                      </div>
+                      </div>-->
+                      <f7-list-item smart-select title="涉外类型" class="select-box">
+                                        <!-- Select with values inside -->
+                                        <select v-model="selectHavesttype" name="activityType">
+                                                <option disabled>{{selectHavesttype}}</option>
+                                                <option v-for="itemmenu in this.l_swtype_data" 
+                                                :key="itemmenu.value" :value="itemmenu.value">
+                                                {{itemmenu.value}}</option>
+                                        </select>
+                                    </f7-list-item>
                   </div>
               </f7-block>
               <f7-block>
                   <div class="mybox">
-                      <div class="mylabelbox">
+                      <!--<div class="mylabelbox">
                           <f7-label><font class="mylabelfont">涉外田地</font></f7-label>
                       </div>
                       <div class="myinputbox">
@@ -739,7 +761,16 @@ div.gap{
                                 <option v-for="(itemmenu) in this.l_churchs_data" :key="itemmenu.value">
                                 {{itemmenu.value}}</option>
                             </select>
-                      </div>
+                      </div>-->
+                      <f7-list-item smart-select title="涉外田地" class="select-box">
+                                        <!-- Select with values inside -->
+                                        <select v-model="selectChurch" name="activityType">
+                                                <option disabled>{{selectChurch}}</option>
+                                                <option v-for="itemmenu in this.l_churchs_data" 
+                                                :key="itemmenu.value" :value="itemmenu.value">
+                                                {{itemmenu.value}}</option>
+                                        </select>
+                                    </f7-list-item>
                   </div>
               </f7-block>
             </f7-accordion-content>
@@ -753,16 +784,14 @@ div.gap{
                           <f7-label><font class="mylabelfont">果子生日</font></f7-label>
                       </div>
                       <div class="myinputbox">
-                          <f7-input type="select" placeholder="Male" :value="selectGender" @change="selectGender = $event.target.value">
-                              <option  v-for="(itemmenu, index) in this.l_gender_data" :key="index">
-                              {{itemmenu.gender}}</option>
-                          </f7-input>
+                          <f7-input type="date" :value="l_ggBirthday" @change="l_ggBirthday = $event.target.value">
+                            </f7-input>
                       </div>
                   </div>
               </f7-block>
               <f7-block>
                   <div class="mybox">
-                      <div class="mylabelbox">
+                      <!--<div class="mylabelbox">
                           <f7-label><font class="mylabelfont">果子会属</font></f7-label>
                       </div>
                       <div class="myinputbox">
@@ -772,12 +801,21 @@ div.gap{
                                 {{itemmenu.value}}</option>
                             </select>
 
-                      </div>
+                      </div>-->
+                    <f7-list-item smart-select title="果子会属" class="select-box">
+                    <!-- Select with values inside -->
+                        <select v-model="selectHscontent" name="activityType">
+                        <option disabled>{{selectHscontent}}</option>
+                        <option v-for="itemmenu in this.l_hscontent_data" 
+                                                :key="itemmenu.value" :value="itemmenu.value">
+                                                {{itemmenu.value}}</option>
+                        </select>
+                    </f7-list-item>
                   </div>
               </f7-block>
               <f7-block>
                   <div class="mybox">
-                      <div class="mylabelbox">
+                      <!--<div class="mylabelbox">
                           <f7-label><font class="mylabelfont">婚恋情况</font></f7-label>
                       </div>
                       <div class="myinputbox">
@@ -787,11 +825,20 @@ div.gap{
                                 <option v-for="(itemmenu) in this.l_marriage_data" :key="itemmenu.value">
                                 {{itemmenu.value}}</option>
                             </select>
-                      </div>
+                      </div>-->
+                    <f7-list-item smart-select title="婚恋情况" class="select-box">
+                    <!-- Select with values inside -->
+                        <select v-model="selectMarriage" name="activityType">
+                        <option disabled>{{selectMarriage}}</option>
+                        <option v-for="itemmenu in this.l_marriage_data" 
+                                                :key="itemmenu.value" :value="itemmenu.value">
+                                                {{itemmenu.value}}</option>
+                        </select>
+                    </f7-list-item>
                   </div>
               </f7-block>
               <f7-block>
-                  <div class="mybox">
+                  <!--<div class="mybox">
                       <div class="mylabelbox">
                           <f7-label><font class="mylabelfont">果子学历</font></f7-label>
                       </div>
@@ -802,11 +849,20 @@ div.gap{
                                 <option v-for="(itemmenu) in this.l_education_data" :key="itemmenu.value">
                                 {{itemmenu.value}}</option>
                             </select>
-                      </div>
-                  </div>
+                      </div </div>>-->
+                    <f7-list-item smart-select title="果子学历" class="select-box">
+                    <!-- Select with values inside -->
+                        <select v-model="selectEducation" name="activityType">
+                        <option disabled>{{selectEducation}}</option>
+                        <option v-for="itemmenu in this.l_education_data" 
+                                                :key="itemmenu.value" :value="itemmenu.value">
+                                                {{itemmenu.value}}</option>
+                        </select>
+                    </f7-list-item>
+                 
               </f7-block>
               <f7-block>
-                  <div class="mybox">
+                  <!--<div class="mybox">
                       <div class="mylabelbox">
                           <f7-label><font class="mylabelfont">果子职业</font></f7-label>
                       </div>
@@ -818,10 +874,19 @@ div.gap{
                                 {{itemmenu.value}}</option>
                             </select>
                       </div>
-                  </div>
+                  </div>-->
+                    <f7-list-item smart-select title="果子职业" class="select-box">
+                    <!-- Select with values inside -->
+                        <select v-model="selectOccuption" name="activityType">
+                        <option disabled>{{selectOccuption}}</option>
+                        <option v-for="itemmenu in this.l_occuption_data" 
+                                                :key="itemmenu.value" :value="itemmenu.value">
+                                                {{itemmenu.value}}</option>
+                        </select>
+                    </f7-list-item>
               </f7-block>
               <f7-block>
-                  <div class="mybox">
+                  <!--<div class="mybox">
                       <div class="mylabelbox">
                           <f7-label><font class="mylabelfont">就业情况</font></f7-label>
                       </div>
@@ -833,10 +898,19 @@ div.gap{
                                 {{itemmenu.value}}</option>
                             </select>
                       </div>
-                  </div>
+                  </div>-->
+                    <f7-list-item smart-select title="就业情况" class="select-box">
+                    <!-- Select with values inside -->
+                        <select v-model="selectEmployment" name="activityType">
+                        <option disabled>{{selectEmployment}}</option>
+                        <option v-for="itemmenu in this.l_employment_data" 
+                                                :key="itemmenu.value" :value="itemmenu.value">
+                                                {{itemmenu.value}}</option>
+                        </select>
+                    </f7-list-item>
               </f7-block>
               <f7-block>
-                  <div class="mybox">
+                    <!--<div class="mybox">
                       <div class="mylabelbox">
                           <f7-label><font class="mylabelfont">负债情况</font></f7-label>
                       </div>
@@ -847,10 +921,19 @@ div.gap{
                                 {{itemmenu.value}}</option>
                             </select>
                       </div>
-                  </div>
+                  </div>-->
+                    <f7-list-item smart-select title="负债情况" class="select-box">
+                    <!-- Select with values inside -->
+                        <select v-model="selectDebt" name="activityType">
+                        <option disabled>{{selectDebt}}</option>
+                        <option v-for="itemmenu in this.l_debt_data" 
+                                                :key="itemmenu.value" :value="itemmenu.value">
+                                                {{itemmenu.value}}</option>
+                        </select>
+                    </f7-list-item>
               </f7-block>
               <f7-block>
-                  <div class="mybox">
+                    <!--<div class="mybox">
                       <div class="mylabelbox">
                           <f7-label><font class="mylabelfont">健康情况</font></f7-label>
                       </div>
@@ -862,10 +945,20 @@ div.gap{
                                 {{itemmenu.value}}</option>
                             </select>
                       </div>
-                  </div>
+
+                  </div>-->
+                    <f7-list-item smart-select title="健康情况" class="select-box">
+                    <!-- Select with values inside -->
+                        <select v-model="selectHealthy" name="activityType">
+                        <option disabled>{{selectHealthy}}</option>
+                        <option v-for="itemmenu in this.l_health_data" 
+                                                :key="itemmenu.value" :value="itemmenu.value">
+                                                {{itemmenu.value}}</option>
+                        </select>
+                    </f7-list-item>
               </f7-block>
               <f7-block>
-                  <div class="mybox">
+                    <!--<div class="mybox">
                       <div class="mylabelbox">
                           <f7-label><font class="mylabelfont">学习计划</font></f7-label>
                       </div>
@@ -877,7 +970,16 @@ div.gap{
                                 {{itemmenu.value}}</option>
                             </select>
                       </div>
-                  </div>
+                  </div>-->
+                    <f7-list-item smart-select title="学习计划" class="select-box">
+                    <!-- Select with values inside -->
+                        <select v-model="selectStudySchedules" name="activityType">
+                        <option disabled>{{selectStudySchedules}}</option>
+                        <option v-for="itemmenu in this.l_yesorno_data" 
+                                                :key="itemmenu.value" :value="itemmenu.value">
+                                                {{itemmenu.value}}</option>
+                        </select>
+                    </f7-list-item>
               </f7-block>
             </f7-accordion-content>
         </f7-list-item>
@@ -900,36 +1002,10 @@ div.gap{
               <f7-block>
                   <div class="mybox">
                       <div class="mylabelbox">
-                          <f7-label><font class="mylabelfont">是否读经</font></f7-label>
-                      </div>
-                      <div class="myinputbox">
-                          <f7-input type="select" :value="selectReadingHabit" @change="selectReadingHabit = $event.target.value">
-                              <option  v-for="(itemmenu, index) in this.l_yesorno_data" :key="index">
-                              {{itemmenu.value}}</option>
-                          </f7-input>
-                      </div>
-                  </div>
-              </f7-block>
-              <f7-block>
-                  <div class="mybox">
-                      <div class="mylabelbox">
                           <f7-label><font class="mylabelfont">读经情况</font></f7-label>
                       </div>
                       <div class="myinputbox">
                           <input type="tel" dir="rtl" v-model="l_reading" clear-button>
-                      </div>
-                  </div>
-              </f7-block>
-              <f7-block>
-                  <div class="mybox">
-                      <div class="mylabelbox">
-                          <f7-label><font class="mylabelfont">是否祷告</font></f7-label>
-                      </div>
-                      <div class="myinputbox">
-                          <f7-input type="select" :value="selectPrayers" @change="selectPrayers = $event.target.value">
-                              <option  v-for="(itemmenu, index) in this.l_yesorno_data" :key="index">
-                              {{itemmenu.value}}</option>
-                          </f7-input>
                       </div>
                   </div>
               </f7-block>
@@ -946,36 +1022,10 @@ div.gap{
               <f7-block>
                   <div class="mybox">
                       <div class="mylabelbox">
-                          <f7-label><font class="mylabelfont">是否服侍</font></f7-label>
-                      </div>
-                      <div class="myinputbox">
-                          <f7-input type="select" :value="selectSelfService" @change="selectSelfService = $event.target.value">
-                              <option  v-for="(itemmenu, index) in this.l_yesorno_data" :key="index">
-                              {{itemmenu.value}}</option>
-                          </f7-input>
-                      </div>
-                  </div>
-              </f7-block>
-              <f7-block>
-                  <div class="mybox">
-                      <div class="mylabelbox">
                           <f7-label><font class="mylabelfont">服侍情况</font></f7-label>
                       </div>
                       <div class="myinputbox">
                           <input type="tel" dir="rtl" v-model="l_service" clear-button>
-                      </div>
-                  </div>
-              </f7-block>
-              <f7-block>
-                  <div class="mybox">
-                      <div class="mylabelbox">
-                          <f7-label><font class="mylabelfont">是否异端戒备</font></f7-label>
-                      </div>
-                      <div class="myinputbox">
-                          <f7-input type="select" :value="selectVigilant" @change="selectVigilant = $event.target.value">
-                              <option  v-for="(itemmenu, index) in this.l_yesorno_data" :key="index">
-                              {{itemmenu.value}}</option>
-                          </f7-input>
                       </div>
                   </div>
               </f7-block>
