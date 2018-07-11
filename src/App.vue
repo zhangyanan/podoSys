@@ -141,51 +141,62 @@ export default {
   <div id="app">
     <f7-panel left reveal>
       <f7-block-title>我是左侧面板</f7-block-title>
-          <f7-page>
-            <div class = "myItem_div">
-              <div v-if="this.loginSuccess == 1">
-                  <f7-link panel-close href="/userItem/">
-                    <img  class = "di_icon" src="@/assets/icon_all/yang.png" />
-                  </f7-link>
-                  <div class = "headidentity">
-                      <p class = "rcorners1"></p>
-                      <label class = "useridentity_font">{{l_ret_personal_gg_s.datas[0].阶段}}</label>                
-                  </div>
-                  <div class = "username_1">
-                      <label class = "namescolor_1">{{l_ret_personal_imf_s.datas[0].姓名}}</label>
-                  </div>
-                  <div class = "username_2">
-                      <label class = "namescolor_2">{{l_ret_personal_imf_s.datas[0].微信}}</label>
-                  </div>
-                  <div class = "mysearchbox">
-                      <div class = "searchbody" >
-                          <input type="text" placeholder="手机/微信/姓名" v-model="search_msg">
+          <f7-page class="myItem-page">
+            <f7-list class="myItem-list" v-if="this.loginSuccess == 1">
+              <f7-list-item>
+                  <f7-row no-gap>
+                      <f7-col>
+                          <f7-link panel-close href="/userItem/">                    
+                          <img src="@/assets/icon_all/shizi.png"/>
+                          </f7-link>
+                      </f7-col>
+                      <f7-col>
+                          <div class="userstatus"><span>{{l_ret_personal_gg_s.datas[0].阶段}}</span></div>
+                      </f7-col>
+                  </f7-row>         
+              </f7-list-item>
+              <f7-list-item class="li-username">
+                <span class="username">{{l_ret_personal_imf_s.datas[0].姓名}}</span>
+              </f7-list-item>
+              <f7-list-item class="li-userwechat">
+              <span class="userwechat">{{l_ret_personal_imf_s.datas[0].微信}}</span>
+              </f7-list-item>
+              <f7-list-item class="search">            
+                  <div class="item-input-wrap">
+                      <input type="text" placeholder="搜索手机/微信/姓名" v-model="search_msg">
+                      <div slot="media" class="search-div">
+                          <f7-link @click="onSearch(search_msg)"><img class="search-icon" src="@/assets/icon_all/search_blue.png"/></f7-link>
                       </div>
-                      <div class = "searchicon">
-                          <a href="#" @click="onSearch(search_msg)"><img  src="@/assets/icon_all/search_green.png"/></a>
-                      </div>
                   </div>
-                  <img class = "menuicon_1" src="@/assets/icon_all/panel_concert.png" />
-                
-                  <f7-link  class = "menutitle_1"  @click="gotoOurGGList()">协力
-                  </f7-link>
-
-                  <img class = "menuicon_2" src="@/assets/icon_all/panel_favorite.png" />
-                  <f7-link  class = "menutitle_2" @click="gotoFavoriteGGList()">收藏
-                  </f7-link>
-                  <img class = "menuicon_3" src="@/assets/icon_all/panel_notification.png" />
-                  <a class = "menutitle_3" v-bind:href="notification_url">通知</a>
-
-
-                  <img class = "menuicon_4" src="@/assets/icon_all/panel_setting.png" />
-                  <a class = "menutitle_4" v-bind:href="setting_url">设置</a>
-
-                  <img class = "menuicon_5" src="@/assets/icon_all/panel_logout.png" />
-                  <a class = "menutitle_5" href="/list/">退出</a>
-              </div>
-          </div>
-      </f7-page>  
-    </f7-panel>
+              </f7-list-item>
+              <f7-list-item class="panel_menu" @click="gotoOurGGList()" title="协力">
+                  <div slot="media">
+                    <img class="help-icon" src="@/assets/icon_all/panel_concert.png"/>
+                  </div>
+              </f7-list-item>
+              <f7-list-item class="panel_menu" @click="gotoFavoriteGGList()" title="收藏">
+                  <div slot="media">
+                    <img class="help-icon" src="@/assets/icon_all/panel_favorite.png"/>
+                  </div>
+              </f7-list-item>
+              <f7-list-item class="panel_menu" link="#" title="通知">
+                  <div slot="media">
+                    <img class="help-icon" src="@/assets/icon_all/panel_notification.png"/>
+                  </div>
+              </f7-list-item>
+              <f7-list-item class="panel_menu" link="#" title="设置">
+                  <div slot="media">
+                    <img class="help-icon" src="@/assets/icon_all/panel_setting.png"/>
+                  </div>
+              </f7-list-item>
+              <f7-list-item class="panel_menu" link="#" title="退出">
+                  <div slot="media">
+                    <img class="help-icon" src="@/assets/icon_all/panel_logout.png"/>
+                  </div>
+              </f7-list-item>
+            </f7-list>
+          </f7-page>  
+      </f7-panel>
     
       <f7-panel right cover>
         <f7-block-title>我是右侧面板</f7-block-title>
@@ -202,228 +213,112 @@ export default {
   </div>
 </template>
 
-<style>
-.myItem_div{
-    background-color: #54bcbf;
-    width: 100%;
-    height: 100%;
-}
-.mysearchbox{
-            background-color:#ffffff;
-            position: absolute;
-            width: 179px;
-            height: 39px;
-            left:31px;
-            top:288px;
-}
-.searchbody{
-            position:absolute;
-            width: 116px;
-            height: 18px;
-            margin-left:11px;
-            margin-top:9px;
-            
-}
-.searchbtn{
-            position:absolute;
-            width: 22px;
-            height: 22px;
-            margin-left: 144px;
-            margin-top:8px;
-            background-color:#ffffff;
-}
-.searchicon{
-            position:absolute;
-            width: 22px;
-            height: 22px;
-            margin-left: 144px;
-            margin-top:8px;
-}
+<style lang="scss">
+.md .myItem-list .list {
+    margin: 55px 0px 0px 0px;
 
-.di_icon{
-            position: absolute;
-            width: 99px;
-            height: 99px;
-            left:48px;
-            top:65px;
-            border-radius: 50%;
 }
-
-.headidentity{
-            position: absolute;
-            width: 39px;
-            height: 39px; 
-            left:114px;
-            top:129px;
+.myItem-page .page-content{
+    background: #54BCBF;
 }
-
-.rcorners1 {
-    border-radius: 50%;
-    background: #fcc93d;
-    position: absolute;
+div.userstatus{
     width: 39px;
-    height: 39px;    
-    left:0px;
-    top:0px;
+    height: 39px;
+    background: #FCC93D;
+    border-radius: 20px;
+    margin-left: -6px;
+    margin-top: 55px;
 }
-
-.useridentity_font{
-    position: absolute;
-    width: 27px;
-    height: 26px;    
-    left:8px;
-    top:18px;
-    color: #ffffff;
+div.userstatus span{
+    font-family: PFSquareSansPro-ExtraBlack;
     font-size: 20px;
+    color: #FFFFFF;
+    letter-spacing: -1.29px;
+    padding-left: 8px;
 }
-
-.username_1{
-            position: absolute;
-            width: 74px;
-            height: 45px;
-            left:55px;
-            top:176px;
+span.username{
+    font-family: PFSquareSansPro-Bold;
+    font-size: 22px;
+    color: #FFFFFF;
+    letter-spacing: 0;
+    line-height: 8px;
 }
-.username_2{
-            position: absolute;
-            width: 74px;
-            height: 16px;
-            left:56px;
-            top:215px;
+span.userwechat{
+    font-family: PFSquareSansPro-Light;
+    font-size: 16px;
+    color: #FFFFFF;
+    letter-spacing: 0;
 }
-
-
-
-.namescolor_1{
-            color: #ffffff;
-            font-size: 22px;
+.row{
+    margin-left: 40px;
 }
-
-.namescolor_2{
-            color: #ffffff;
-            font-size: 16px;
+li.li-username{
+   margin-left: 47px;
+   margin-top: -5px;
 }
-
-.md a{
-    color: #ffffff;
+li.li-userwechat{
+    margin-left: 40px;
+    margin-top: -25px;
 }
-.menuicon_1{
-            position: absolute;
-            width: 17px;
-            height: 21px;
-            left:54px;
-            top:365px;
+.md .list .item-inner:after{
+    background: #54BCBF;
 }
-
-.menutitle_1{
-            position: absolute;
-            width: 118px;
-            height: 21px;
-            left:87px;
-            top:367px;
-            color: #ffffff;
-            font-size: 16px;
-            font-weight: 600;
-            text-decoration:none;
+list ul li{
+    border:solid 1px #54BCBF;
 }
+.panel_menu{
 
-.menuicon_2{
-            position: absolute;
-            width: 18.7px;
-            height: 18px;
-            left:53.6px;
-            top:423.3px;
 }
-
-.menutitle_2{
-            position: absolute;
-            width: 118px;
-            height: 21px;
-            left:87px;
-            top:422px;
-            color: #ffffff;
-            font-size: 16px;
-            font-weight: 800;
-            text-decoration:none;
+.md .list .item-media {
+    padding-top: 13px;
+    min-width: 40px;
+    padding-left: 50px;
 }
-
-.menuicon_3{
-            position: absolute;
-            width: 20px;
-            height: 16px;
-            left:53px;
-            top:481px;
+div.item-title{
+    font-family: PingFangSC-Semibold;
+    font-size: 16px;
+    color: #FFFFFF;
+    letter-spacing: 0;
+    line-height: 21px;
 }
-
-.menutitle_3{
-            position: absolute;
-            width: 118px;
-            height: 21px;
-            left:87px;
-            top:478px;
-            color: #ffffff;
-            font-size: 16px;
-            font-weight: 600;
-            text-decoration:none;
+.md .list input[type=text]{
+    width:179px;
+    height: 39px;
+    line-height: 39px;
+    background: #FFFFFF;
+    border-radius:4px;
+    margin-left: 30px;
+    color: #54BCBF;
 }
-
-.menuicon_4{
-            position: absolute;
-            width: 18.4px;
-            height: 20px;
-            left:53.8px;
-            top:533px;
+ input::-webkit-input-placeholder {
+    /* placeholder颜色  */
+    color: #54BCBF;
+    /* placeholder字体大小  */
+    font-size: 16px;
+    /* placeholder位置  */
+    text-align: left;
+    font-family: PingFangSC-Regular;
+    font-size: 16px;
+    letter-spacing: 0;
+    line-height: 21px;
+    padding-left: 15px;
+    }
+div.search-div{
+    width:25px;
+    height: 25px;
+    margin-left: 183px;
+    margin-top: -31px;
 }
-
-.menutitle_4{
-            position: absolute;
-            width: 118px;
-            height: 21px;
-            left:87px;
-            top:533px;
-            color: #ffffff;
-            font-size: 16px;
-            font-weight: 600;
-            text-decoration:none;
+li.panel_menu{
+    padding-top: 15px;
 }
-
-.menuicon_5{
-            position: absolute;
-            width: 19.4px;
-            height: 18.1px;
-            left:53px;
-            top:586.9px;
+.md .list ul:before{
+    background-color: #54BCBF;
 }
-
-.menutitle_5{
-            position: absolute;
-            width: 118px;
-            height: 21px;
-            left:87px;
-            top:585px;
-            color: #ffffff;
-            font-size: 16px;
-            font-weight: 600;
-            text-decoration:none;
+.md .list ul:after{
+    background-color: #54BCBF;
 }
-
-.top_part{
-            position: absolute;
-            top:0px;
-            height: 285px;
-            width: 100%;
-            opacity:1;
-}
-
-.bottom_part{
-            position: absolute;
-            top:285px;
-            width: 100%;
-            opacity:1;
-}
-
-.md a {
-    color: #ffffff
+.md .item-input-wrap:after{
+    background-color: #54BCBF;
 }
 </style>
-

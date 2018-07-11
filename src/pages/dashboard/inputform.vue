@@ -1,9 +1,10 @@
 <!-- 当前页面名称： 登陆页面-->
 <template>
 <f7-page>
-    <f7-row no-gap class="input-row">
+    <!--<f7-row no-gap class="input-row">-->
+      <f7-row no-gap>
       <f7-col width="40">
-        <f7-list>
+        <f7-list class="login-list">
           <f7-list-item class="shape-li">
             <img class="shape" src="@/assets/icon_all/SHAPE-2.png"/>
           </f7-list-item>
@@ -97,7 +98,7 @@
     margin-left: 60px;
     padding-top: 10px;
   }
-  .md .list {
+  .md  .login-list .list{
       margin: 0px;
   }
   .list .item-inner{

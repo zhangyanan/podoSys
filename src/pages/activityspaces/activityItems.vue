@@ -373,8 +373,12 @@ $$('#my-range').on('range:change', function (e, range) {
             position: absolute;
             width:100%;
             height: 140px;
-            left:0px;
-            top:50px;
+            top:0px;
+            margin-left: 12px;
+            margin-right: 12px;
+            border-style:solid; 
+            border-width:1px;
+            border-color:rgb(194, 191, 191);
 }
 
 .divresponse2   {
@@ -695,17 +699,22 @@ $$('#my-range').on('range:change', function (e, range) {
                     </f7-list-item>
 
                     <f7-list-item class="list3item1"> 
-                        <div class = "divresponse"> 
-                            <!--<div class = "divresponse2">-->
-                                <textarea type="text" :value="inputresponse" @input="inputresponse = $event.target.value"></textarea>             
-                            <!--</div>-->
+                        <div class="mybox3">
+                            <div class = "divresponse"> 
+                                <!--<div textareaclass = "divresponse2">-->
+                                    <input type="text" :value="inputresponse" @input="inputresponse = $event.target.value">           
+                                <!--</div>-->
+                            </div>
                         </div>
                     </f7-list-item>
                  
-                    <f7-list-item>                
-                        <f7-link href="#" class="menu_foot" id = "title_font_middle" @click="comfirmActivityData()">完成</f7-link>             
-                    </f7-list-item>     
+                      
 
+            </f7-list>
+            <f7-list>
+                <f7-list-item class="list3item1">             
+                        <f7-link href="#" class="menu_foot" id = "title_font_middle" @click="comfirmActivityData()">完成</f7-link>             
+                </f7-list-item>   
             </f7-list>
             </div>
         </f7-row>
