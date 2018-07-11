@@ -49,20 +49,8 @@
             </a>
           </li>
         </div>
-        
-       
-        
-        
       </ul>
     </div>
-      <!-- Left Panel with Reveal effect -->
-      <f7-panel left reveal>
-        <img src="@/assets/img1.jpg"/>
-      </f7-panel>
-      <!-- Right Panel with Cover effect and dark layout -->
-      <f7-panel right cover layout="dark">
-        <img src="@/assets/img2.jpg"/>
-      </f7-panel>
   </f7-page>
 </template>
 <style lang="scss" scoped>

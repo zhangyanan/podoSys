@@ -1,7 +1,7 @@
 <!-- 当前页面名称： 登陆页面-->
 <template>
 <f7-page>
-    <f7-row no-gap>
+    <f7-row no-gap class="input-row">
       <f7-col width="40">
         <f7-list>
           <f7-list-item class="shape-li">
@@ -67,7 +67,8 @@
 
 </script>
 <style lang="scss">
-  div.row.no-gap {
+  //div.row.no-gap 
+  .input-row{
     margin-top: 0px;
   }
   div.list.text-list{
