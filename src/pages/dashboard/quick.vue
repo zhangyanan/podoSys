@@ -475,4 +475,7 @@ import { mapState, mapGetters, mapActions, mapMutations, Store } from 'vuex'
   div.dialog-text{
       margin-left: 20px;
   }
+   .md .input-focused:after,.md .item-input-focused .item-input-wrap:after{
+    background:#FFFFFF;
+  }
 </style>
