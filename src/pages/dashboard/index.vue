@@ -12,7 +12,7 @@
           <h1 class="white">HOME</h1>
         </f7-list-item>
       </f7-list>
-      <f7-row no-gap>
+      <f7-row class="inputform" no-gap>
         <f7-col width="70">
           <f7-list class="smiler-list">
             <f7-list-item><div class="item-text"><img src="@/assets/icon_all/smiler.png" /></div></f7-list-item>
@@ -128,14 +128,8 @@
     background-color: transparent;
   }
 
-  div.row.no-gap {
+  div.row.inputform.no-gap {
       margin-top: 285px;
-  }
-  .md .row.no-gap .col-30 {
-   // padding-left: 35px;
-  }
-  .md .row.no-gap .col-70 {
-    //padding-left: 56px;
   }
   div.list.smiler-list ul li{
     height: 30px;
