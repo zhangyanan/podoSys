@@ -59,7 +59,7 @@
           </li>
         </ul>
       </div>
-      <f7-button href="#" big text="登录" fill @click="loginIn()"></f7-button>
+      <f7-button class="login_button" href="#" big text="登录" fill @click="loginIn()"></f7-button>
   </form>  
 </f7-page>
 </template>
@@ -131,7 +131,7 @@
   .md .list ul:before, .md .list ul:after, .md .item-input-wrap:after, .md .list .item-inner:after {
     background-color: transparent;
   }
-  .button, .button.button-fill, .button.button-fill.active-state {
+  a.login_button.button-fill.button-big.button {
     background-color: #54BCBF;
     margin-top: 100px;
   }
