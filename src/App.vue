@@ -213,10 +213,10 @@ export default {
   </div>
 </template>
 
+
 <style lang="scss">
 .md .myItem-list .list {
     margin: 55px 0px 0px 0px;
-
 }
 .myItem-page .page-content{
     background: #54BCBF;
