@@ -30,7 +30,7 @@
                             <div class="leafname">{{this.in_21Item_Short.引导人姓名}}</div>                            
                         </f7-list-item>
                         <f7-list-item>
-                            <div class="more">...</div>
+                            <div class="more" >...</div>
                         </f7-list-item>
                 </f7-list>
                 </f7-col>
@@ -51,7 +51,7 @@
                                 :key="index"
                                 v-if="l_retdata.datas[0][item.value] != null" :title="item.value" :text="l_retdata.datas[0][item.value]" class="staticmsgbox">
                             </f7-list-item>
-                            <f7-list-item @click="add21Item()">
+                            <f7-list-item @click="add21Item()" class="bottomcomfirm">
                                 <div v-if="relation_of_this_one == 3 || relation_of_this_one == 2" class="bottombtn">添加信息</div>
                                 <div v-else-if="relation_of_this_one == 1" class="bottombtn">取消收藏</div>
                                 <div v-else class="bottombtn">收藏</div>
@@ -65,7 +65,7 @@
                             <f7-list-item v-for="(item, index) in l_retactivitydata.datas"
                                 :key="index" :title="item.活动名称" :text="item.活动日期" @click="local_setSelectedActivity(item.键值, index)"  class="staticmsgbox">
                             </f7-list-item>
-                            <f7-list-item @click="addActivity()">
+                            <f7-list-item @click="addActivity()" class="bottomcomfirm">
                                 <div class="bottombtn">添加记录</div>
                             </f7-list-item>
                             </f7-list>
@@ -73,7 +73,7 @@
                     </f7-tab>
                     <f7-tab id="tab-3" class="page-content">
                         <f7-block>
-                            <p>Tab 32233333333333333333333333333 content</p>
+                            <p>栏目建设中，敬请期待...</p>
                         </f7-block>
                     </f7-tab>
                 </f7-tabs>
@@ -103,13 +103,13 @@
 div.list.gg-list-header{
     margin: 0px;
 }
-div.name{
+div.name {
     width: 99px;
     height: 99px;
     background: #FFFFFF;
     border-radius: 50px;
-    margin-left: 90px;
-    margin-top: -20px;
+    margin-left: 100px;
+    margin-top: 0px;
 }
 div.ggname{
     font-family: PFSquareSansPro-Bold;
@@ -154,13 +154,18 @@ img.leaf-little-icon{
     height: 13px;
     margin-left: 3px;    
 }
-div.name span{
+div.name span {
     font-family: PingFangSC-Semibold;
     font-size: 38px;
     color: #FF6D7F;
     letter-spacing: 0;
     line-height: 21px;
-    margin-left: 20px;
+    margin-left: 30px;
+    top: 45px;
+    /* left: 10px; */
+    position: abs;
+    /* display: block; */
+    position: absolute;
 }
 .item-inner img.leaf-icon{
     width:56px;
@@ -181,21 +186,45 @@ div.name span{
 }
 div.list.baseinfo{
     margin: 0px;
+   
+}
+div.list.baseinfo ul{
+    margin-top: 0px; 
+}
+
+div.list.baseinfo .staticmsgbox{
+    margin: 0px;
+    padding-left: 0px;
+}
+div.list.baseinfo .staticmsgbox .item-content{
+    margin: 0px;
+    padding-left: 30px;
 }
 
 .staticmsgbox {
     min-height: 61.5px;
     padding-left: 14px;
+    box-shadow: 0 0 0 1px rgba(74, 74, 74, 0.1);
+    background: #fff;
+}
+
+div.list.baseinfo .bottomcomfirm .item-content{
+    margin: 0px;
+    padding: 0px;
+}
+div.list.baseinfo .bottomcomfirm .item-content .item-inner{
+    margin: 0px;
+    padding: 0px;
 }
 
 .bottombtn {
     //padding-left: 120px;
     height: 60px;
     width: 100%;
-    text-align: center;
-    vertical-align: middle;
     background: #FF6D7F;
     color: #fff;
+    text-align: center;
+    line-height: 60px;
 }
 </style>
 <!-- 当前页面名称： 蝈蝈信息-->

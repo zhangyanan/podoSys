@@ -304,13 +304,14 @@ $$('#my-range').on('range:change', function (e, range) {
             background: #ffffff;
 }
 
-#menu_font_1{
-            position: absolute;
-            width: 199px;
-            height: 21px;
-            left:12px;
-            top:16px;
-            font-size: 14px;
+#menu_font_1 {
+    position: absolute;
+    width: calc(100% - 12px);
+    height: calc(100% - 16px);
+    top: 16px;
+    font-size: 14px;
+    padding-left: 12px;
+    border-bottom: solid 1px rgba(74, 74, 74, 0.1);
 }
 
 
@@ -371,20 +372,30 @@ $$('#my-range').on('range:change', function (e, range) {
 
 .divresponse    {
             position: absolute;
-            width:100%;
+            width: calc(100% - 24px);
             height: 140px;
-            left:0px;
-            top:50px;
+            top:0px;
+            margin-left: 12px;
+            margin-right: 12px;
+            border-style:solid; 
+            border-width:1px;
+            border-color:rgb(194, 191, 191);
+            color: #000000;
 }
 
-.divresponse2   {
-            position: absolute;
-            width:70%;
-            height: 70%;
-            left:17px;
-            top:17px;
+.md .list .inputdiv {
+    color: #000000;
+    
 }
-
+.md .list input[type=text] {
+    width: calc(100% - 11.5px);
+    height: calc(100% - 13px);
+    background: #FFFFFF;
+    border-radius: 4px;
+    margin-left: 11.5px;
+    margin-top:13px;
+    color: #000000;
+}
 .divtitle   {
             position: absolute;
             width: 328px;
@@ -417,12 +428,21 @@ $$('#my-range').on('range:change', function (e, range) {
 
 .menu_foot   {
             position: absolute;
-            width: 40px;
-            height: 28px;
-            left:157px;
+            width: calc(100% - 22px);
+            height: 60px;
+            left:11px;
+            right:11px;
             top:30px;
+            background: #54BCBF;
+            color: #ffffff;
+            text-align: center;
+            line-height: 60px;
+            font-size: 20px;
 }
 
+.md .menu_foot a {
+            color:#FFFFFF
+}
 .inputname  {
             position: absolute;
             width: 140px;
@@ -469,27 +489,9 @@ $$('#my-range').on('range:change', function (e, range) {
             background-color:cornsilk
 }
 
-.test{
-            position: absolute;
-            width: 100%;
-            height: 140px;
-            left:0px;
-            top:1804px;
-            background: #FF6D7F;
-}
-
-.bottombtn{
-            position: absolute;
-            width: 100%;
-            height: 60px;
-            left:0px;
-            top:2004px;
-            background: #FF6D7F;
-}
-
-
 .activity-row-header{
             background: #FF6D7F;
+            height: 87px;
 }
 
 .activity-row-body{
@@ -522,7 +524,8 @@ $$('#my-range').on('range:change', function (e, range) {
 }
 
 .activity-row-body .list{
-    width: 100%
+    width: 100%;
+    margin: 0;
 }
 
 .activitylist {
@@ -537,10 +540,15 @@ $$('#my-range').on('range:change', function (e, range) {
     padding-left: 0px;
 }
 
+.md .activity-row-body .list-2 {
+    margin:0px;
+}
 .md .list .list-2-item-1 .item-content {
     padding-left: 0px;
 }
-
+.md .list .list-2-item-1 .item-inner{
+    padding: 0px;
+}
 .md .list .list-3-item-1 .item-content {
     padding-left: 0px;
 }
@@ -550,7 +558,29 @@ $$('#my-range').on('range:change', function (e, range) {
 }
 
 .md .list .list3item1 .item-inner{
-    padding-right: 0px;
+    padding: 0px;
+    margin: 0px;
+}
+
+.md .list .list3item2 .item-content{
+    padding-left: 0px;
+    min-height: 165px;
+}
+
+.md .list .list3item2 .item-inner{
+    padding: 0px;
+    margin: 0px;
+}
+
+.md .list .list4item1 .item-content{
+    padding-left: 0px;
+    min-height: 149px;
+}
+
+.md .list .list4item1 .item-inner{
+    padding: 0px;
+    margin: 0px;
+    background: #EFF0F4;
 }
 
 .md .list .list-3-3-item-3 .item-content{
@@ -616,6 +646,7 @@ $$('#my-range').on('range:change', function (e, range) {
     text-align: right;
     margin-right: 9px;
     }
+
 </style>
 <template>
   <f7-page>
@@ -694,18 +725,25 @@ $$('#my-range').on('range:change', function (e, range) {
                         </div>  
                     </f7-list-item>
 
-                    <f7-list-item class="list3item1"> 
-                        <div class = "divresponse"> 
-                            <!--<div class = "divresponse2">-->
-                                <textarea type="text" :value="inputresponse" @input="inputresponse = $event.target.value"></textarea>             
-                            <!--</div>-->
+                    <f7-list-item class="list3item2"> 
+                        <div class="mybox3">
+                            <div class = "divresponse"> 
+                                <!--<div textareaclass = "divresponse2">-->
+                                    <input class="inputdiv" type="text" :value="inputresponse" @input="inputresponse = $event.target.value">           
+                                <!--</div>-->
+                            </div>
                         </div>
                     </f7-list-item>
                  
-                    <f7-list-item>                
-                        <f7-link href="#" class="menu_foot" id = "title_font_middle" @click="comfirmActivityData()">完成</f7-link>             
-                    </f7-list-item>     
+                      
 
+            </f7-list>
+            <f7-list class="list-4">
+                <f7-list-item class="list4item1">   
+                        <div class="menu_foot">      
+                            <f7-link @click="comfirmActivityData()">完成</f7-link>    
+                        </div>         
+                </f7-list-item>   
             </f7-list>
             </div>
         </f7-row>

@@ -1,9 +1,10 @@
 <!-- 当前页面名称： 登陆页面-->
 <template>
 <f7-page>
-    <f7-row no-gap class="input-row">
+    <!--<f7-row no-gap class="input-row">-->
+      <f7-row no-gap>
       <f7-col width="40">
-        <f7-list>
+        <f7-list class="login-list">
           <f7-list-item class="shape-li">
             <img class="shape" src="@/assets/icon_all/SHAPE-2.png"/>
           </f7-list-item>
@@ -67,7 +68,7 @@
 
 </script>
 <style lang="scss">
-  //div.row.no-gap 
+  
   .input-row{
     margin-top: 0px;
   }
@@ -96,21 +97,24 @@
   div.item-text-green-img{
     margin-left: 60px;
     padding-top: 10px;
-  }
-  .md .list {
-      margin: 0px;
-  }
-  .list .item-inner{
-    padding: 0px;
-  }
+  } 
   .md .inline-labels .item-label{
     padding-top: 20px
   }
-  .md .list ul.down .item-inner{
-    margin-top: 70px;
-    text-align:right;
-    margin-right: 20px;
+  div.inline-labels{
+    padding-top: 30px;
   }
+  div.inline-labels ul li{
+    border-top: 1px solid #ECECEC;
+    height: 70px;
+  }
+  span.icon-image{
+    margin-right: 10px;
+  }
+  
+ 
+ 
+  
   .login {
     padding: 0px;
     text-align: center;
@@ -127,6 +131,19 @@
       border: 1px solid red;
       margin-bottom: 0px;
     }
+  }
+  /*
+   .md .list .login-list .item-content{
+      margin: 0px;
+  }
+  .list .login-list .item-inner{
+    padding: 0px;
+  }
+
+  .md .list ul.down .item-inner{
+    margin-top: 70px;
+    text-align:right;
+    margin-right: 20px;
   }
   .md .list ul:before, .md .list ul:after, .md .item-input-wrap:after, .md .list .item-inner:after {
     background-color: transparent;
@@ -155,16 +172,7 @@
     width:200px;
     height: 200px;
   }
-  div.inline-labels{
-    padding-top: 30px;
-  }
-  div.inline-labels ul li{
-    border-top: 1px solid #ECECEC;
-    height: 70px;
-  }
-  span.icon-image{
-    margin-right: 10px;
-  }
+  
   li.shape-li{
     width: 150px;
   }
@@ -230,7 +238,7 @@
   }
   .md .input-focused:after,.md .item-input-focused .item-input-wrap:after{
     background:#FFFFFF;
-  }
+  }*/
 </style>
 
 

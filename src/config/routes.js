@@ -6,9 +6,9 @@ import wheatListPage from '@/pages/wheat/wheatlist'
 import errorPage from '@/pages/common/error'
 import myItemPage from '@/pages/userDetail/myItem'
 import userItemPage from '@/pages/userDetail/userItem'
-import userListPage from '@/pages/userDetail/userlist'
+import userListPage from '@/pages/userDetail/editinfo'
 import ggFilePage from '@/pages/wheat/gg'
-import allListPage from '@/pages/wheat/alllist'
+import allListPage from '@/pages/wheat/gglibrary'
 import activityItemsPage from '@/pages/activityspaces/activityItems'
 import ggStatusPage from '@/pages/wheat/ggstatus'
 import searchListPage  from '@/pages/wheat/searchList'
@@ -20,6 +20,7 @@ import ggPage from '@/pages/wheat/gg'
 import gglibrary from '@/pages/wheat/gglibrary'
 import itemPage from '@/pages/wheat/item'
 import editinfoPage from '@/pages/userDetail/editinfo'
+
 
 export default [
   {
