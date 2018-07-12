@@ -60,7 +60,6 @@
             <f7-button raised panel-open="left"><img src="@/assets/icon_all/pull_out@2x.png"/></f7-button>
           </span>
       </label>
-      <label class="site-title">|</label>
       <label class="content-title">{{title}}</label>
     </f7-nav-title>
     <f7-nav-right>

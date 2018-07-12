@@ -143,8 +143,8 @@ export default {
       <f7-block-title>我是左侧面板</f7-block-title>
           <f7-page class="myItem-page">
             <f7-list class="myItem-list" v-if="this.loginSuccess == 1">
-              <f7-list-item>
-                  <f7-row no-gap>
+              <f7-list-item class="myItem-list-item">
+                  <f7-row no-gap class="app-row">
                       <f7-col>
                           <f7-link panel-close href="/userItem/">                    
                           <img src="@/assets/icon_all/shizi.png"/>
@@ -179,17 +179,17 @@ export default {
                     <img class="help-icon" src="@/assets/icon_all/panel_favorite.png"/>
                   </div>
               </f7-list-item>
-              <f7-list-item class="panel_menu" link="#" title="通知">
+              <f7-list-item class="panel_menu" title="通知">
                   <div slot="media">
                     <img class="help-icon" src="@/assets/icon_all/panel_notification.png"/>
                   </div>
               </f7-list-item>
-              <f7-list-item class="panel_menu" link="#" title="设置">
+              <f7-list-item class="panel_menu" title="设置">
                   <div slot="media">
                     <img class="help-icon" src="@/assets/icon_all/panel_setting.png"/>
                   </div>
               </f7-list-item>
-              <f7-list-item class="panel_menu" link="#" title="退出">
+              <f7-list-item class="panel_menu" title="退出">
                   <div slot="media">
                     <img class="help-icon" src="@/assets/icon_all/panel_logout.png"/>
                   </div>
@@ -221,13 +221,24 @@ export default {
 .myItem-page .page-content{
     background: #54BCBF;
 }
+
+.md .list .myItem-list-item .item-content {
+    padding-left: 48px;
+}
+
+.md .list .search .item-content {
+    padding-left: 0px;
+}
+
 div.userstatus{
     width: 39px;
     height: 39px;
     background: #FCC93D;
     border-radius: 20px;
-    margin-left: -6px;
-    margin-top: 55px;
+    left: 60px;
+    top: 75px;
+    position: absolute;
+    z-index: 1;
 }
 div.userstatus span{
     font-family: PFSquareSansPro-ExtraBlack;
@@ -249,7 +260,7 @@ span.userwechat{
     color: #FFFFFF;
     letter-spacing: 0;
 }
-.row{
+.row .app-row{
     margin-left: 40px;
 }
 li.li-username{
@@ -269,12 +280,12 @@ list ul li{
 .panel_menu{
 
 }
-.md .list .item-media {
+.md .list .myItem-list .item-media {
     padding-top: 13px;
     min-width: 40px;
     padding-left: 50px;
 }
-div.item-title{
+div .myItem-list .item-title{
     font-family: PingFangSC-Semibold;
     font-size: 16px;
     color: #FFFFFF;
