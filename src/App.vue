@@ -140,7 +140,6 @@ export default {
 <template>
   <div id="app">
     <f7-panel left reveal>
-      <f7-block-title>我是左侧面板</f7-block-title>
           <f7-page class="myItem-page">
             <f7-list class="myItem-list" v-if="this.loginSuccess == 1">
               <f7-list-item class="myItem-list-item">
