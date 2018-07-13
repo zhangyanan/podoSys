@@ -285,7 +285,7 @@ import { mapState, mapGetters, mapActions, mapMutations, Store } from 'vuex'
   .md .quick-form .list {
       margin: 0px;
   }
-    .md .list .item-media+.item-inner {
+    .md .quick .list .item-media+.item-inner {
         margin-left: -20px;
     }
   .quick-form {
@@ -386,7 +386,7 @@ import { mapState, mapGetters, mapActions, mapMutations, Store } from 'vuex'
     padding-right: 15px;
   }
   p.gender-p{
-    margin-left: 50px;
+    margin-left: 30px;
     font-family: PingFangSC-Semibold;
     font-size: 16px;
     color: #4A4A4A;
