@@ -1,19 +1,21 @@
+<!-- 当前页面名称： 蝈蝈列表 收藏列表 协力列表 搜索列表 -->
 <template>
 <f7-page>
   <v-asideheader title=''></v-asideheader>
-  <f7-list media-list class="gglibrary">
-    <f7-list-item link="#" class="sw-bg">
-       <div slot="subtitle" class="ggname">赵鸿祎</div>         
+  <f7-list v-if="this.l_ret_gg_imf_s != null" media-list class="gglibrary">
+    <f7-list-item v-for="(item, index) in this.l_ret_gg_imf_s.datas" :key="index" 
+              @click="local_setSelectedGG(item.键值, index)" :class="item.阶段 + '-bg'">
+       <div slot="subtitle" class="gglib-ggname">{{item.姓名}}</div>         
        <div slot="media">
-         <div class="name-bg-sw"><span class="surname">赵</span></div>
+         <div :class="'name-bg-' +item.阶段" ><span class="surname">{{item.姓名.substr(0,1)}}</span></div>
        </div>
       <div slot="subtitle">
         <div class="row">
-            <div class="col-50">zhaohongwei1990</div>
+            <div class="col-50">{{item.微信}}</div>
             <div class="col-50">
               <div class="item-title-row">
-                <div class="chip color-red">
-                    <div class="chip-label">SW</div>
+                <div :class="'chip color-' + item.阶段">
+                    <div class="chip-label">{{item.阶段}}</div>
                 </div>
               </div>
             </div>
@@ -23,20 +25,20 @@
           <div class="row nogap">
               <div class="col-40">
                 <div class="row">
-                  <div class="col-20"><span class="phone-icon-red"><img src="@/assets/icon_all/listicon_SW1.png"/></span></div>
-                  <div class="col-80"><span class="phone">13524677323</span></div>
+                  <div class="col-20"><span :class="'phone-icon-' + item.阶段"><img v-bind:src="'@/assets/icon_all/listicon_' + item.阶段 + '1.png'"/></span></div>
+                  <div class="col-80"><span class="phone">{{item.手机}}</span></div>
                 </div>
               </div>
               <div class="col-20">
                 <div class="row">
-                  <div class="col-50"><span class="gender-icon-red"><img src="@/assets/icon_all/listicon_SW2.png"/></span></div>
-                  <div class="col-50"><span class="gender">女</span></div>
+                  <div class="col-50"><span :class="'gender-icon-' + item.阶段"><img v-bind:src="'@/assets/icon_all/listicon_' + item.阶段 + '2.png'"/></span></div>
+                  <div class="col-50"><span class="gender">{{item.性别}}</span></div>
                 </div>
               </div>
               <div class="col-40">
                 <div class="row">
-                  <div class="col-20"><span class="date-icon-red"><img src="@/assets/icon_all/listicon_SW3.png"/></span></div>
-                  <div class="col-80"><span class="date">2018.08.10</span></div>
+                  <div class="col-20"><span :class="'date-icon-' + item.阶段"><img v-bind:src="'@/assets/icon_all/listicon_' + item.阶段 + '3.png'"/></span></div>
+                  <div class="col-80"><span class="date">{{item.涉外时间}}</span></div>
                 </div>
               </div>
           </div>
@@ -45,198 +47,22 @@
           <div class="div-border"></div>
        </div>
     </f7-list-item>
-
-    <f7-list-item link="#" class="st-bg">
-       <div slot="subtitle" class="ggname">宋美月</div>         
-       <div slot="media">
-         <div class="name-bg-st"><span class="surname">宋</span></div>
-       </div>
-      <div slot="subtitle">
-        <div class="row">
-            <div class="col-50">lucyQueen</div>
-            <div class="col-50">
-              <div class="item-title-row">
-                <div class="chip color-green">
-                    <div class="chip-label">ST</div>
-                </div>
-              </div>
-            </div>
-        </div>
-      </div>
-       <div slot="text">
-          <div class="row nogap">
-              <div class="col-40">
-                <div class="row">
-                  <div class="col-20"><span class="phone-icon-green"><img src="@/assets/icon_all/listicon_green1.png"/></span></div>
-                  <div class="col-80"><span class="phone">13524677323</span></div>
-                </div>
-              </div>
-              <div class="col-20">
-                <div class="row">
-                  <div class="col-50"><span class="gender-icon-green"><img src="@/assets/icon_all/listicon_green2.png"/></span></div>
-                  <div class="col-50"><span class="gender">女</span></div>
-                </div>
-              </div>
-              <div class="col-40">
-                <div class="row">
-                  <div class="col-20"><span class="date-icon-green"><img src="@/assets/icon_all/listicon_green3.png"/></span></div>
-                  <div class="col-80"><span class="date">2018.08.10</span></div>
-                </div>
-              </div>
-          </div>
-       </div>
-       <div slot="root-end">
-          <div class="div-border"></div>
-       </div>
-    </f7-list-item>
-
-    <f7-list-item link="#" class="ff-bg">
-       <div slot="subtitle" class="ggname">刘曾涛</div>         
-       <div slot="media">
-         <div class="name-bg-ff"><span class="surname">刘</span></div>
-       </div>
-      <div slot="subtitle">
-        <div class="row">
-            <div class="col-50">taoTao231</div>
-            <div class="col-50">
-              <div class="item-title-row">
-                <div class="chip color-orange">
-                    <div class="chip-label">FF</div>
-                </div>
-              </div>
-            </div>
-        </div>
-      </div>
-       <div slot="text">
-          <div class="row nogap">
-              <div class="col-40">
-                <div class="row">
-                  <div class="col-20"><span class="phone-icon-orange"><img src="@/assets/icon_all/listicon_orange1.png"/></span></div>
-                  <div class="col-80"><span class="phone">13524677323</span></div>
-                </div>
-              </div>
-              <div class="col-20">
-                <div class="row">
-                  <div class="col-50"><span class="gender-icon-orange"><img src="@/assets/icon_all/listicon_orange2.png"/></span></div>
-                  <div class="col-50"><span class="gender">女</span></div>
-                </div>
-              </div>
-              <div class="col-40">
-                <div class="row">
-                  <div class="col-20"><span class="date-icon-orange"><img src="@/assets/icon_all/listicon_orange3.png"/></span></div>
-                  <div class="col-80"><span class="date">2018.08.10</span></div>
-                </div>
-              </div>
-          </div>
-       </div>
-       <div slot="root-end">
-          <div class="div-border"></div>
-       </div>
-    </f7-list-item>
-
-
-    <f7-list-item link="#" class="cj-bg">
-       <div slot="subtitle" class="ggname">吴萌萌</div>         
-       <div slot="media">
-         <div class="name-bg-cj"><span class="surname">吴</span></div>
-       </div>
-      <div slot="subtitle">
-        <div class="row">
-            <div class="col-50">zhaohongwei1990</div>
-            <div class="col-50">
-              <div class="item-title-row">
-                <div class="chip color-blue">
-                    <div class="chip-label">CJ</div>
-                </div>
-              </div>
-            </div>
-        </div>
-      </div>
-       <div slot="text">
-          <div class="row nogap">
-              <div class="col-40">
-                <div class="row">
-                  <div class="col-20"><span class="phone-icon-blue"><img src="@/assets/icon_all/listicon_blue1.png"/></span></div>
-                  <div class="col-80"><span class="phone">13524677323</span></div>
-                </div>
-              </div>
-              <div class="col-20">
-                <div class="row">
-                  <div class="col-50"><span class="gender-icon-blue"><img src="@/assets/icon_all/listicon_blue2.png"/></span></div>
-                  <div class="col-50"><span class="gender">女</span></div>
-                </div>
-              </div>
-              <div class="col-40">
-                <div class="row">
-                  <div class="col-20"><span class="date-icon-blue"><img src="@/assets/icon_all/listicon_blue3.png"/></span></div>
-                  <div class="col-80"><span class="date">2018.08.10</span></div>
-                </div>
-              </div>
-          </div>
-       </div>
-       <div slot="root-end">
-          <div class="div-border"></div>
-       </div>
-    </f7-list-item>
-
-    <f7-list-item link="#" class="gray-bg">
-       <div slot="subtitle" class="ggname">王恩慈</div>         
-       <div slot="media">
-         <div class="name-bg-gray"><span class="surname">王</span></div>
-       </div>
-      <div slot="subtitle">
-        <div class="row">
-            <div class="col-50">zhaohongwei1990</div>
-            <div class="col-50">
-              <div class="item-title-row">
-                <div class="chip color-gray">
-                    <div class="chip-label">BK</div>
-                </div>
-              </div>
-            </div>
-        </div>
-      </div>
-       <div slot="text">
-          <div class="row nogap">
-              <div class="col-40">
-                <div class="row">
-                  <div class="col-20"><span class="phone-icon-gray"><img src="@/assets/icon_all/listicon_black1.png"/></span></div>
-                  <div class="col-80"><span class="phone">13524677323</span></div>
-                </div>
-              </div>
-              <div class="col-20">
-                <div class="row">
-                  <div class="col-50"><span class="gender-icon-gray"><img src="@/assets/icon_all/listicon_gray2.png"/></span></div>
-                  <div class="col-50"><span class="gender">女</span></div>
-                </div>
-              </div>
-              <div class="col-40">
-                <div class="row">
-                  <div class="col-20"><span class="date-icon-gray"><img src="@/assets/icon_all/listicon_gray3.png"/></span></div>
-                  <div class="col-80"><span class="date">2018.08.10</span></div>
-                </div>
-              </div>
-          </div>
-       </div>
-       <div slot="root-end">
-          <div class="div-border"></div>
-       </div>
-    </f7-list-item>
-
   </f7-list>
 </f7-page>
 </template>
 
 <script>
 export default {
-
 }
 </script>
 
 <style>
-
+.md .list .gglibrary .gglibrary-item .item-content{
+    padding-left: 0px;
+}
 div.list.media-list.gglibrary{
   margin: 0px;
+  padding-left: 31px;
 }
 div.navbar-inner.sliding{
   height: 65px;
@@ -245,6 +71,7 @@ div.navbar-inner.sliding{
 div.list.gglibrary.media-list ul li{
   border: 0px solid #E9E9E9;
   height: 95px;
+  padding-left: 0px;
 }
 label.firstcharacter{
   margin-top: -20px;
@@ -255,7 +82,7 @@ label.firstcharacter{
   letter-spacing: 0;
   line-height: 21px;
 }
-div.ggname
+div.gglib-ggname
 {
   font-family: PingFangSC-Semibold;
   font-size: 14px;
@@ -270,65 +97,65 @@ div.item-subtitle{
   letter-spacing: 0;
   line-height: 18px;
 }
-.md .list li.sw_bg .item-after{
+.md .list li.SW_bg .item-after{
   background: #FF6D7F;
   border-radius: 32.4px;
   width: 22px;
   height: 15px;
 }
-li.sw_bg div.item-after span{
+li.SW_bg div.item-after span{
   font-family: PFSquareSansPro-Bold;
   font-size: 8px;
   color: #FFFFFF;
   letter-spacing: 0;
   line-height: 15px;
 }
-.md .list li.st_bg .item-after{
+.md .list li.ST_bg .item-after{
   background: #54BCBF;;
   border-radius: 32.4px;
   width: 22px;
   height: 15px;
 }
-li.st_bg div.item-after span{
+li.ST_bg div.item-after span{
   font-family: PFSquareSansPro-Bold;
   font-size: 8px;
   color: #FFFFFF;
   letter-spacing: 0;
   line-height: 15px;
 }
-.md .list li.ff_bg .item-after{
+.md .list li.FF_bg .item-after{
   background: #EF9F62;;
   border-radius: 32.4px;
   width: 22px;
   height: 15px;
 }
-li.ff_bg div.item-after span{
+li.FF_bg div.item-after span{
   font-family: PFSquareSansPro-Bold;
   font-size: 8px;
   color: #FFFFFF;
   letter-spacing: 0;
   line-height: 15px;
 }
-.md .list li.cj_bg .item-after{
+.md .list li.CJ_bg .item-after{
   background: #5C9FC9;;
   border-radius: 32.4px;
   width: 22px;
   height: 15px;
 }
-li.cj_bg div.item-after span{
+li.CJ_bg div.item-after span{
   font-family: PFSquareSansPro-Bold;
   font-size: 8px;
   color: #FFFFFF;
   letter-spacing: 0;
   line-height: 15px;
 }
-.md .list li.bk_bg .item-after{
+.md .list li.BLACK_bg .item-after{
   background: #9F9F9F;;
   border-radius: 32.4px;
   width: 22px;
   height: 15px;
 }
-li.bk_bg div.item-after span{
+li.BLACK_bg div.item-after span{
   font-family: PFSquareSansPro-Bold;
   font-size: 8px;
   color: #FFFFFF;
@@ -452,23 +279,35 @@ span.phone-icon-red,span.phone-icon-green,span.phone-icon-orange,span.phone-icon
     padding: 0 8px;
     margin-left: 60px;
 }
-.md .chip.color-red {
+.md .chip.color-SW {
     background: #FF6D7F;
     border-radius: 32.4px;
 }
-.md .chip.color-green {
+.md .chip.color-ST {
     background: #54BCBF;
     border-radius: 32.4px;
 }
-.md .chip.color-blue {
+.md .chip.color-CJ {
     background: #5C9FC9;
     border-radius: 32.4px;
 }
-.md .chip.color-orange {
+.md .chip.color-ZJ {
+    background: #5C9FC9;
+    border-radius: 32.4px;
+}
+.md .chip.color-GJ {
+    background: #5C9FC9;
+    border-radius: 32.4px;
+}
+.md .chip.color-FF {
     background: #EF9F62;
     border-radius: 32.4px;
 }
-.md .chip.color-gray {
+.md .chip.color-GD {
+    background: #EF9F62;
+    border-radius: 32.4px;
+}
+.md .chip.color-BLACK {
     background: #9D9D9D;
     border-radius: 32.4px;
 }
@@ -481,8 +320,7 @@ span.phone-icon-red,span.phone-icon-green,span.phone-icon-orange,span.phone-icon
     line-height: 17px;
     padding-left: 2px;
 }
-
-  .name-bg-sw{
+  .name-bg-SW{
     background-color: #FF6D7F;
     width:59px;
     height: 59px;
@@ -490,7 +328,7 @@ span.phone-icon-red,span.phone-icon-green,span.phone-icon-orange,span.phone-icon
     border-radius: 30px;
     display:table-cell;
   }
-  .name-bg-st{
+  .name-bg-ST{
     background-color: #54BCBF;
     width:59px;
     height: 59px;
@@ -498,7 +336,7 @@ span.phone-icon-red,span.phone-icon-green,span.phone-icon-orange,span.phone-icon
     border-radius: 30px;
     display:table-cell;
   }
-  .name-bg-ff{
+  .name-bg-GD{
     background-color: #EF9F62;
     width:59px;
     height: 59px;
@@ -506,7 +344,15 @@ span.phone-icon-red,span.phone-icon-green,span.phone-icon-orange,span.phone-icon
     border-radius: 30px;
     display:table-cell;
   }
-  .name-bg-cj{
+  .name-bg-FF{
+    background-color: #EF9F62;
+    width:59px;
+    height: 59px;
+    line-height: 59px;
+    border-radius: 30px;
+    display:table-cell;
+  }
+  .name-bg-CJ{
     background-color: #5C9FC9;
     width:59px;
     height: 59px;
@@ -514,7 +360,23 @@ span.phone-icon-red,span.phone-icon-green,span.phone-icon-orange,span.phone-icon
     border-radius: 30px;
     display:table-cell;
   }
-  .name-bg-gray{
+  .name-bg-ZJ{
+    background-color: #5C9FC9;
+    width:59px;
+    height: 59px;
+    line-height: 59px;
+    border-radius: 30px;
+    display:table-cell;
+  }
+  .name-bg-GJ{
+    background-color: #5C9FC9;
+    width:59px;
+    height: 59px;
+    line-height: 59px;
+    border-radius: 30px;
+    display:table-cell;
+  }
+  .name-bg-BLACK{
     background-color: #9F9F9F;
     width:59px;
     height: 59px;
@@ -533,3 +395,162 @@ span.phone-icon-red,span.phone-icon-green,span.phone-icon-orange,span.phone-icon
     background: #E9E9E9;
   }
 </style>
+<script>
+import { mapState, mapGetters, mapActions, mapMutations, Store } from 'vuex'
+export default {
+  data() {
+    return {
+            userItemUrl:"/userItem/",
+            selectOption:"",
+            selectRange:"88",
+            selectGender:"",
+            selectStudyState:"",
+            
+            b_render:0,
+            inputname:"",
+            jump_to:""
+            }
+  },
+  computed: {
+    
+    ...mapGetters('listdata',[
+        'l_retdata'
+    ]),
+    ...mapGetters('listdata',[
+      'l_ret_gg_imf_s'
+    ]),
+    ...mapGetters('listdata',[
+        'l_ret_personal_imf_s'
+    ]),
+    ...mapGetters('listdata',[
+        'l_ret_personal_favorite_s'
+    ]),
+     ...mapGetters('listdata',[
+        'l_ret_personal_favorite_list_s'
+    ]),
+    ...mapGetters('listdata',[
+      'l_ret_our_gg_imf_s'
+    ]),
+    
+    ...mapGetters('listdata',[
+        'l_ret_search_data'
+    ]),
+    ...mapGetters('datainterchange',[
+      'pageNavigation'
+    ]),
+  },
+  created () {
+    //需要一个重加载标志表明是否需要刷新
+    this.b_render = 0
+    var jump = ""
+    if(this.pageNavigation != null)
+        jump = JSON.parse(this.pageNavigation)
+    this.jump_to = jump.to
+    console.log("I'm jump from " + jump.from + " to " + jump.to)
+    //得到当前登陆用户的gg列表
+    //如果是查看自己的gg 则以自己为引导人查看
+    //this.get_my_gglist('约翰')
+    //cui 是个唯一值
+    //根据来源页面的期望加载不同的数据集
+   if(jump.to == "蝈蝈列表"){
+                              this.get_my_gglist(this.l_ret_personal_imf_s.datas[0].个人表单)
+        }else if(jump.to == "协力列表"){
+                              this.get_our_gglist(this.l_ret_personal_imf_s.datas[0].个人表单)
+        }
+        else if(jump.to == "收藏列表"){
+                              this.getPersonalFavoriteList(this.l_ret_personal_imf_s.datas[0].个人表单)
+        }
+    //this.getPersonalAccount('cui')
+    //如果是查看自己作为管理者的gg 则以自己为管理人查
+    //this.get_our_gglist('cui')
+    
+    //1s以后进行刷新
+      this.timeout(1000).then(() => {
+                console.log('in vue.timeout')
+                if(jump.to == "收藏列表")
+                {
+                  console.log('in 1')
+                  if(this.l_ret_personal_favorite_list_s != null)
+                  {
+                    this.b_render = 2
+                  }
+                  else
+                    this.b_render = 1
+                }
+                  
+                else if (jump.to == "协力列表")
+                {
+                  console.log('in 2')
+                  if(this.l_ret_our_gg_imf_s != null)
+                  {
+                    this.b_render = 2
+                  }
+                  else
+                    this.b_render = 1
+                }
+                else if (jump.to == "搜索列表")
+                {
+                    if(this.l_ret_search_data != null)
+                    {
+                      this.b_render = 2
+                    }
+                    else
+                      this.b_render = 1
+                }
+                else 
+                {
+                  if(this.l_ret_gg_imf_s != null)
+                  {
+                    
+                    this.b_render = 2
+                  }
+                  else
+                    this.b_render = 1
+                }
+      });
+  },
+  methods: {
+    ...mapActions('datainterchange',[
+      'setSelectedUser'
+    ]),
+    ...mapActions('listdata',[
+      'get_my_gglist'
+    ]),
+    ...mapActions('listdata',[
+      'get_our_gglist'
+    ]),
+    ...mapActions('listdata',[
+      'getformvaluesaccurate'
+    ]),
+    ...mapActions('listdata',[
+      'getPersonalAccount'
+    ]),
+    ...mapActions('listdata',[
+      'getPersonalFavoriteList'
+    ]),
+    ...mapActions('datainterchange',[
+      'setPageNavigation'
+    ]),
+    ...mapActions('datainterchange',[
+    'gotoPodosysAnyPage'
+    ]),
+    reflash() {
+        console.log("I'm back!")
+    },
+    timeout(ms) {
+          return new Promise((resolve) => {
+            setTimeout(resolve, ms);
+                })
+      },
+    local_setSelectedGG(keyid, index){
+      //全局设置 ggID
+      this.setSelectedUser(index)
+      //设置跳转来源
+      /*var str = '{"from":"' + this.jump_to + '","to":"蝈蝈信息"}'
+      this.setPageNavigation(str)*/
+      this.gotoPodosysAnyPage('蝈蝈信息')
+      this.$f7router.navigate('/gglist/')
+    }
+  }
+}
+</script>
