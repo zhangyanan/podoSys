@@ -163,7 +163,7 @@ export default {
               </f7-list-item>
               <f7-list-item class="search">            
                   <div class="item-input-wrap">
-                      <input type="text" placeholder="搜索手机/微信/姓名" v-model="search_msg">
+                      <input type="text" class="searchinput" placeholder="搜索" v-model="search_msg">
                       <div slot="media" class="search-div">
                           <f7-link @click="onSearch(search_msg)"><img class="search-icon" src="@/assets/icon_all/search_blue.png"/></f7-link>
                       </div>
@@ -271,15 +271,6 @@ li.li-userwechat{
     margin-left: 40px;
     margin-top: -25px;
 }
-.md .list .item-inner:after{
-    background: #54BCBF;
-}
-list ul li{
-    border:solid 1px #54BCBF;
-}
-.panel_menu{
-
-}
 .md .list .myItem-list .item-media {
     padding-top: 13px;
     min-width: 40px;
@@ -291,15 +282,6 @@ div .myItem-list .item-title{
     color: #FFFFFF;
     letter-spacing: 0;
     line-height: 21px;
-}
-.md .list input[type=text]{
-    width:179px;
-    height: 39px;
-    line-height: 39px;
-    background: #FFFFFF;
-    border-radius:4px;
-    margin-left: 30px;
-    color: #54BCBF;
 }
  input::-webkit-input-placeholder {
     /* placeholder颜色  */
@@ -323,13 +305,20 @@ div.search-div{
 li.panel_menu{
     padding-top: 15px;
 }
-.md .list ul:before{
+div.list.myItem-list ul:before,div.list.myItem-list ul:after{
+  background-color: #54BCBF;
+}
+div.list.myItem-list div.item-inner:before,div.list.myItem-list div.item-inner:after{
     background-color: #54BCBF;
 }
-.md .list ul:after{
-    background-color: #54BCBF;
+li.search{
+    width: 190px;
+    height: 39px;
 }
-.md .item-input-wrap:after{
-    background-color: #54BCBF;
+input.searchinput{
+    border-radius: 4px;
+    background-color: #FFFFFF;
+    margin-left: 31px;
+    text-align: right;
 }
 </style>
