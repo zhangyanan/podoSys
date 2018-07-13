@@ -285,9 +285,9 @@ import { mapState, mapGetters, mapActions, mapMutations, Store } from 'vuex'
   .md .quick-form .list {
       margin: 0px;
   }
-    .md .quick .list .item-media+.item-inner {
-        margin-left: -20px;
-    }
+div.quick.list.inline-labels{
+  margin-left: -40px
+}
   .quick-form {
     text-align: center;
 
