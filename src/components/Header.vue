@@ -24,7 +24,7 @@
 </style>
 <template>
   <f7-navbar>
-    <f7-nav-left>
+    <!--<f7-nav-left>
     </f7-nav-left>
     <f7-nav-title>
       <label class="site-title"><f7-link href="/" no-link-class>SJC life</f7-link></label>
@@ -34,7 +34,7 @@
     <f7-nav-right>
       <f7-link icon-f7="undo" back v-if="back"></f7-link>
       <f7-link icon-material="menu" panel-open="right" v-else-if="!noMenu" popup-open data-popup=".popup-menu"></f7-link>
-    </f7-nav-right>
+    </f7-nav-right>-->
   </f7-navbar>
 </template>
 <script>

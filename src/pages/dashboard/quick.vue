@@ -1,7 +1,7 @@
 <template>
   <f7-page>
     <form class="quick-form" v-on:submit.prevent="submit" no-hairlines-md>
-      <f7-list>
+      <f7-list calss="quick-list">
         <f7-list-item class="text-center b-0">
           <div class=""><a href="#" @click="goback()"><img src="@/assets/icon_all/back_green.png"/></a></div>
         </f7-list-item>
@@ -54,7 +54,7 @@
             </div>
             <div class="item-inner">
               <div class="item-title item-label"><span class="icon-image"><img src="@/assets/icon_all/wechat.png" /></span><label>微信ID</label></div>
-                <div class="wrong-message-icon"><f7-button @click="openVerticalButtons"><img src="@/assets/icon_all/wrong_green.png" /></f7-button></div>
+                <div class="wrong-message-icon"><f7-button @click="onSearch(s_weChat)"><img src="@/assets/icon_all/wrong_green.png" /></f7-button></div>
                 <div class="item-input-wrap">
                     <input type="text" placeholder="请输入" v-model="s_weChat">
                     <span class="input-clear-button"></span>
@@ -117,6 +117,11 @@ import { mapState, mapGetters, mapActions, mapMutations, Store } from 'vuex'
       ...mapGetters('listdata',[
         'l_ret_search_none'
     ]),
+
+    ...mapGetters('listdata',[
+        'l_ret_search_data'
+    ]),
+
     },
     methods: {
       ...mapActions('listdata',[
@@ -134,23 +139,34 @@ import { mapState, mapGetters, mapActions, mapMutations, Store } from 'vuex'
       'getFormValuesByName'
       ]),
 
+      timeout(ms) {
+          return new Promise((resolve) => {
+            setTimeout(resolve, ms);
+                })
+      },
+
       onSearch(param) {
                         if(param != "")
                         {
                           this.getFormValuesByName(param)
                           this.timeout(2000).then(() => {
-                              console.log('this.l_ret_gg_imf_s.num = ' + this.l_ret_gg_imf_s.num)
+                              console.log('this.l_ret_search_none.num = ' + this.l_ret_search_none.num)
                               if(this.l_ret_search_none > 0)
                                 {
                                   //添加重复 请确认
-
+                                  this.openVerticalButtons('提示', '此微信号已重复')
                                 }
-                              else
+                              /*else
                               {
                                   //可以添加
                                   this.local_insert21Data()
-                              }
+                              }*/
                           });
+                        }
+                        else
+                        {
+                          //为空
+                          this.openVerticalButtons('提示','请输入微信号')
                         }
               
       },
@@ -164,9 +180,17 @@ import { mapState, mapGetters, mapActions, mapMutations, Store } from 'vuex'
       },
 
       submitForm()  {
+          this.onSearch(this.s_weChat)
           this.onSearch(this.s_phone)
-          
+          this.timeout(2000).then(() => {
+                              if(this.l_ret_search_none == 0)
+                              {
+                                  this.local_insert21Data()
+                              }
+          })
       },
+
+      //姓名 性别 和 微信 是必填的
       local_insert21Data()    {
         var tempNames = ""
         var tempValues = ""
@@ -177,9 +201,11 @@ import { mapState, mapGetters, mapActions, mapMutations, Store } from 'vuex'
         {
             tempNames = tempNames + "姓名,"
             tempValues = tempValues + this.s_name + ","
-            bInsert = true
         }
-            
+        else
+        {
+            this.openVerticalButtons('请输入姓名')
+        }    
         //性别修改了吗
         if(this.male_selected == true)
         {
@@ -206,7 +232,6 @@ import { mapState, mapGetters, mapActions, mapMutations, Store } from 'vuex'
         }    
 
         //是否有了重复
-
         if(bInsert == true)
         {
             //默认填入的信息部分
@@ -236,19 +261,20 @@ import { mapState, mapGetters, mapActions, mapMutations, Store } from 'vuex'
             this.insertformvalues(sqldata)
         }
     },
-      openVerticalButtons() {
+      openVerticalButtons(s_title, s_msg) {
         const app = this.$f7;
         app.dialog.create({
-          title: '查重提示',
-          text: '此微信号已重复',
+          title: s_title,
+          text: s_msg,
           buttons: [
             {
-              text: '搜索'
+              text: '确定'
             }
           ],
           verticalButtons: true
         }).open();
       },
+
       hit(param)  {
         console.log(param)
         if (param == 1)

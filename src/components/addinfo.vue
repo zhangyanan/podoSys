@@ -7,7 +7,6 @@ div.navbar-inner.sliding{
 <template>
   <f7-navbar>
     <f7-nav-left>
-      
       <img @click="goBack()" src="@/assets/icon_all/back_white.png">
     </f7-nav-left>
     <f7-nav-title>
@@ -16,8 +15,13 @@ div.navbar-inner.sliding{
   </f7-navbar>
 </template>
 <script>
+import { mapState, mapGetters, mapActions, mapMutations, Store } from 'vuex'
 export default {
   methods: {
+    ...mapActions('datainterchange',[
+    'gotoPodosysAnyPage'
+    ]),
+
     goBack(){
       console.log("come from " + this.title)
       if(this.title == "编辑资料")
@@ -26,6 +30,11 @@ export default {
       }
       else if(this.title == "添加信息")
       {
+        this.$f7router.navigate('/gglist/')
+      }
+      else if(this.title == "编辑记录" || '添加记录' == this.title)
+      {
+        this.gotoPodosysAnyPage('蝈蝈活动')
         this.$f7router.navigate('/gglist/')
       }
     },

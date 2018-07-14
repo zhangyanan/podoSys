@@ -89,7 +89,7 @@ export default {
         //设置激活的tab
         //sessionStorage.setItem('hotPageAtGGFile',1)
         //window.location.href ='/gglist/'
-        this.gotoPodosysAnyPage('蝈蝈信息')
+        this.gotoPodosysAnyPage('蝈蝈活动')
         this.$f7router.navigate('/gglist/')
     },
 
@@ -428,10 +428,8 @@ $$('#my-range').on('range:change', function (e, range) {
 
 .menu_foot   {
             position: absolute;
-            width: calc(100% - 22px);
+            width: 100%;
             height: 60px;
-            left:11px;
-            right:11px;
             top:30px;
             background: #54BCBF;
             color: #ffffff;
@@ -490,8 +488,8 @@ $$('#my-range').on('range:change', function (e, range) {
 }
 
 .activity-row-header{
-            background: #FF6D7F;
-            height: 87px;
+            background: #54BCBF;
+            height: 90px;
 }
 
 .activity-row-body{
@@ -515,7 +513,8 @@ $$('#my-range').on('range:change', function (e, range) {
 }
 
 .md .list .activity-col-header-title .item-content {
-    padding-left: 0px;
+    padding: 0px;
+    margin: 0px;
 }
 
 .title-pos{
@@ -574,7 +573,7 @@ $$('#my-range').on('range:change', function (e, range) {
 
 .md .list .list4item1 .item-content{
     padding-left: 0px;
-    min-height: 149px;
+    min-height: 155px;
 }
 
 .md .list .list4item1 .item-inner{
@@ -644,14 +643,182 @@ $$('#my-range').on('range:change', function (e, range) {
     border-width:0px;
     font-size: 2em;
     text-align: right;
-    margin-right: 9px;
+    width: calc(100% - 120px)
+    }
+.myinputdatebox{
+    display: inline-block;
+    border-width:0px;
+    font-size: 2em;
+    text-align: right;
+    position: absolute;
+    right:5px;
+}
+/******************************************/
+.md .list{
+    margin: 0px;
+    }
+.page-content{
+    background: #EFF0F4;
+    }
+.mybox:hover{
+    border-style:solid; 
+    border-width:2px;
+    border-color: rgb(146, 247, 247);
+    }
+.mylist{
+    margin-bottom: 12px;
+    }
+.mybox{
+    border-style:solid; 
+    border-width:1px;
+    border-color:rgb(194, 191, 191);
+    margin-top: 6px;
     }
 
+.mylabelfont{
+    color:black;
+    font-family: PingFangSC-Semibold;
+    font-size: 14px;
+    color: #4A4A4A;
+    letter-spacing: 0;
+    line-height: 21px;
+    }
+.mylabelbox{
+    display: inline-block;
+    text-align:left;
+    font-size: 3em;
+    width: 110px;
+    }
+.myinputbox{
+    display: inline-block;
+    border-width:0px;
+    font-size: 2em;
+    }
+.comfirmbtn{
+    background-color: aquamarine
+}
+
+ .md .button-big.button span {
+    padding-left: 0px;
+}
+
+.pagebody{
+    background-color: darkgray
+}
+.listitem{
+    background-color:cornsilk
+}
+.md .navbar .content-title {
+    font-family: PingFangSC-Semibold;
+    font-size: 22px;
+    color: #FFFFFF;
+    letter-spacing: -0.09px;
+    line-height: 19px;
+}
+div.navbar-inner.sliding{
+    background: #54BCBF;
+    color:#FFFFFF;
+}
+.md .navbar .content-title {
+    font-family: PingFangSC-Semibold;
+    font-size: 22px;
+    color: #FFFFFF;
+    letter-spacing: -0.09px;
+    line-height: 19px;
+    padding-left: 90px;
+}
+div.navbar-inner.sliding{
+    background: #54BCBF;
+    color:#FFFFFF;
+    height: 65px;
+}
+.list.addinfo-list{
+    margin: 19px 11px;
+    background: #FFFFFF;
+}
+.navbar-inner {
+    padding-left: 19px;
+}
+.md .navbar:after {
+    content: '';
+    position: absolute;
+    right: 0;
+    width: 100%;
+    top: 100%;
+    bottom: auto;
+    height: 10px;
+    pointer-events: none;
+    background: -webkit-gradient(linear,left top,left bottom,from(rgba(0,0,0,0)),color-stop(40%,rgba(0,0,0,0)),color-stop(0,rgba(0,0,0,0)),color-stop(0,rgba(0,0,0,0)),to(rgba(0,0,0,0))); 
+    background: -webkit-linear-gradient(top,rgba(0,0,0,0) 0,rgba(0,0,0,0) 0,rgba(0,0,0,0) 0,rgba(0,0,0,0) 0,rgba(0,0,0,0) 0);
+    background: linear-gradient(to bottom,rgba(0,0,0,0) 0,rgba(0,0,0,0) 0,rgba(0,0,0,0) 0,rgba(0,0,0,0) 0,rgba(0,0,0,0) 0); 
+}
+.list .item-title {
+    min-width: 0;
+    -webkit-flex-shrink: 1;
+    -ms-flex-negative: 1;
+    flex-shrink: 1;
+    white-space: nowrap;
+    position: relative;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    font-family: PingFangSC-Semibold;
+    font-size: 14px;
+    color: #4A4A4A;
+    letter-spacing: 0;
+    line-height: 21px;
+}
+div.gap{
+    height: 13px;
+    background: #EFF0F4;
+}
+.accordion-item-content{
+   padding-bottom: 0px;
+}
+.accordion-item.accordion-item-opened{
+    padding-bottom: 26px;
+    
+}
+  .md .button {
+    color: #54BCBF;
+    border-radius: 0px;
+    line-height: 36px;
+    height: 36px;
+    text-transform: uppercase;
+    min-width: 30px;
+    padding-top: 5px;
+    padding-left: 0px;
+    border: none;
+    -webkit-transition-duration: .3s;
+    transition-duration: .3s;
+    -webkit-transform: translate3d(0,0,0);
+    transform: translate3d(0,0,0);
+}
+  .md .button.button-big, .md .button.button-big-md {
+    height: 60px;
+    line-height: 60px;
+    border-radius: 4px;
+    margin: 0px 11px;
+  }
+  .md .button.button-active, .md .button.button-fill, .md .button.button-fill-md, .md .button.tab-link-active {
+    background-color: #54BCBF;
+    font-family: PingFangSC-Semibold;
+    font-size: 22px;
+    color: #FFFFFF;
+    letter-spacing: 3px;
+    margin-top: 210px;
+  }
+
+  .md .list .select-box .item-content {
+    padding-left: 0px;
+}
+/******************************************/
 </style>
 <template>
   <f7-page>
+      <v-addinfo :title='l_title_name'></v-addinfo>
       <f7-block class="back-ground">
-        <f7-row no-gap class="activity-row-header">
+        <!--<f7-row no-gap class="activity-row-header">
                 <f7-col class="activity-col-header" width="20">
                     <f7-list class = "liststyle">
                     <f7-list-item class = "liststyle-item">
@@ -668,7 +835,7 @@ $$('#my-range').on('range:change', function (e, range) {
                         </f7-list-item>
                 </f7-list>
                 </f7-col>
-        </f7-row>
+        </f7-row>-->
         <f7-row no-gap class="activity-row-body">
             <div class = "activitylist">
             <f7-list class="list-2">
@@ -677,8 +844,6 @@ $$('#my-range').on('range:change', function (e, range) {
                     </f7-list-item>
             </f7-list>
             <f7-list class="list-3">
-                    
-                                 
                                     <f7-list-item class="list3item1">  
                                         <div class="mybox">
                                             <div class="mylabelbox">
@@ -701,22 +866,16 @@ $$('#my-range').on('range:change', function (e, range) {
                                                 {{itemmenu.value}}</option>
                                         </select>
                                     </f7-list-item>
-                                                 
                         <f7-list-item class="list3item1">
                             <div class="mybox">
                                 <div class="mylabelbox">
                                     <f7-label><font class="mylabelfont">活动日期</font></f7-label>
                                 </div>
-                                <div class="myinputbox">
-                                    <input type="date" :value="inputdate" @change="inputdate = $event.target.value">
+                                <div class="myinputdatebox">
+                                        <input type="date" :value="inputdate" @change="inputdate = $event.target.value">
                                 </div>
                             </div>  
                         </f7-list-item>    
-                                    
-                           
-                                
-            
-
                     <f7-list-item class="list3item1">
                         <div class="mybox2">
                                 <div class="mylabelbox">

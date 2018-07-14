@@ -1,49 +1,51 @@
+<!-- 当前页面名称： 蝈蝈信息 蝈蝈活动-->
 <template>
   <f7-page>
     <f7-block>
         <f7-row no-gap class="gg-row-header">
                 <f7-col width="70">
                     <f7-list>
-                    <f7-list-item>
-                        <f7-link href = "#" @click="goBack()">
-                        <img src="@/assets/icon_all/back_white.png"/>
-                        </f7-link>
-                    </f7-list-item>
-                    <f7-list-item>
-                        <div class="name"><span>{{b_load_21Item == 0?'稍等':l_retdata.datas[0].姓名.substr(0,1)}}</span></div>
-                    </f7-list-item>
-                    <f7-list-item>
-                        <div class="ggname">{{b_load_21Item == 0?'稍等':l_retdata.datas[0].姓名}}</div>
-                    </f7-list-item>
-                    <f7-list-item>
-                        <div class="ggwechat">{{b_load_21Item == 0?'稍等':l_retdata.datas[0].微信}}</div>
-                    </f7-list-item>                    
-                </f7-list>
+                        <f7-list-item class="col-70-gg-item">
+                            <div class = "goback">
+                                <f7-link  href = "#" @click="goBack()">
+                                    <img src="@/assets/icon_all/back_white.png"/>
+                                </f7-link>
+                            </div>
+                            <div class="name"><span>{{b_load_21Item == 0?'稍等':l_retdata.datas[0].姓名.substr(0,1)}}</span></div>
+                            <div class="ggname">{{b_load_21Item == 0?'稍等':l_retdata.datas[0].姓名}}</div>
+                            <div class="ggwechat">{{b_load_21Item == 0?'稍等':l_retdata.datas[0].微信}}</div>
+                        </f7-list-item>             
+                    </f7-list>
                 </f7-col>
                 <f7-col width="30">
                     <f7-list>
-                        <f7-list-item>
+                        <f7-list-item class="col-30-leaf-item">
                             <img class="leaf-icon" src="@/assets/icon_all/yang.png"/>
-                            <div class="littleleaf"><img class="leaf-little-icon" src="@/assets/icon_all/listicon_SW4.png"/></div>
-                        </f7-list-item>
-                        <f7-list-item>
-                            <div class="leafname">{{this.in_21Item_Short.引导人姓名}}</div>                            
-                        </f7-list-item>
-                        <f7-list-item>
-                            <div class="more" >...</div>
+                            <div class="littleleaf">
+                                <img class="leaf-little-icon" src="@/assets/icon_all/listicon_SW4.png"/>
+                            </div>
+                            <div class="leafname">{{l_retdata.datas[0].引导人姓名}}</div>
+                            <div class="more" >
+                                <f7-link class="more-link" raised panel-open="right">
+                                    ...
+                                </f7-link>
+                            </div>
                         </f7-list-item>
                 </f7-list>
                 </f7-col>
         </f7-row>
          <f7-row no-gap class="gg-tab">
+             
             <f7-col>
                 <f7-toolbar tabbar>
-                        <f7-link  :class="tab-link-active" tab-link="#tab-1" class="baselink">基本信息</f7-link>
-                        <f7-link  :class="tab_link_inactive" tab-link="#tab-2" class="baselink">活动记录</f7-link>
+                        <f7-link  tab-link="#tab-1" class="baselink">基本信息</f7-link>
+                        <f7-link  tab-link="#tab-2" class="baselink">活动记录</f7-link>
                         <f7-link tab-link="#tab-3" class="baselink">修改历史</f7-link>
                 </f7-toolbar>
                 <f7-tabs animated>
-                    <f7-tab :class="[(jumpFrom != '活动编辑')?tab-link-active:tab_link_inactive]" id="tab-1" class="page-content" tab-active>
+                    <!--<f7-tab v-if="(jumpTo == '蝈蝈信息')" id="tab-1" class="page-content" tab-active>
+                    <f7-tab v-else id="tab-1" class="page-content" tab-inactive> :title="item.value"-->
+                    <f7-tab  id="tab-1" class="page-content">
                         <f7-block>
                           <f7-list  media-list v-if="b_load_21Item == 1" class="baseinfo">
                               
@@ -59,15 +61,29 @@
                             </f7-list>
                         </f7-block>
                     </f7-tab>
-                    <f7-tab :class="[(jumpFrom == '活动编辑')?tab-link-active:tab_link_inactive]" id="tab-2" class="page-content">
+                    <!--<f7-tab v-if="(jumpTo == '蝈蝈活动')" id="tab-2" class="page-content" tab-active>
+                    <f7-tab v-if="(jumpTo != '蝈蝈活动')" id="tab-2" class="page-content" tab-inactive>-->
+                    <f7-tab id="tab-2" class="page-content">
                         <f7-block>
                             <f7-list media-list v-if="b_load_activity == 1 && relation_of_this_one > 1" class="baseinfo">
-                            <f7-list-item v-for="(item, index) in l_retactivitydata.datas"
-                                :key="index" :title="item.活动名称" :text="item.活动日期" @click="local_setSelectedActivity(item.键值, index)"  class="staticmsgbox">
-                            </f7-list-item>
-                            <f7-list-item @click="addActivity()" class="bottomcomfirm">
-                                <div class="bottombtn">添加记录</div>
-                            </f7-list-item>
+                                <f7-list-item v-for="(item, index) in l_retactivitydata.datas"
+                                    :key="index" :title="item.活动名称" :text="item.活动日期" @click="local_setSelectedActivity(item.键值, index)"  class="staticmsgbox">
+                                </f7-list-item>
+                                <f7-list-item @click="addActivity()" class="bottomcomfirm">
+                                    <div class="bottombtn">添加记录</div>
+                                </f7-list-item>
+                            </f7-list>
+                            <f7-list v-else>
+                                <f7-list-item>
+                                    <f7-label>
+                                          亲爱的佳人，您好，想一起培育🍇 {{l_retdata.datas[0].姓名}} 吗？
+                                    </f7-label>
+                                </f7-list-item>
+                                <f7-list-item>
+                                    <f7-label>
+                                        快快联系🍃 {{l_retdata.datas[0].引导人姓名}} 吧，不要消灭圣灵的感动哦 ^_^
+                                    </f7-label>
+                                </f7-list-item>
                             </f7-list>
                         </f7-block>
                     </f7-tab>
@@ -83,6 +99,8 @@
   </f7-page>
 </template>
 <script>
+import { mapGetters } from "vuex";
+
 </script>
 <style lang="scss">
 .md .block {
@@ -103,30 +121,45 @@
 div.list.gg-list-header{
     margin: 0px;
 }
+
+div.goback{
+    position:absolute;
+    top:46px;
+    left: 19px;
+}
+
 div.name {
     width: 99px;
     height: 99px;
     background: #FFFFFF;
     border-radius: 50px;
-    margin-left: 100px;
-    margin-top: 0px;
+    position:absolute;
+    top:67px;
+    left: 138px;
 }
 div.ggname{
     font-family: PFSquareSansPro-Bold;
     font-size: 22px;
     color: #FFFFFF;
     letter-spacing: 0.2px;
-    line-height: 8px;
-    margin-left: 105px;
-    margin-top: 0px;
+    line-height: 40px;
+    position:absolute;
+    top:180px;
+    left: 134px;
+    width: 110px;
+    text-align: center;
 }
 div.ggwechat{
     font-family: PFSquareSansPro-Light;
     font-size: 16px;
     color: #FFFFFF;
     letter-spacing: 0.5px;
-    margin-left: 105px;
-    margin-top: 0px;
+    line-height: 40px;
+    position:absolute;
+    top:210px;
+    left: 136.5px;
+    width: 110px;
+    text-align: center;
 }
 div.leafname{
     font-family: PingFangSC-Semibold;
@@ -134,20 +167,25 @@ div.leafname{
     color: #FFFFFF;
     letter-spacing: 0;
     line-height: 18px;
-    margin-left: 5px;
-    margin-top: -30px;
+    position: absolute;
+    top:106px;
+    right:33px;
 }
 div.more{
     color:#FFFFFF;
     font-size: 30px;
-    margin-left: 5px;
-    margin-top: -30px;
+    position: absolute;
+    top:173px;
+    right:39px;
 }
 div.littleleaf{
     width: 20px;
     height: 20px;
     background: #FFFFFF;
-    border-radius: 10px
+    border-radius: 10px;
+    position:absolute;
+    right:21px;
+    top:79px;
 }
 img.leaf-little-icon{
     width: 13px;
@@ -163,7 +201,6 @@ div.name span {
     margin-left: 30px;
     top: 45px;
     /* left: 10px; */
-    position: abs;
     /* display: block; */
     position: absolute;
 }
@@ -171,6 +208,9 @@ div.name span {
     width:56px;
     height: 56px;
     border-radius: 28px;
+    top:45px;
+    right:25.5px;
+    position: absolute;
 }
 .md .list .item-inner:after,.md .list .item-inner:before {
     background-color: rgba(0,0,0,0);
@@ -226,8 +266,35 @@ div.list.baseinfo .bottomcomfirm .item-content .item-inner{
     text-align: center;
     line-height: 60px;
 }
+
+.more .more-link {
+    color: #ffffff
+}
+
+.md .list .col-30-leaf-item .item-content{
+    padding: 0px;
+    margin: 0px;
+    height: 245px;
+}
+
+.md .list .col-30-leaf-item .item-inner{
+    padding: 0px;
+    height: 100%;
+}
+
+.md .list .col-70-gg-item .item-content{
+    padding: 0px;
+    margin: 0px;
+    height: 245px;
+}
+
+.md .list .col-70-gg-item .item-inner{
+    padding: 0px;
+    height: 100%;
+}
+
 </style>
-<!-- 当前页面名称： 蝈蝈信息-->
+
 <script>
 import { mapState, mapGetters, mapActions, mapMutations, Store } from 'vuex'
 export default {
@@ -244,7 +311,10 @@ export default {
             //保存蝈蝈信息 这部分信息在这个页面上是不会更改的
             in_21Item_Short:"",
             in_self_favorite:"",
+            //页面来自于
             jumpFrom:"",
+            //页面要去
+            jumpTo:"",
             //判断当前帐户与该gg的关系  0:没有关系  1:收藏关系  2.协力关系  3.母子关系
             relation_of_this_one:0,
 
@@ -300,14 +370,22 @@ export default {
     ...mapGetters('configdata',[
     'l_showggtitle_data'
     ]),
+
+    ...mapGetters('configdata',[
+    'l_ggstatus_data'
+    ]),
   },
   
   created () {
+    this.get_l_ggstatus_datalist()
     //得到所选用户
     var index = this.selectedUser
     
-    //得到gg键值
     this.jumpFrom = this.getSourcePos()
+    this.jumpTo = this.getDesPos()
+
+    console.log("I'm jump from " + this.jumpFrom + " to " + this.jumpTo)
+
     if(this.jumpFrom == "收藏列表")
     {
       this.in_21Item_Short = this.l_ret_personal_favorite_list_s.datas[index]
@@ -321,6 +399,7 @@ export default {
     else
       this.in_21Item_Short = this.l_ret_my_gg_imf_s.datas[index]
     
+    //得到蝈蝈的键值
     var keyid = this.in_21Item_Short.键值
 
     console.log('this.isMyGG(keyid)' + JSON.stringify(this.isMyGG(keyid))) 
@@ -367,6 +446,7 @@ export default {
     this.get_l_showggtitle_datalist(this.relation_of_this_one)
     //this.relation_of_this_one = 0
     console.log('relation_of_this_one = ' + this.relation_of_this_one)
+
  },
   methods: {
     ...mapActions('listdata',[
@@ -403,6 +483,10 @@ export default {
     'get_l_showggtitle_datalist'
     ]),
     
+    ...mapActions('configdata',[
+    'get_l_ggstatus_datalist'
+    ]),
+
     ...mapActions('datainterchange',[
     'gotoPodosysAnyPage'
     ]),
@@ -604,6 +688,7 @@ export default {
       //保存 gg的21项数据
       //sessionStorage.setItem('selectedGG21Item', JSON.stringify(this.l_retdata.datas[0]))
       //保存 将要更改的状态
+      this.gotoPodosysAnyPage('蝈蝈状态')
       this.setSelectedGGStatus(newStatus)
       this.$f7router.navigate('/ggStatus/')
     },

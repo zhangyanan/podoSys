@@ -41,7 +41,7 @@ export default {
 					"in_username":"",
 					"in_keynames":"个人表单,",
 					"in_keyvalues":username,
-					"in_fieldnames":"个人表单,姓名,手机,微信,蝈蝈关联表单,会属,区域,生日,"
+					"in_fieldnames":"个人表单,姓名,手机,微信,蝈蝈关联表单,会属,区域,生日,性别,"
 				 }))
 					.then(response => {
 						//alert(response.data.userId);, 'application/json;charset=UTF-8;Access-Control-Allow-Origin:*'
