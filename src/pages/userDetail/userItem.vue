@@ -1,6 +1,7 @@
 <template>
   <f7-page>
-    <div class = "userItem_div">
+      <f7-block class="back-ground">
+        <div class = "userItem_div">
             <img  class = "back_img" src="@/assets/icon_all/back_white.png" @click="goBack()" /> 
             <img  class = "yz_img" src="@/assets/icon_all/sheep.png" />
             <img  class = "yz_icon" src="@/assets/icon_all/sheep.png" />
@@ -55,7 +56,8 @@
                     <label class = "footnamecolor">编辑资料</label>
                 </a>
             </div>
-    </div>
+        </div>
+    </f7-block>
   </f7-page>  
 </template>
 <script>

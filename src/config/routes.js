@@ -19,6 +19,7 @@ import quickPage from '@/pages/dashboard/quick'
 import ggPage from '@/pages/wheat/gg'
 import itemPage from '@/pages/wheat/item'
 
+
 export default [
   {
     path: '/',
