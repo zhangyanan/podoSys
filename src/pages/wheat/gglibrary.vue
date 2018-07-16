@@ -64,7 +64,7 @@ div.list.media-list.gglibrary{
   margin: 0px;
   padding-left: 31px;
 }
-div.navbar-inner.sliding{
+div.list.media-list.navbar-inner.sliding{
   height: 65px;
   background: #FFFFFF;
 }
