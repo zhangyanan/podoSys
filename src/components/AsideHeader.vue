@@ -34,19 +34,19 @@
     background: linear-gradient(to bottom,rgba(0,0,0,0) 0,rgba(0,0,0,0) 0,rgba(0,0,0,0) 0,rgba(0,0,0,0) 0,rgba(0,0,0,0) 0); 
   }
 
-  .md a.link{
+  .md a.link.leftlink,.md a.link.rightlink{
     background: #FFFFFF;
   }
 </style>
 <template>
   <f7-navbar>
   <f7-nav-left>
-    <f7-link href="#" raised panel-open="left"><img src="@/assets/icon_all/pull_out.png"/></f7-link>
+    <f7-link href="#" class="leftlink" raised panel-open="left"><img src="@/assets/icon_all/pull_out.png"/></f7-link>
   </f7-nav-left>
   <f7-nav-title></f7-nav-title>
   <f7-nav-right>
     <!-- <f7-link addPage v-if="addPage" href="/quick/"><img src="@/assets/icon_all/add_21profile.png"/></f7-link>-->
-    <f7-link href="/quick/"><img src="@/assets/icon_all/add_21profile.png"/></f7-link>
+    <f7-link class="rightlink" href="/quick/"><img src="@/assets/icon_all/add_21profile.png"/></f7-link>
   </f7-nav-right>
 </f7-navbar>
 </template>
