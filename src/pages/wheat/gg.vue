@@ -1,49 +1,86 @@
+<!-- 当前页面名称： 蝈蝈信息 蝈蝈活动-->
 <template>
   <f7-page>
-    <f7-block>
+    <f7-block v-if="b_load_21Item == 1 && b_load_activity == 1">
         <f7-row no-gap class="gg-row-header">
-                <f7-col width="70">
-                    <f7-list>
-                    <f7-list-item>
-                        <f7-link href = "#" @click="goBack()">
-                        <img src="@/assets/icon_all/back_white.png"/>
-                        </f7-link>
-                    </f7-list-item>
-                    <f7-list-item>
-                        <div class="name"><span>{{b_load_21Item == 0?'稍等':l_retdata.datas[0].姓名.substr(0,1)}}</span></div>
-                    </f7-list-item>
-                    <f7-list-item>
-                        <div class="ggname">{{b_load_21Item == 0?'稍等':l_retdata.datas[0].姓名}}</div>
-                    </f7-list-item>
-                    <f7-list-item>
-                        <div class="ggwechat">{{b_load_21Item == 0?'稍等':l_retdata.datas[0].微信}}</div>
-                    </f7-list-item>                    
-                </f7-list>
+                <f7-col class="col-70" width="70">
+                    <f7-list class="list-70">
+                        <f7-list-item class="col-70-gg-item">
+                            <div class = "goback">
+                                <f7-link  href = "#" @click="goBack()">
+                                    <img src="@/assets/icon_all/back_white.png"/>
+                                </f7-link>
+                            </div>
+                            <div class="name"><span>{{b_load_21Item == 0?'稍等':l_retdata.datas[0].姓名.substr(0,1)}}</span></div>
+                            <div class="ggname">{{b_load_21Item == 0?'稍等':l_retdata.datas[0].姓名}}</div>
+                            <div class="ggwechat">{{b_load_21Item == 0?'稍等':l_retdata.datas[0].微信}}</div>
+                        </f7-list-item>             
+                    </f7-list>
                 </f7-col>
                 <f7-col width="30">
                     <f7-list>
-                        <f7-list-item>
+                        <f7-list-item class="col-30-leaf-item">
                             <img class="leaf-icon" src="@/assets/icon_all/yang.png"/>
-                            <div class="littleleaf"><img class="leaf-little-icon" src="@/assets/icon_all/listicon_SW4.png"/></div>
+                            <div class="littleleaf">
+                                <img class="leaf-little-icon" src="@/assets/icon_all/listicon_SW4.png"/>
+                            </div>
+                            <div class="leafname">{{l_retdata.datas[0].引导人姓名}}</div>
+                            <!--
+                            <f7-popover class="popover-menu">
+                                <f7-list>
+                                    <f7-list-item v-for="(item, index) in this.l_ggstatus_data"
+                                        :key="index"
+                                        :title="item.value"
+                                        class="staticmsgbox" popover-close link="#" @click="goto_ggstatus(item.value)">
+                                        <img v-if="l_retdata.datas[0].状态 == item.value" slot="media" src="@/assets/icon_all/selection_green@2x.png" width="29"/>
+                                    </f7-list-item>
+                                </f7-list>
+                            </f7-popover> -->
                         </f7-list-item>
-                        <f7-list-item>
-                            <div class="leafname">{{this.in_21Item_Short.引导人姓名}}</div>                            
+                        <f7-list-item class="col-30-more-item">
+                                <!-- 权限判断：蝈蝈状态权限-->
+                                <!-- 是自己的蝈蝈 且 在SW QJ TK GD FF阶段 -->
+                    
+                                <f7-link v-if="may_edit_gg_status(l_retdata.datas[0].阶段)" 
+                                                id="more-btn" raised sheet-open=".status-sheet">
+                                    <span>...</span>
+                                </f7-link>
+                                <!-- <select v-if="(relation_of_this_one == 3) &&
+                                                (get_gg_status_no(l_retdata.datas[0].阶段) < 6)" name="gg-status">
+                                        <option v-for="(itemmenu) in l_ggstatus_data" :key="itemmenu.value" :value="itemmenu.value" @click="goto_ggstatus(itemmenu.value)">
+                                                {{itemmenu.value}}</option>
+                                </select> -->
                         </f7-list-item>
-                        <f7-list-item>
-                            <div class="more" >...</div>
-                        </f7-list-item>
-                </f7-list>
+                        <f7-sheet class="status-sheet" :opened="sheetOpened" @sheet:closed="sheetOpened = false">
+                            <f7-list>
+                                <f7-list-item sheet-close>
+                                    <f7-label style="left:15px">状态变更</f7-label>
+                                    <f7-link style="right:28.4px" sheet-close><img src = "@/assets/icon_all/close_gray.png"></f7-link>
+                                </f7-list-item>
+                                
+                                <f7-list-item v-for="(item, index) in this.l_ggstatus_data"
+                                        :key="index"
+                                        @click="goto_ggstatus(item.value)">
+                                        <f7-label style="left:15px">{{item.value}}</f7-label>
+                                        <f7-link style="right:34.4px" v-if="l_retdata.datas[0].状态 == item.value" sheet-close><img src = "@/assets/icon_all/selection_green@2x.png" width="29"></f7-link>
+                                        <f7-link style="right:34.4px" v-else sheet-close><img src = "@/assets/icon_all/selection_gray@2x.png" width="29"></f7-link>
+                                </f7-list-item>
+                            </f7-list>
+                        </f7-sheet>
+                    </f7-list>
                 </f7-col>
         </f7-row>
          <f7-row no-gap class="gg-tab">
             <f7-col>
-                <f7-toolbar tabbar>
-                        <f7-link  :class="tab-link-active" tab-link="#tab-1" class="baselink">基本信息</f7-link>
-                        <f7-link  :class="tab_link_inactive" tab-link="#tab-2" class="baselink">活动记录</f7-link>
+                <f7-toolbar tabbar class = "gg-toolbar">
+                        <f7-link  tab-link="#tab-1" class="baselink">基本信息</f7-link>
+                        <f7-link  tab-link="#tab-2" class="baselink">活动记录</f7-link>
                         <f7-link tab-link="#tab-3" class="baselink">修改历史</f7-link>
                 </f7-toolbar>
                 <f7-tabs animated>
-                    <f7-tab :class="[(jumpFrom != '活动编辑')?tab-link-active:tab_link_inactive]" id="tab-1" class="page-content" tab-active>
+                    <!--<f7-tab v-if="(jumpTo == '蝈蝈信息')" id="tab-1" class="page-content" tab-active>
+                    <f7-tab v-else id="tab-1" class="page-content" tab-inactive> :title="item.value"-->
+                    <f7-tab  id="tab-1" class="page-content">
                         <f7-block>
                           <f7-list  media-list v-if="b_load_21Item == 1" class="baseinfo">
                               
@@ -59,15 +96,29 @@
                             </f7-list>
                         </f7-block>
                     </f7-tab>
-                    <f7-tab :class="[(jumpFrom == '活动编辑')?tab-link-active:tab_link_inactive]" id="tab-2" class="page-content">
+                    <!--<f7-tab v-if="(jumpTo == '蝈蝈活动')" id="tab-2" class="page-content" tab-active>
+                    <f7-tab v-if="(jumpTo != '蝈蝈活动')" id="tab-2" class="page-content" tab-inactive>-->
+                    <f7-tab id="tab-2" class="page-content">
                         <f7-block>
                             <f7-list media-list v-if="b_load_activity == 1 && relation_of_this_one > 1" class="baseinfo">
-                            <f7-list-item v-for="(item, index) in l_retactivitydata.datas"
-                                :key="index" :title="item.活动名称" :text="item.活动日期" @click="local_setSelectedActivity(item.键值, index)"  class="staticmsgbox">
-                            </f7-list-item>
-                            <f7-list-item @click="addActivity()" class="bottomcomfirm">
-                                <div class="bottombtn">添加记录</div>
-                            </f7-list-item>
+                                <f7-list-item v-for="(item, index) in l_retactivitydata.datas"
+                                    :key="index" :title="item.活动名称" :text="item.活动日期" @click="local_setSelectedActivity(item.键值, index)"  class="staticmsgbox">
+                                </f7-list-item>
+                                <f7-list-item @click="addActivity()" class="bottomcomfirm">
+                                    <div class="bottombtn">添加记录</div>
+                                </f7-list-item>
+                            </f7-list>
+                            <f7-list v-else>
+                                <f7-list-item>
+                                    <f7-label>
+                                          亲爱的佳人，您好，想一起培育🍇 {{l_retdata.datas[0].姓名}} 吗？
+                                    </f7-label>
+                                </f7-list-item>
+                                <f7-list-item>
+                                    <f7-label>
+                                        快快联系🍃 {{l_retdata.datas[0].引导人姓名}} 吧，不要消灭圣灵的感动哦 ^_^
+                                    </f7-label>
+                                </f7-list-item>
                             </f7-list>
                         </f7-block>
                     </f7-tab>
@@ -83,6 +134,8 @@
   </f7-page>
 </template>
 <script>
+import { mapGetters } from "vuex";
+
 </script>
 <style lang="scss">
 .md .block {
@@ -103,30 +156,45 @@
 div.list.gg-list-header{
     margin: 0px;
 }
+
+div.goback{
+    position:absolute;
+    top:14px;
+    left: 19px;
+}
+
 div.name {
     width: 99px;
     height: 99px;
     background: #FFFFFF;
     border-radius: 50px;
-    margin-left: 100px;
-    margin-top: 0px;
+    position:absolute;
+    top:35px;
+    left: 138px;
 }
 div.ggname{
     font-family: PFSquareSansPro-Bold;
     font-size: 22px;
     color: #FFFFFF;
     letter-spacing: 0.2px;
-    line-height: 8px;
-    margin-left: 105px;
-    margin-top: 0px;
+    line-height: 40px;
+    position:absolute;
+    top:148px;
+    left: 134px;
+    width: 110px;
+    text-align: center;
 }
 div.ggwechat{
     font-family: PFSquareSansPro-Light;
     font-size: 16px;
     color: #FFFFFF;
     letter-spacing: 0.5px;
-    margin-left: 105px;
-    margin-top: 0px;
+    line-height: 40px;
+    position:absolute;
+    top:calc(210px - 32px);
+    left: 88.5px;
+    width: 200px;
+    text-align: center;
 }
 div.leafname{
     font-family: PingFangSC-Semibold;
@@ -134,20 +202,34 @@ div.leafname{
     color: #FFFFFF;
     letter-spacing: 0;
     line-height: 18px;
-    margin-left: 5px;
-    margin-top: -30px;
+    position: absolute;
+    top:calc(106px - 32px);
+    right:33px;
 }
-div.more{
+
+#more-btn{
+    position: absolute;
+    top:10px;
+    right:39px; 
+    margin:0px;
+    padding: 0px;
+    box-shadow: 0;
+}
+
+#more-btn span {
     color:#FFFFFF;
     font-size: 30px;
-    margin-left: 5px;
-    margin-top: -30px;
+   
 }
+
 div.littleleaf{
     width: 20px;
     height: 20px;
     background: #FFFFFF;
-    border-radius: 10px
+    border-radius: 10px;
+    position:absolute;
+    right:21px;
+    top:calc(79px - 32px);
 }
 img.leaf-little-icon{
     width: 13px;
@@ -163,7 +245,6 @@ div.name span {
     margin-left: 30px;
     top: 45px;
     /* left: 10px; */
-    position: abs;
     /* display: block; */
     position: absolute;
 }
@@ -171,6 +252,9 @@ div.name span {
     width:56px;
     height: 56px;
     border-radius: 28px;
+    top:calc(45px - 32px);
+    right:25.5px;
+    position: absolute;
 }
 .md .list .item-inner:after,.md .list .item-inner:before {
     background-color: rgba(0,0,0,0);
@@ -226,8 +310,62 @@ div.list.baseinfo .bottomcomfirm .item-content .item-inner{
     text-align: center;
     line-height: 60px;
 }
+
+.more .more-link {
+    color: #ffffff
+}
+
+.md .list .col-30-leaf-item .item-content{
+    padding: 0px;
+    margin: 0px;
+    height: calc(165px - 32px);
+}
+
+.md .list .col-30-leaf-item .item-inner{
+    padding: 0px;
+    height: 100%;
+}
+
+.md .list .col-30-more-item .item-content{
+    padding: 0px;
+    margin: 0px;
+    height: 40px;
+}
+
+.md .list .col-30-more-item .item-inner{
+    padding: 0px;
+    height: 100%;
+}
+
+.status-sheet {
+    height: calc(100% - 245px);
+}
+
+.md .list .col-70-gg-item .item-content{
+    padding: 0px;
+    margin: 0px;
+}
+
+.md .list .col-70-gg-item .item-inner{
+    padding: 0px;
+}
+
+.col-70 {
+    padding: 0px;
+    margin: 0px;
+}
+
+.md .list .list-70 .item-content{
+    padding: 0px;
+    margin: 0px;
+}
+
+.md .list .list-70 .item-inner{
+    padding: 0px;
+    margin: 0px;
+}
 </style>
-<!-- 当前页面名称： 蝈蝈信息-->
+
 <script>
 import { mapState, mapGetters, mapActions, mapMutations, Store } from 'vuex'
 export default {
@@ -244,7 +382,10 @@ export default {
             //保存蝈蝈信息 这部分信息在这个页面上是不会更改的
             in_21Item_Short:"",
             in_self_favorite:"",
+            //页面来自于
             jumpFrom:"",
+            //页面要去
+            jumpTo:"",
             //判断当前帐户与该gg的关系  0:没有关系  1:收藏关系  2.协力关系  3.母子关系
             relation_of_this_one:0,
 
@@ -300,14 +441,27 @@ export default {
     ...mapGetters('configdata',[
     'l_showggtitle_data'
     ]),
+
+    ...mapGetters('configdata',[
+    'l_ggstatus_data'
+    ]),
+
+    ...mapGetters('configdata',['l_ggstudystatus_data']),
   },
   
   created () {
+    //蝈蝈的所有状态信息
+    this.get_l_ggstatus_datalist()
+    //蝈蝈的所有学习信息
+    this.get_l_ggstudystatus_datalist()
     //得到所选用户
     var index = this.selectedUser
     
-    //得到gg键值
     this.jumpFrom = this.getSourcePos()
+    this.jumpTo = this.getDesPos()
+
+    console.log("I'm jump from " + this.jumpFrom + " to " + this.jumpTo)
+
     if(this.jumpFrom == "收藏列表")
     {
       this.in_21Item_Short = this.l_ret_personal_favorite_list_s.datas[index]
@@ -321,9 +475,10 @@ export default {
     else
       this.in_21Item_Short = this.l_ret_my_gg_imf_s.datas[index]
     
+    //得到蝈蝈的键值
     var keyid = this.in_21Item_Short.键值
 
-    console.log('this.isMyGG(keyid)' + JSON.stringify(this.isMyGG(keyid))) 
+    //console.log('this.isMyGG(keyid)' + JSON.stringify(this.isMyGG(keyid))) 
     //得到唯一表单
     this.getformvaluesaccurate(keyid).then((res) => {
                 console.log('in vue.getformvaluesaccurate')
@@ -333,10 +488,25 @@ export default {
     this.getAllActivity(keyid)
     
     //1s以后进行刷新
-    this.timeout(1000).then(() => {
-                console.log('in vue.timeout')
-                //设置显示内容
-                this.getGGTitle(this.relation_of_this_one)
+    this.timeout(2000).then(() => {
+                console.log('in gg create.timeout')
+
+                //设置权限
+                if(this.isMyGG(keyid))
+                          this.relation_of_this_one = 3
+                else if (this.isOurGG(keyid))
+                                    this.relation_of_this_one = 2
+                else if (this.in_self_favorite != null && this.in_self_favorite.收藏内容 != null && 
+                        this.is_my_favorite(keyid, this.in_self_favorite.收藏内容))
+                                    this.relation_of_this_one = 1
+                else
+                                    this.relation_of_this_one = 0
+
+                //得到需要显示的21项 选项字段列表
+                this.get_l_showggtitle_datalist(this.relation_of_this_one)
+                //this.relation_of_this_one = 0
+                console.log('relation_of_this_one = ' + this.relation_of_this_one)
+
                 this.b_load_21Item = 1
                 this.b_load_activity = 1
       });
@@ -353,20 +523,6 @@ export default {
     else
       this.in_self_favorite = null
 
-    if(this.isMyGG(keyid))
-                          this.relation_of_this_one = 3
-    else if (this.isOurGG(keyid))
-                          this.relation_of_this_one = 2
-    else if (this.in_self_favorite != null && this.in_self_favorite.收藏内容 != null && 
-            this.is_my_favorite(keyid, this.in_self_favorite.收藏内容))
-                          this.relation_of_this_one = 1
-    else
-                          this.relation_of_this_one = 0
-
-    //得到需要显示的21项 选项字段列表
-    this.get_l_showggtitle_datalist(this.relation_of_this_one)
-    //this.relation_of_this_one = 0
-    console.log('relation_of_this_one = ' + this.relation_of_this_one)
  },
   methods: {
     ...mapActions('listdata',[
@@ -403,6 +559,10 @@ export default {
     'get_l_showggtitle_datalist'
     ]),
     
+    ...mapActions('configdata',[
+    'get_l_ggstatus_datalist'
+    ]),
+
     ...mapActions('datainterchange',[
     'gotoPodosysAnyPage'
     ]),
@@ -411,6 +571,8 @@ export default {
       'getPersonalFavorite'
     ]),
     
+    ...mapActions('configdata',['get_l_ggstudystatus_datalist']),
+
     getSourcePos() {
       var jump = ""
       jump = JSON.parse(this.pageNavigation)
@@ -431,16 +593,18 @@ export default {
     //判断其是否是当前帐号的蝈蝈 传入gg的键值
     isMyGG(ggid){
       
-      for (var i=0; i<this.l_ret_my_gg_imf_s.datas.length; i++)
+      /*for (var i=0; i<this.l_ret_my_gg_imf_s.datas.length; i++)
       {
           //console.log("key:" + key + ", value:" ,data.data.datas[0][key]);
           if(this.l_ret_my_gg_imf_s.datas[i].键值 == ggid)
           {
             return true
           }
-      }
+      }*/
+        if(this.l_retdata.datas[0].引导人 == this.l_ret_personal_imf_s.datas[0].个人表单)
+            return true;
 
-      return false
+        return false
     },
     //判断其是否是当前帐号下需管理的蝈蝈
     isOurGG(ggid){
@@ -457,6 +621,15 @@ export default {
       return false
     },
     //判断其是否是被收藏的蝈蝈
+    //-x-x-x-
+    //这个蝈蝈在我的收藏夹吗
+    is_my_favorite(anyid, favoritelist)  {
+      var findid = "-" + anyid + "-"
+      if (favoritelist.indexOf(findid) == -1)
+          return false
+      
+      return true
+    },
     /************************************************************************************* */
 
     /****************************得到描述这个蝈蝈的具体的21项********************************** */
@@ -483,21 +656,37 @@ export default {
     },
     /****************************得到描述这个蝈蝈的具体的21项********************************** */
 
+    /****************************得到蝈蝈状态值 ***********************************************/
+    may_edit_gg_status(gg_status)
+    {
+        if((this.relation_of_this_one == 3) &&
+            this.get_gg_status_no(gg_status) < 6)
+            return true
+
+        return false
+    },
+
+    get_gg_status_no(gg_status)
+    {
+        var item
+        
+        for (item in this.l_ggstudystatus_data)
+        {
+            if(gg_status == this.l_ggstudystatus_data[item].value)
+            {
+                return this.l_ggstudystatus_data[item].NO;
+            }
+            //console.log("item.value = " + this.l_ggstudystatus_data[item].value);    
+        }
+
+        return 0;
+    },
+
     timeout(ms) {
           return new Promise((resolve) => {
             setTimeout(resolve, ms);
                 })
       },
-
-    //-x-x-x-
-    //这个蝈蝈在我的收藏夹吗
-    is_my_favorite(anyid, favoritelist)  {
-      var findid = "-" + anyid + "-"
-      if (favoritelist.indexOf(findid) == -1)
-          return false
-      
-      return true
-    },
 
     //从我的收藏夹里删除
     delete_my_favorite(anyid, favoritelist) {
@@ -536,6 +725,35 @@ export default {
         this.gotoPodosysAnyPage('')
         this.$f7router.navigate('/allList/')
     },
+
+    /*createPopup()   {
+        const self = this;
+        // Create popup
+        if (!self.popup) {
+          self.popup = self.$f7.popup.create({
+            content: `
+              <div class="popup">
+                <div class="page">
+                  <div class="navbar">
+                    <div class="navbar-inner">
+                      <div class="title">Dynamic Popup</div>
+                      <div class="right"><a href="#" class="link popup-close">Close</a></div>
+                    </div>
+                  </div>
+                  <div class="page-content">
+                    <div class="block">
+                      <p>This popup was created dynamically</p>
+                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse faucibus mauris leo, eu bibendum neque congue non...</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            `.trim(),
+          });
+        }
+        // Open it
+        self.popup.open();
+    },*/
 
     getGGStatus(ggid)  {
       var formname = "状态标签"
@@ -604,6 +822,8 @@ export default {
       //保存 gg的21项数据
       //sessionStorage.setItem('selectedGG21Item', JSON.stringify(this.l_retdata.datas[0]))
       //保存 将要更改的状态
+      console.log("in goto_ggstatus")
+      this.gotoPodosysAnyPage('蝈蝈状态')
       this.setSelectedGGStatus(newStatus)
       this.$f7router.navigate('/ggStatus/')
     },

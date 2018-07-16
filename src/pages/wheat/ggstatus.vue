@@ -15,6 +15,7 @@ export default {
   },
   computed: {
     ...mapGetters('listdata',['l_retdata']),
+    ...mapGetters('listdata',['l_ret_personal_imf_s']),
     ...mapGetters('datainterchange',['selectedGGStatus']),
   },
   created () {
@@ -59,8 +60,8 @@ export default {
         //this.in_gg21Item = JSON.parse(sessionStorage.getItem('selectedGG21Item'))
         this.s_ggName = this.in_gg21Item.姓名
         this.ggId = this.in_gg21Item.键值
-        this.s_ggStatus = sessionStorage.getItem('selectedGGStatus')
-        this.s_response = this.in_gg21Item.状态变更原因 ?  this.in_gg21Item.状态变更原因 : ""
+        this.s_ggStatus = this.selectedGGStatus
+        this.s_response = this.in_gg21Item.状态变更原因 ?  this.in_gg21Item.状态变更原因 : "请录入状态变更原因"
     },
     
     updateStatusData()    {

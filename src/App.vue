@@ -103,15 +103,28 @@ export default {
                 //this.gotoPodosysAnyPage('搜索列表')
               }
             else
-              this.search_msg = 'none'
+              this.openVerticalButtons('查重提示','没有找到对应的蝈蝈')
         });
+      }
+      else{
+          this.openVerticalButtons('查重提示','请输入/手机/微信/姓名')
       }
               
     },
 
-    /*goNext(param1, param2, param3)  {
-      this.$f7router.navigate('/userItem/')
-    },*/
+    openVerticalButtons(s_title, s_msg) {
+        const app = this.$f7;
+        app.dialog.create({
+          title: s_title,
+          text: s_msg,
+          buttons: [
+            {
+              text: '确定'
+            }
+          ],
+          verticalButtons: true
+        }).open();
+      },
 
     gotoFavoriteGGList()  {
       console.log('in gotoFavoriteGGList ')
@@ -178,17 +191,17 @@ export default {
                     <img class="help-icon" src="@/assets/icon_all/panel_favorite.png"/>
                   </div>
               </f7-list-item>
-              <f7-list-item class="panel_menu" title="通知">
+              <f7-list-item class="panel_menu" title="通知" @click="openVerticalButtons('提示','栏目建设中...')">
                   <div slot="media">
                     <img class="help-icon" src="@/assets/icon_all/panel_notification.png"/>
                   </div>
               </f7-list-item>
-              <f7-list-item class="panel_menu" title="设置">
+              <f7-list-item class="panel_menu" title="设置" @click="openVerticalButtons('提示','栏目建设中...')"> 
                   <div slot="media">
                     <img class="help-icon" src="@/assets/icon_all/panel_setting.png"/>
                   </div>
               </f7-list-item>
-              <f7-list-item class="panel_menu" title="退出">
+              <f7-list-item class="panel_menu" title="退出" @click="openVerticalButtons('提示','栏目建设中...')">
                   <div slot="media">
                     <img class="help-icon" src="@/assets/icon_all/panel_logout.png"/>
                   </div>
@@ -197,14 +210,14 @@ export default {
           </f7-page>  
       </f7-panel>
     
-      <f7-panel right cover>
+      <!--<f7-panel right cover>
         <f7-block-title>我是右侧面板</f7-block-title>
             <f7-page>
               <div class="bottom_part">
               <img src="@/assets/icon_all/selection_green.png" />
               </div>
             </f7-page>  
-      </f7-panel>
+      </f7-panel>-->
    
     
     <f7-view :pushState="true" main/>
@@ -238,13 +251,14 @@ div.userstatus{
     top: 75px;
     position: absolute;
     z-index: 1;
+    line-height: 39px;
+    text-align: center;
 }
 div.userstatus span{
     font-family: PFSquareSansPro-ExtraBlack;
     font-size: 20px;
     color: #FFFFFF;
     letter-spacing: -1.29px;
-    padding-left: 8px;
 }
 span.username{
     font-family: PFSquareSansPro-Bold;

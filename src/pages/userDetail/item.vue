@@ -235,15 +235,18 @@ div.userstatus{
     height: 39px;
     background: #FCC93D;
     border-radius: 20px;
-    margin-left: -6px;
-    margin-top: 55px;
+    left: 60px;
+    top: 75px;
+    position: absolute;
+    z-index: 1;
+    line-height: 39px;
+    text-align: center;
 }
 div.userstatus span{
     font-family: PFSquareSansPro-ExtraBlack;
     font-size: 20px;
     color: #FFFFFF;
     letter-spacing: -1.29px;
-    padding-left: 8px;
 }
 span.username{
     font-family: PFSquareSansPro-Bold;

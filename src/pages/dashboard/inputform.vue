@@ -290,6 +290,8 @@ export default {
       this.timeout(1000).then(() => {
             console.log("in timeout of inputform.vue")
             //设置登陆成功标示
+            //如果是禁止登陆的角色需要拒绝
+            //if(this.l_ret_personal_imf_s.data[0].阶段)
 
             this.setloginSuccess('1')
             this.$f7router.navigate('/alllist/')

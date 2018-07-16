@@ -28,8 +28,8 @@ reading habits      30180
 prayers             30190
 service             30200
 vigilant            30300
-value        30350
-
+value               30350
+status              30400
 //other parts
 ggtitle             40000
 getGenderList
@@ -52,7 +52,18 @@ export default {
 
     result = new Promise(function (resolve, reject) {
       resolve({data: {
-        20010: {value: 'SW'},
+        20010: {value: 'SW', NO:1,},
+        20011: {value: 'QJ',NO:2,},
+        20012: {value: 'TK', NO:3,},
+        20013: {value: 'GD', NO:4,},
+        20014: {value: 'FF', NO:5,},
+        20015: {value: 'CJ', NO:6,},
+        20016: {value: 'ZJ', NO:7,},
+        20017: {value: 'GJ', NO:8,},
+        20018: {value: 'RJ', NO:9,},
+        20019: {value: 'XJ', NO:10,},
+        20020: {value: 'BLACK', NO:0,},
+        /*20010: {value: 'SW'},
         20011: {value: 'QJ'},
         20012: {value: 'TK'},
         20013: {value: 'GD'},
@@ -60,7 +71,9 @@ export default {
         20015: {value: 'CJ'},
         20016: {value: 'ZJ'},
         20017: {value: 'GJ'},
-        20018: {value: 'RJ'}
+        20018: {value: 'RJ'},
+        20019: {value: 'XJ'},
+        20020: {value: 'BLACK'},*/
       }})
     })
     return result
@@ -270,6 +283,21 @@ export default {
     return result
   },
 
+  get_l_ggstatus_datalist() {
+    var result = instance.get(api.get_l_ggstatus_datalist)
+
+    result = new Promise(function (resolve, reject) {
+      resolve({data: {
+        30400: {value: '正常'},
+        30401: {value: '脱落'},
+        30402: {value: '宣教'},
+        30403: {value: '黑名单'},
+        30404: {value: '不做跟进'},
+      }})
+    })
+    
+    return result
+  },
   
   get_l_showggtitle_datalist(param) {
     var result = instance.get(api.get_l_showggtitle_datalist)

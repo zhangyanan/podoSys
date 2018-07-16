@@ -481,6 +481,7 @@ $$('#my-range').on('range:change', function (e, range) {
     display: inline-block;
     border-width:0px;
     font-size: 2em;
+    width: calc(100% - 130px);
     }
 .comfirmbtn{
     background-color: aquamarine
@@ -628,19 +629,19 @@ div.block.first-block{
                     <input type="text" dir="rtl" align="right" v-model="l_ggName" clear-button/>
                   </div>
                 </div>
-              </f7-block>
-              <f7-block>
+            </f7-block>
+            <f7-block>
                 <div class="mybox">
-                  <div class="mylabelbox">
-                    <f7-label><font class="mylabelfont">性别</font></f7-label>
+                    <f7-list-item smart-select title="性别" class="select-box">
+                        <!-- Select with values inside -->
+                        <select v-model="selectGender" name="activityType">
+                            <option disabled>{{selectGender}}</option>
+                            <option v-for="itemmenu in this.l_gender_data" 
+                                    :key="itemmenu.value" :value="itemmenu.value">
+                                    {{itemmenu.value}}</option>
+                            </select>
+                        </f7-list-item>
                   </div>
-                  <div class="myinputbox">
-                    <select v-model="selectGender">
-                        <option v-for="(itemmenu) in this.l_gender_data" :key="itemmenu.value">
-                        {{itemmenu.value}}</option>
-                    </select>
-                </div>
-              </div>
             </f7-block>
             <f7-block>
               <div class="mybox">
@@ -695,7 +696,7 @@ div.block.first-block{
                           <f7-label><font class="mylabelfont">引导人姓名</font></f7-label>
                       </div>
                       <div class="myinputbox">
-                          <input type="tel" dir="rtl" v-model="l_yzName" clear-button>
+                          <input type="tel" dir="rtl" v-model="l_yzName" disabled>
                       </div>
                   </div>
               </f7-block>
@@ -705,7 +706,7 @@ div.block.first-block{
                           <f7-label><font class="mylabelfont">引导人会属</font></f7-label>
                       </div>
                       <div class="myinputbox">
-                          <input type="tel" dir="rtl" v-model="l_yzHs" clear-button>
+                          <input type="tel" dir="rtl" v-model="l_yzHs" disabled>
                       </div>
                   </div>
               </f7-block>
@@ -715,7 +716,7 @@ div.block.first-block{
                           <f7-label><font class="mylabelfont">引导人区域</font></f7-label>
                       </div>
                       <div class="myinputbox">
-                          <input type="tel" dir="rtl" v-model="l_yzQy" clear-button>
+                          <input type="tel" dir="rtl" v-model="l_yzQy" disabled>
                       </div>
                   </div>
               </f7-block>

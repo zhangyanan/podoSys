@@ -1,8 +1,9 @@
+
 <!-- 当前页面名称： 蝈蝈列表 收藏列表 协力列表 搜索列表 -->
 <template>
 <f7-page>
-  <v-asideheader title=''></v-asideheader>
-  <f7-list v-if="this.l_ret_gg_imf_s != null" media-list class="gglibrary">
+  <v-asideheader addPage title=''></v-asideheader>
+  <f7-list v-if="b_render == 2" media-list class="gglibrary">
     <f7-list-item v-for="(item, index) in this.l_ret_gg_imf_s.datas" :key="index" 
               @click="local_setSelectedGG(item.键值, index)" :class="item.阶段 + '-bg'">
        <div slot="subtitle" class="gglib-ggname">{{item.姓名}}</div>         
@@ -25,19 +26,51 @@
           <div class="row nogap">
               <div class="col-40">
                 <div class="row">
-                  <div class="col-20"><span :class="'phone-icon-' + item.阶段"><img v-bind:src="'@/assets/icon_all/listicon_' + item.阶段 + '1.png'"/></span></div>
+                  <div class="col-20"><span :class="'phone-icon-' + item.阶段">
+                    <!-- 我也不想这么写， 但是不这样应该怎么实现呢，太尴尬了，那就这样吧，一切为了效果 -->
+                    <img v-if="item.阶段 == 'SW' || item.阶段 == 'TK' || item.阶段 == 'QJ'" v-bind:src="'/static/icon_all/listicon_red1.png'"/>
+                    <img v-else-if="item.阶段 == 'GD' || item.阶段 == 'FF'"  v-bind:src="'/static/icon_all/listicon_orange1.png'"/> 
+                    <img v-else-if="item.阶段 == 'CJ' || item.阶段 == 'ZJ' || item.阶段 == 'GJ'"  v-bind:src="'/static/icon_all/listicon_blue1.png'"/> 
+                    <img v-else-if="item.阶段 == 'BLACK'"  v-bind:src="'/static/icon_all/listicon_black1.png'"/> 
+                    <img v-else-if="item.阶段 == 'RJ'"     v-bind:src="'/static/icon_all/listicon_green1.png'"/> 
+                    <img v-else                           v-bind:src="'/static/icon_all/listicon_gray1.png'"/> 
+                   
+                    <!--<f7-icon v-if="item.阶段 == 'SW'"                                           material="smartphone" color = "red"></f7-icon>
+                    <f7-icon v-else-if="item.阶段 == 'GD' || item.阶段 == 'FF'"                       material="smartphone" color = "orange"></f7-icon>
+                    <f7-icon v-else-if="item.阶段 == 'CJ' || item.阶段 == 'ZJ' || item.阶段 == 'GJ'"   material="smartphone" color = "blue"></f7-icon>
+                    <f7-icon v-else-if="item.阶段 == 'BLACK'"                                        material="smartphone" color = "black"></f7-icon>
+                    <f7-icon v-else-if="item.阶段 == 'RJ'"                                           material="smartphone" color = "green"></f7-icon> 
+                    <f7-icon v-else                                                             material="smartphone" color = "gray"></f7-icon><!-- 来11:39-40 -->
+                    
+                    </span></div>
                   <div class="col-80"><span class="phone">{{item.手机}}</span></div>
                 </div>
               </div>
               <div class="col-20">
                 <div class="row">
-                  <div class="col-50"><span :class="'gender-icon-' + item.阶段"><img v-bind:src="'@/assets/icon_all/listicon_' + item.阶段 + '2.png'"/></span></div>
+                  <div class="col-50"><span :class="'gender-icon-' + item.阶段">
+                    <img v-if="item.阶段 == 'SW' || item.阶段 == 'TK' || item.阶段 == 'QJ'" v-bind:src="'/static/icon_all/listicon_red2.png'"/>
+                    <img v-else-if="item.阶段 == 'GD' || item.阶段 == 'FF'"  v-bind:src="'/static/icon_all/listicon_orange2.png'"/> 
+                    <img v-else-if="item.阶段 == 'CJ' || item.阶段 == 'ZJ' || item.阶段 == 'GJ'"  v-bind:src="'/static/icon_all/listicon_blue2.png'"/> 
+                    <img v-else-if="item.阶段 == 'BLACK'"  v-bind:src="'/static/icon_all/listicon_black2.png'"/> 
+                    <img v-else-if="item.阶段 == 'RJ'"     v-bind:src="'/static/icon_all/listicon_green2.png'"/> 
+                    <img v-else                           v-bind:src="'/static/icon_all/listicon_gray2.png'"/> 
+                   
+                    </span></div>
                   <div class="col-50"><span class="gender">{{item.性别}}</span></div>
                 </div>
               </div>
               <div class="col-40">
                 <div class="row">
-                  <div class="col-20"><span :class="'date-icon-' + item.阶段"><img v-bind:src="'@/assets/icon_all/listicon_' + item.阶段 + '3.png'"/></span></div>
+                  <div class="col-20"><span :class="'date-icon-' + item.阶段">
+                    <img v-if="item.阶段 == 'SW' || item.阶段 == 'TK' || item.阶段 == 'QJ'" v-bind:src="'/static/icon_all/listicon_red3.png'"/>
+                    <img v-else-if="item.阶段 == 'GD' || item.阶段 == 'FF'"  v-bind:src="'/static/icon_all/listicon_orange3.png'"/> 
+                    <img v-else-if="item.阶段 == 'CJ' || item.阶段 == 'ZJ' || item.阶段 == 'GJ'"  v-bind:src="'/static/icon_all/listicon_blue3.png'"/> 
+                    <img v-else-if="item.阶段 == 'BLACK'"  v-bind:src="'/static/icon_all/listicon_black3.png'"/> 
+                    <img v-else-if="item.阶段 == 'RJ'"     v-bind:src="'/static/icon_all/listicon_green3.png'"/> 
+                    <img v-else                           v-bind:src="'/static/icon_all/listicon_gray3.png'"/> 
+                   
+                    </span></div>
                   <div class="col-80"><span class="date">{{item.涉外时间}}</span></div>
                 </div>
               </div>
@@ -48,15 +81,22 @@
        </div>
     </f7-list-item>
   </f7-list>
+  <f7-list v-else-if="b_render == 1">
+    <f7-list-item>
+      <f7-label>您好，您的{{jump_to}}列表为空，还需要再努力哦^_^</f7-label>
+    </f7-list-item>
+  </f7-list>  
 </f7-page>
 </template>
 
 <script>
 export default {
+
 }
 </script>
 
 <style>
+
 .md .list .gglibrary .gglibrary-item .item-content{
     padding-left: 0px;
 }
@@ -64,7 +104,7 @@ div.list.media-list.gglibrary{
   margin: 0px;
   padding-left: 31px;
 }
-div.list.media-list.navbar-inner.sliding{
+div.navbar-inner.sliding{
   height: 65px;
   background: #FFFFFF;
 }
@@ -320,6 +360,7 @@ span.phone-icon-red,span.phone-icon-green,span.phone-icon-orange,span.phone-icon
     line-height: 17px;
     padding-left: 2px;
 }
+
   .name-bg-SW{
     background-color: #FF6D7F;
     width:59px;
@@ -422,12 +463,15 @@ export default {
     ...mapGetters('listdata',[
         'l_ret_personal_imf_s'
     ]),
+
     ...mapGetters('listdata',[
         'l_ret_personal_favorite_s'
     ]),
+
      ...mapGetters('listdata',[
         'l_ret_personal_favorite_list_s'
     ]),
+
     ...mapGetters('listdata',[
       'l_ret_our_gg_imf_s'
     ]),
@@ -435,6 +479,7 @@ export default {
     ...mapGetters('listdata',[
         'l_ret_search_data'
     ]),
+
     ...mapGetters('datainterchange',[
       'pageNavigation'
     ]),
@@ -447,6 +492,7 @@ export default {
         jump = JSON.parse(this.pageNavigation)
     this.jump_to = jump.to
     console.log("I'm jump from " + jump.from + " to " + jump.to)
+
     //得到当前登陆用户的gg列表
     //如果是查看自己的gg 则以自己为引导人查看
     //this.get_my_gglist('约翰')
@@ -460,12 +506,13 @@ export default {
         else if(jump.to == "收藏列表"){
                               this.getPersonalFavoriteList(this.l_ret_personal_imf_s.datas[0].个人表单)
         }
+
     //this.getPersonalAccount('cui')
     //如果是查看自己作为管理者的gg 则以自己为管理人查
     //this.get_our_gglist('cui')
     
     //1s以后进行刷新
-      this.timeout(1000).then(() => {
+      this.timeout(2000).then(() => {
                 console.log('in vue.timeout')
                 if(jump.to == "收藏列表")
                 {
@@ -513,35 +560,45 @@ export default {
     ...mapActions('datainterchange',[
       'setSelectedUser'
     ]),
+
     ...mapActions('listdata',[
       'get_my_gglist'
     ]),
+
     ...mapActions('listdata',[
       'get_our_gglist'
     ]),
+
     ...mapActions('listdata',[
       'getformvaluesaccurate'
     ]),
+
     ...mapActions('listdata',[
       'getPersonalAccount'
     ]),
+
     ...mapActions('listdata',[
       'getPersonalFavoriteList'
     ]),
+
     ...mapActions('datainterchange',[
       'setPageNavigation'
     ]),
+
     ...mapActions('datainterchange',[
     'gotoPodosysAnyPage'
     ]),
+
     reflash() {
         console.log("I'm back!")
     },
+
     timeout(ms) {
           return new Promise((resolve) => {
             setTimeout(resolve, ms);
                 })
       },
+
     local_setSelectedGG(keyid, index){
       //全局设置 ggID
       this.setSelectedUser(index)
@@ -553,4 +610,3 @@ export default {
     }
   }
 }
-</script>
