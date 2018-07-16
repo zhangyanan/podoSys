@@ -445,14 +445,16 @@ $$('#my-range').on('range:change', function (e, range) {
 .md .list{
     margin: 0px;
     }
-.list ul {
+.list.addinfo-list ul {
     list-style: none;
     margin: 0;
     padding: 0;
     position: relative;
-    margin-top: 30px;
+    margin-top: -20px;
 }
-
+div.list.addinfo-list {
+    margin-top: 20px;
+}
 .page-content{
     background: #EFF0F4;
 }
@@ -592,6 +594,25 @@ div.item-content.item-input{
 div.block.first-block{
     padding-top: 12px;
 }
+div.list.addinfo-list {
+    margin-top: 50px;
+}
+
+/*addinfo 头文件的css*/
+div.navbar-inner.sliding{
+  background-color: #54BCBF;
+  color:#FFFFFF;
+}
+div.navbar-inner.sliding{
+    background: #54BCBF;
+    color:#FFFFFF;
+    height: 65px;
+}
+div.navbar-inner {
+    padding-left: 19px;
+}
+
+
 </style>
 <template>
   <f7-page>
