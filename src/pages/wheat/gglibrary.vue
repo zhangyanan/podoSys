@@ -1,3 +1,4 @@
+
 <!-- 当前页面名称： 蝈蝈列表 收藏列表 协力列表 搜索列表 -->
 <template>
 <f7-page>
@@ -609,4 +610,3 @@ export default {
     }
   }
 }
-</script>

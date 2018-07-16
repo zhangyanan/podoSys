@@ -590,10 +590,27 @@ div.gap{
     font-size: 22px;
     color: #FFFFFF;
     letter-spacing: 3px;
-    margin-top: 210px;
+    margin-top: 230px;
   }
+.mybox:hover {
+    border-style: solid;
+    border-width: 2px;
+    border-color:#E3E2E2;
+}
+div.item-content.item-input{
+    border-bottom: solid 1px #E3E4E8;
+}
 
-  .md .list .select-box .item-content {
+.accordion-item.accordion-item-opened {
+    padding-bottom: 30px;
+}
+.accordion-item .block{
+    padding-bottom: 6px;
+}
+div.block.first-block{
+    padding-top: 12px;
+}
+.md .list .select-box .item-content {
     padding-left: 0px;
 }
 </style>
@@ -1051,4 +1068,3 @@ div.gap{
 <style lang="scss" scoped>
 
 </style>
-
