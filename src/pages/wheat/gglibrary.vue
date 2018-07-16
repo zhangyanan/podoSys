@@ -2,7 +2,7 @@
 <template>
 <f7-page>
   <v-asideheader addPage title=''></v-asideheader>
-  <f7-list v-if="this.l_ret_gg_imf_s != null" media-list class="gglibrary">
+  <f7-list v-if="b_render == 2" media-list class="gglibrary">
     <f7-list-item v-for="(item, index) in this.l_ret_gg_imf_s.datas" :key="index" 
               @click="local_setSelectedGG(item.键值, index)" :class="item.阶段 + '-bg'">
        <div slot="subtitle" class="gglib-ggname">{{item.姓名}}</div>         
@@ -26,14 +26,20 @@
               <div class="col-40">
                 <div class="row">
                   <div class="col-20"><span :class="'phone-icon-' + item.阶段">
-                    <!-- 我也不想这么写， 但是不这样应该怎么实现呢，太尴尬了，那就这样吧，一切为了效果
-                    <img v-bind:src="'@/assets/icon_all/listicon_' + item.阶段 + '1.png'"/> -->
-                    <f7-icon v-if="item.阶段 == 'SW'"                                           material="smartphone" color = "red"></f7-icon>
+                    <!-- 我也不想这么写， 但是不这样应该怎么实现呢，太尴尬了，那就这样吧，一切为了效果 -->
+                    <img v-if="item.阶段 == 'SW' || item.阶段 == 'TK' || item.阶段 == 'QJ'" v-bind:src="'/static/icon_all/listicon_red1.png'"/>
+                    <img v-else-if="item.阶段 == 'GD' || item.阶段 == 'FF'"  v-bind:src="'/static/icon_all/listicon_orange1.png'"/> 
+                    <img v-else-if="item.阶段 == 'CJ' || item.阶段 == 'ZJ' || item.阶段 == 'GJ'"  v-bind:src="'/static/icon_all/listicon_blue1.png'"/> 
+                    <img v-else-if="item.阶段 == 'BLACK'"  v-bind:src="'/static/icon_all/listicon_black1.png'"/> 
+                    <img v-else-if="item.阶段 == 'RJ'"     v-bind:src="'/static/icon_all/listicon_green1.png'"/> 
+                    <img v-else                           v-bind:src="'/static/icon_all/listicon_gray1.png'"/> 
+                   
+                    <!--<f7-icon v-if="item.阶段 == 'SW'"                                           material="smartphone" color = "red"></f7-icon>
                     <f7-icon v-else-if="item.阶段 == 'GD' || item.阶段 == 'FF'"                       material="smartphone" color = "orange"></f7-icon>
                     <f7-icon v-else-if="item.阶段 == 'CJ' || item.阶段 == 'ZJ' || item.阶段 == 'GJ'"   material="smartphone" color = "blue"></f7-icon>
                     <f7-icon v-else-if="item.阶段 == 'BLACK'"                                        material="smartphone" color = "black"></f7-icon>
-                    <f7-icon v-else-if="item.阶段 == 'RJ'"                                           material="smartphone" color = "green"></f7-icon> <!-- 来11:39-40 -->
-                    <f7-icon v-else                                                             material="smartphone" color = "gray"></f7-icon>
+                    <f7-icon v-else-if="item.阶段 == 'RJ'"                                           material="smartphone" color = "green"></f7-icon> 
+                    <f7-icon v-else                                                             material="smartphone" color = "gray"></f7-icon><!-- 来11:39-40 -->
                     
                     </span></div>
                   <div class="col-80"><span class="phone">{{item.手机}}</span></div>
@@ -42,13 +48,13 @@
               <div class="col-20">
                 <div class="row">
                   <div class="col-50"><span :class="'gender-icon-' + item.阶段">
-                    <f7-icon v-if="item.阶段 == 'SW'"                                           material="perm_identity" color = "red"></f7-icon>
-                    <f7-icon v-else-if="item.阶段 == 'GD' || item.阶段 == 'FF'"                       material="perm_identity" color = "orange"></f7-icon>
-                    <f7-icon v-else-if="item.阶段 == 'CJ' || item.阶段 == 'ZJ' || item.阶段 == 'GJ'"   material="perm_identity" color = "blue"></f7-icon>
-                    <f7-icon v-else-if="item.阶段 == 'BLACK'"                                        material="perm_identity" color = "black"></f7-icon>
-                    <f7-icon v-else-if="item.阶段 == 'RJ'"                                           material="perm_identity" color = "green"></f7-icon> <!-- 来11:39-40 -->
-                    <f7-icon v-else                                                             material="perm_identity" color = "gray"></f7-icon>
-                    
+                    <img v-if="item.阶段 == 'SW' || item.阶段 == 'TK' || item.阶段 == 'QJ'" v-bind:src="'/static/icon_all/listicon_red2.png'"/>
+                    <img v-else-if="item.阶段 == 'GD' || item.阶段 == 'FF'"  v-bind:src="'/static/icon_all/listicon_orange2.png'"/> 
+                    <img v-else-if="item.阶段 == 'CJ' || item.阶段 == 'ZJ' || item.阶段 == 'GJ'"  v-bind:src="'/static/icon_all/listicon_blue2.png'"/> 
+                    <img v-else-if="item.阶段 == 'BLACK'"  v-bind:src="'/static/icon_all/listicon_black2.png'"/> 
+                    <img v-else-if="item.阶段 == 'RJ'"     v-bind:src="'/static/icon_all/listicon_green2.png'"/> 
+                    <img v-else                           v-bind:src="'/static/icon_all/listicon_gray2.png'"/> 
+                   
                     </span></div>
                   <div class="col-50"><span class="gender">{{item.性别}}</span></div>
                 </div>
@@ -56,13 +62,13 @@
               <div class="col-40">
                 <div class="row">
                   <div class="col-20"><span :class="'date-icon-' + item.阶段">
-                    <f7-icon v-if="item.阶段 == 'SW'"                                           material="alarm" color = "red"></f7-icon>
-                    <f7-icon v-else-if="item.阶段 == 'GD' || item.阶段 == 'FF'"                       material="alarm" color = "orange"></f7-icon>
-                    <f7-icon v-else-if="item.阶段 == 'CJ' || item.阶段 == 'ZJ' || item.阶段 == 'GJ'"   material="alarm" color = "blue"></f7-icon>
-                    <f7-icon v-else-if="item.阶段 == 'BLACK'"                                        material="alarm" color = "black"></f7-icon>
-                    <f7-icon v-else-if="item.阶段 == 'RJ'"                                           material="alarm" color = "green"></f7-icon> <!-- 来11:39-40 -->
-                    <f7-icon v-else                                                             material="alarm" color = "gray"></f7-icon>
-                    
+                    <img v-if="item.阶段 == 'SW' || item.阶段 == 'TK' || item.阶段 == 'QJ'" v-bind:src="'/static/icon_all/listicon_red3.png'"/>
+                    <img v-else-if="item.阶段 == 'GD' || item.阶段 == 'FF'"  v-bind:src="'/static/icon_all/listicon_orange3.png'"/> 
+                    <img v-else-if="item.阶段 == 'CJ' || item.阶段 == 'ZJ' || item.阶段 == 'GJ'"  v-bind:src="'/static/icon_all/listicon_blue3.png'"/> 
+                    <img v-else-if="item.阶段 == 'BLACK'"  v-bind:src="'/static/icon_all/listicon_black3.png'"/> 
+                    <img v-else-if="item.阶段 == 'RJ'"     v-bind:src="'/static/icon_all/listicon_green3.png'"/> 
+                    <img v-else                           v-bind:src="'/static/icon_all/listicon_gray3.png'"/> 
+                   
                     </span></div>
                   <div class="col-80"><span class="date">{{item.涉外时间}}</span></div>
                 </div>
@@ -74,6 +80,11 @@
        </div>
     </f7-list-item>
   </f7-list>
+  <f7-list v-else-if="b_render == 1">
+    <f7-list-item>
+      <f7-label>您好，您的{{jump_to}}列表为空，还需要再努力哦^_^</f7-label>
+    </f7-list-item>
+  </f7-list>  
 </f7-page>
 </template>
 
@@ -500,7 +511,7 @@ export default {
     //this.get_our_gglist('cui')
     
     //1s以后进行刷新
-      this.timeout(1000).then(() => {
+      this.timeout(2000).then(() => {
                 console.log('in vue.timeout')
                 if(jump.to == "收藏列表")
                 {
