@@ -442,12 +442,10 @@ $$('#my-range').on('range:change', function (e, range) {
 });*/
 </script>
 <style>
-.md .list{
+.md .list.wheat-list{
     margin: 0px;
-    }
-.page-content{
-    background: #EFF0F4;
-    }
+}
+
 .mybox:hover{
     border-style:solid; 
     border-width:2px;
@@ -615,9 +613,9 @@ div.block.first-block{
 }
 </style>
 <template>
-  <f7-page>
+  <f7-page class="wheatlist-page">
     <v-addinfo title='添加信息'></v-addinfo>
-    <f7-list accordion class="addinfo-list">
+    <f7-list accordion class="wheat-list">
         <f7-list-item accordion-item title="基本信息">
             <f7-accordion-content>
               <f7-block>
