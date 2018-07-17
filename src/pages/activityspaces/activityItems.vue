@@ -654,9 +654,6 @@ $$('#my-range').on('range:change', function (e, range) {
     right:5px;
 }
 /******************************************/
-.md .list{
-    margin: 0px;
-    }
 .page-content{
     background: #EFF0F4;
     }
