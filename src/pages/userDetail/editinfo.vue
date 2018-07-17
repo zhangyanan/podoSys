@@ -455,7 +455,7 @@ $$('#my-range').on('range:change', function (e, range) {
 div.list.addinfo-list {
     margin-top: 20px;
 }
-.page-content{
+div.page.editinfo-page.page-current{
     background: #EFF0F4;
 }
 .mybox:hover{
@@ -615,7 +615,7 @@ div.navbar-inner {
 
 </style>
 <template>
-  <f7-page>
+  <f7-page class="editinfo-page">
     <v-addinfo title='编辑资料'></v-addinfo>
     <f7-list accordion class="addinfo-list">
         <f7-list-item accordion-item title="个人资料">
