@@ -35,13 +35,6 @@
                     <img v-else-if="item.阶段 == 'RJ'"     v-bind:src="'/static/icon_all/listicon_green1.png'"/> 
                     <img v-else                           v-bind:src="'/static/icon_all/listicon_gray1.png'"/> 
                    
-                    <!--<f7-icon v-if="item.阶段 == 'SW'"                                           material="smartphone" color = "red"></f7-icon>
-                    <f7-icon v-else-if="item.阶段 == 'GD' || item.阶段 == 'FF'"                       material="smartphone" color = "orange"></f7-icon>
-                    <f7-icon v-else-if="item.阶段 == 'CJ' || item.阶段 == 'ZJ' || item.阶段 == 'GJ'"   material="smartphone" color = "blue"></f7-icon>
-                    <f7-icon v-else-if="item.阶段 == 'BLACK'"                                        material="smartphone" color = "black"></f7-icon>
-                    <f7-icon v-else-if="item.阶段 == 'RJ'"                                           material="smartphone" color = "green"></f7-icon> 
-                    <f7-icon v-else                                                             material="smartphone" color = "gray"></f7-icon><!-- 来11:39-40 -->
-                    
                     </span></div>
                   <div class="col-80"><span class="phone">{{item.手机}}</span></div>
                 </div>
