@@ -487,10 +487,10 @@ div.quick.list.inline-labels{
     text-align: right;
     height: 34px;
     width: 84px;
-    line-height: 48px;
+    line-height: 33px;
     border-radius: 68px;
     background-color: #54BCBF;
-    padding-right: 20px;
+    padding-right: 24px;
 }
 
   .md .dialog-button{
