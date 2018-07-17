@@ -140,6 +140,10 @@ export default {
 
 </script>
 <style>
+div.block.back-ground{
+    margin: 0px; 
+    padding: 0px;
+}
 .userItem_div{
     background-color: #FF6D7F;
     width: 100%;
