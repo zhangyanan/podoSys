@@ -35,7 +35,7 @@
   }
 
   .md a.link.leftlink,.md a.link.rightlink{
-    background: #FFFFFF;
+    //background: #FFFFFF;
   }
 </style>
 <template>
