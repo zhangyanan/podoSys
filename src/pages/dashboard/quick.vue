@@ -204,7 +204,7 @@ import { mapState, mapGetters, mapActions, mapMutations, Store } from 'vuex'
         }
         else
         {
-            this.openVerticalButtons('请输入姓名')
+            this.openVerticalButtons('提示','请输入姓名')
         }    
         //性别修改了吗
         if(this.male_selected == true)
