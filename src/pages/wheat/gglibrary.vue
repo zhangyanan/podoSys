@@ -1,9 +1,8 @@
-
 <!-- 当前页面名称： 蝈蝈列表 收藏列表 协力列表 搜索列表 -->
 <template>
 <f7-page>
   <v-asideheader addPage title=''></v-asideheader>
-  <f7-list v-if="b_render == 2" media-list class="gglibrary">
+  <f7-list v-if="this.b_render == 2" media-list class="gglibrary">
     <f7-list-item v-for="(item, index) in this.l_ret_gg_imf_s.datas" :key="index" 
               @click="local_setSelectedGG(item.键值, index)" :class="item.阶段 + '-bg'">
        <div slot="subtitle" class="gglib-ggname">{{item.姓名}}</div>         
@@ -35,7 +34,7 @@
                     <img v-else-if="item.阶段 == 'RJ'"     v-bind:src="'/static/icon_all/listicon_green1.png'"/> 
                     <img v-else                           v-bind:src="'/static/icon_all/listicon_gray1.png'"/> 
                    
-                    </span></div>
+                   </span></div>
                   <div class="col-80"><span class="phone">{{item.手机}}</span></div>
                 </div>
               </div>
@@ -74,7 +73,7 @@
        </div>
     </f7-list-item>
   </f7-list>
-  <f7-list v-else-if="b_render == 1">
+  <f7-list v-else-if="this.b_render == 1">
     <f7-list-item>
       <f7-label>您好，您的{{jump_to}}列表为空，还需要再努力哦^_^</f7-label>
     </f7-list-item>
@@ -89,15 +88,15 @@ export default {
 </script>
 
 <style>
-
 .md .list .gglibrary .gglibrary-item .item-content{
     padding-left: 0px;
 }
 div.list.media-list.gglibrary{
   margin: 0px;
   padding-left: 31px;
+  background: #FFFFFF;
 }
-div.navbar-inner.sliding{
+div.list.media-list.navbar-inner.sliding{
   height: 65px;
   background: #FFFFFF;
 }
@@ -353,7 +352,6 @@ span.phone-icon-red,span.phone-icon-green,span.phone-icon-orange,span.phone-icon
     line-height: 17px;
     padding-left: 2px;
 }
-
   .name-bg-SW{
     background-color: #FF6D7F;
     width:59px;
@@ -603,3 +601,4 @@ export default {
     }
   }
 }
+</script>
