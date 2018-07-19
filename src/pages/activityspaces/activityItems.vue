@@ -609,7 +609,7 @@ $$('#my-range').on('range:change', function (e, range) {
 /*.md .list{
     margin: 0px;
     }*/
-.page-content{
+.activity-page .page-content{
     background: #EFF0F4;
     }
 .activity_mybox:hover{
@@ -792,7 +792,7 @@ div.gap{
 /******************************************/
 </style>
 <template>
-  <f7-page>
+  <f7-page class="activity-page">
       <v-addinfo :title='l_title_name'></v-addinfo>
       <f7-block class="back-ground">
         <!--<f7-row no-gap class="activity-row-header">
