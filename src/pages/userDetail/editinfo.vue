@@ -222,6 +222,7 @@ export default {
     border-width:1px;
     border-color:rgb(194, 191, 191);
     margin-top: 6px;
+    height:37px;
     }
 
 .mylabelfont{
@@ -233,13 +234,15 @@ export default {
     line-height: 21px;
     }
 .mylabelbox{
-    display: inline-block;
     text-align:left;
     font-size: 3em;
     width: 110px;
+    position: absolute;
+    margin-left:13px;
+    margin-top:8px;
     }
 .myinputbox{
-    display: inline-block;
+    text-align:right;
     border-width:0px;
     font-size: 2em;
     }
@@ -339,7 +342,7 @@ div.gap{
 }
 .mybox:hover {
     border-style: solid;
-    border-width: 2px;
+    border-width: 1px;
     border-color:#E3E2E2;
 }
 div.item-content.item-input{
@@ -355,44 +358,57 @@ div.item-content.item-input{
 div.block.first-block{
     padding-top: 12px;
 }
-.md .list.addinfo-list .item-content {
-    min-height: 48px;
-    padding-left: 0px;
+
+.md .list .myinputbox input[type=text] {
+    width: 179px;
+    height: 37px;
+    line-height: 37px;
+    background: #FFFFFF;
+    border-radius: 4px;
+    margin-right: 11px;
+    color: #000000;
 }
-.md .list.addinfo-list .item-after{
-    padding-left: 245px;
+
+.md .list .myinputbox input[type=date] {
+    width: 130px;
+    height: 37px;
+    line-height: 37px;
+    background: #FFFFFF;
+    border-radius: 4px;
+    margin-right: 11px;
+    color: #000000;
 }
-.md .list.addinfo-list.item-after {
-    color: #757575;
-    font-size: 14px;
-    padding-left: 240px;
+
+.list .mybox .select-box .item-title {
+    left: 12px;
 }
-.md .list.addinfo-list input.input-with-value {
-    text-align: right;
-}
+
 </style>
 <template>
- <f7-page class="editinfo-page">
+  <f7-page>
     <v-addinfo title='编辑资料'></v-addinfo>
     <f7-list accordion class="addinfo-list">
-        <f7-list-item accordion-item title="个人资料" class="personinfo-li">
+        <f7-list-item accordion-item title="个人资料">
             <f7-accordion-content>
-              <f7-block class="first-block">
+              <f7-block>
                 <div class="mybox">
                   <div class="mylabelbox">
                     <f7-label><font class="mylabelfont">姓名</font></f7-label>
                   </div>
                   <div class="myinputbox">
-                    <input type="text" dir="rtl" align="right" v-model="s_name" clear-button/>
+                    <f7-input type="text" dir="rtl" :value="s_name" @input="s_name = $event.target.value" clear-button></f7-input>
                   </div>
                 </div>
               </f7-block>
               <f7-block>
                 <div class="mybox">
+                  <!--<div class="mylabelbox">
+                    <f7-label><font class="mylabelfont">性别</font></f7-label>
+                  </div>-->
                   <div class="myinputbox">
                     <f7-list-item smart-select title="性别">
                         <!-- Select with values inside -->
-                        <select v-model="s_selectGender" name="activityType">
+                        <select v-model="s_selectGender" name="genderType">
                             <option disabled>{{s_selectGender}}</option>
                             <option v-for="itemmenu in this.l_gender_data" 
                                     :key="itemmenu.value" :value="itemmenu.value">
@@ -429,7 +445,7 @@ div.block.first-block{
                   <f7-label><font class="mylabelfont">会属</font></f7-label>
                 </div>
                 <div class="myinputbox">
-                    <input type="text" dir="rtl" :placeholder="in_myPersonalItem.会属" disabled>
+                    <f7-input type="text" dir="rtl" :value="in_myPersonalItem.会属" disabled></f7-input>
                 </div>
               </div>
             </f7-block>
@@ -439,7 +455,7 @@ div.block.first-block{
                   <f7-label><font class="mylabelfont">区域</font></f7-label>
                 </div>
                 <div class="myinputbox">
-                    <input type="text" dir="rtl" :placeholder="in_myPersonalItem.区域" disabled>
+                    <f7-input type="text" dir="rtl" :value="in_myPersonalItem.区域" disabled></f7-input>
                 </div>
               </div>
             </f7-block>
@@ -449,8 +465,7 @@ div.block.first-block{
                   <f7-label><font class="mylabelfont">微信ID</font></f7-label>
                 </div>
                 <div class="myinputbox">
-                  <f7-input type="text" dir="rtl" :value="l_weChat" @input="l_weChat = $event.target.value" clear-button></f7-input>
-               
+                  <f7-input type="text" dir="rtl" :value="s_weChat" @input="s_weChat = $event.target.value" clear-button></f7-input>
                 </div>
                 </div>
             </f7-block>            

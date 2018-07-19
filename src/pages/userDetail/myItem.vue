@@ -314,9 +314,6 @@ export default {
             font-weight: 600;
             text-decoration:none;
 }
-div.list.myItem-list ul:before,div.list.myItem-list ul:after{
-  background-color: #54BCBF;
-}
 
 </style>
 <template>
@@ -337,7 +334,7 @@ div.list.myItem-list ul:before,div.list.myItem-list ul:after{
             </div>
             <div class = "mysearchbox">
                 <div class = "searchbody" >
-                    <input type="text" class="searchinput" placeholder="搜索" v-model="search_msg">
+                    <input type="text" placeholder="搜索" v-model="search_msg">
                 </div>
                 <div class = "searchicon">
                     <a href="#" @click="onSearch(search_msg)"><img  src="@/assets/icon_all/search_green.png"/></a>

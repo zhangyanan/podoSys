@@ -224,6 +224,8 @@ $$('#my-range').on('range:change', function (e, range) {
     border-width:1px;
     border-color:rgb(194, 191, 191);
     margin-top: 6px;
+    margin-left: 12px;
+
     }
 
 .mylabelfont{
@@ -363,6 +365,10 @@ div.gap{
   .md .list .select-box .item-content {
     padding-left: 0px;
 }
+
+.accordion-item.accordion-item-opened {
+    padding-bottom: 36px;
+}
 </style>
 <template>
   <f7-page>
@@ -447,7 +453,6 @@ div.gap{
            </f7-accordion-content>
         </f7-list-item> 
     </f7-list>
-
 
 <!--
     <f7-list accordion>

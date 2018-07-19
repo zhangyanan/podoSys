@@ -372,7 +372,7 @@ $$('#my-range').on('range:change', function (e, range) {
 
 .divresponse    {
             position: absolute;
-            width: calc(100% - 24px);
+            width: calc(100% - 25px);
             height: 140px;
             top:0px;
             margin-left: 12px;
@@ -383,19 +383,11 @@ $$('#my-range').on('range:change', function (e, range) {
             color: #000000;
 }
 
-.md .list .inputdiv {
+.md .list .divresponse .inputdiv {
     color: #000000;
     
 }
-.md .list input[type=text] {
-    width: calc(100% - 11.5px);
-    height: calc(100% - 13px);
-    background: #FFFFFF;
-    border-radius: 4px;
-    margin-left: 11.5px;
-    margin-top:13px;
-    color: #000000;
-}
+
 .divtitle   {
             position: absolute;
             width: 328px;
@@ -463,11 +455,7 @@ $$('#my-range').on('range:change', function (e, range) {
 .iteminline{
             display: inline-block;
 }
-.mybox:hover{
-            border-style:solid; 
-            border-width:2px;
-            border-color: rgb(146, 247, 247);
-}
+
 .mylist{
             margin-bottom: 12px;
 }
@@ -483,9 +471,7 @@ $$('#my-range').on('range:change', function (e, range) {
 .pagebody{
             background-color: darkgray
 }
-.listitem{
-            background-color:cornsilk
-}
+
 
 .activity-row-header{
             background: #54BCBF;
@@ -590,20 +576,6 @@ $$('#my-range').on('range:change', function (e, range) {
     padding-right: 0px;
 }
 
-
-
-.mybox{
-    border-style:solid; 
-    border-width:1px;
-    border-color:rgb(194, 191, 191);
-    margin-top: 6px;
-    margin-left:12px;
-    margin-right:12px;
-    padding-left: 13px;
-    width: 100%;
-    height:37px;
-    }
-
 .mybox2{
     border-style:solid; 
     border-width:1px;
@@ -611,10 +583,10 @@ $$('#my-range').on('range:change', function (e, range) {
     margin-top: 6px;
     margin-left:12px;
     margin-right:12px;
-    padding-left: 13px;
-    width: 100%;
+    padding-left: 12px;
     height:37px;
     background: #54BCBF;
+    width: calc(100% - 25px - 12px)
     }
 .mybox2labelfont{
     color:#ffffff;
@@ -632,32 +604,15 @@ $$('#my-range').on('range:change', function (e, range) {
     letter-spacing: 0;
     line-height: 21px;
     }
-.mylabelbox{
-    display: inline-block;
-    text-align:left;
-    font-size: 3em;
-    width: 110px;
-    }
-.myinputbox{
-    display: inline-block;
-    border-width:0px;
-    font-size: 2em;
-    text-align: right;
-    width: calc(100% - 120px)
-    }
-.myinputdatebox{
-    display: inline-block;
-    border-width:0px;
-    font-size: 2em;
-    text-align: right;
-    position: absolute;
-    right:5px;
-}
+
 /******************************************/
-.activityitems-page .page-content{
+/*.md .list{
+    margin: 0px;
+    }*/
+.page-content{
     background: #EFF0F4;
     }
-.mybox:hover{
+.activity_mybox:hover{
     border-style:solid; 
     border-width:2px;
     border-color: rgb(146, 247, 247);
@@ -665,11 +620,14 @@ $$('#my-range').on('range:change', function (e, range) {
 .mylist{
     margin-bottom: 12px;
     }
-.mybox{
+.activity_mybox{
     border-style:solid; 
     border-width:1px;
     border-color:rgb(194, 191, 191);
     margin-top: 6px;
+    margin-left: 12px;
+    margin-right: 12px;
+    height:37px;
     }
 
 .mylabelfont{
@@ -680,14 +638,19 @@ $$('#my-range').on('range:change', function (e, range) {
     letter-spacing: 0;
     line-height: 21px;
     }
-.mylabelbox{
-    display: inline-block;
+.activity_mybox .mylabelbox{
     text-align:left;
     font-size: 3em;
     width: 110px;
+    position: absolute;
+    margin-left:0px;
+    margin-top:8px;
+    padding-left: 13px;
+    height: 37px;
+    line-height: 37px;
     }
 .myinputbox{
-    display: inline-block;
+    text-align:right;
     border-width:0px;
     font-size: 2em;
     }
@@ -702,9 +665,7 @@ $$('#my-range').on('range:change', function (e, range) {
 .pagebody{
     background-color: darkgray
 }
-.listitem{
-    background-color:cornsilk
-}
+
 .md .navbar .content-title {
     font-family: PingFangSC-Semibold;
     font-size: 22px;
@@ -806,13 +767,32 @@ div.gap{
     margin-top: 210px;
   }
 
-  .md .list .select-box .item-content {
+  .md .list .activity_mybox .select-box .item-content {
     padding-left: 0px;
+}
+
+.md .list .myinputbox input[type=date] {
+    width: 130px;
+    height: 37px;
+    line-height: 37px;
+    background: #FFFFFF;
+    border-radius: 4px;
+    margin-right: 11px;
+    color: #000000;
+}
+.md .list .myinputbox input[type=text] {
+    width: 179px;
+    height: 37px;
+    line-height: 37px;
+    background: #FFFFFF;
+    border-radius: 4px;
+    margin-right: 11px;
+    color: #000000;
 }
 /******************************************/
 </style>
 <template>
-  <f7-page class="activityitems-page">
+  <f7-page>
       <v-addinfo :title='l_title_name'></v-addinfo>
       <f7-block class="back-ground">
         <!--<f7-row no-gap class="activity-row-header">
@@ -841,38 +821,48 @@ div.gap{
                     </f7-list-item>
             </f7-list>
             <f7-list class="list-3">
+                <f7-block>
                                     <f7-list-item class="list3item1">  
-                                        <div class="mybox">
+                                        
+                                        <div class="activity_mybox">
                                             <div class="mylabelbox">
                                                 <f7-label><font class="mylabelfont">活动名称</font></f7-label>
                                             </div>
                                             <div class="myinputbox">
-                                                <input type="tel" dir="rtl" v-model="inputname" clear-button>
+                                                <f7-input type="text" dir="rtl" align="right" :value="inputname" @input="inputname = $event.target.value" clear-button></f7-input>
                                             </div>
                                         </div>
-                                        
+                                       
                                     </f7-list-item>
-                                
-                                 
-                                    <f7-list-item smart-select title="活动类型" class="activity-type-list">
-                                        <!-- Select with values inside -->
-                                        <select v-model="selectOption" name="activityType">
-                                                <option disabled>{{selectOption}}</option>
-                                                <option v-for="itemmenu in this.l_activitytype_data" 
-                                                :key="itemmenu.value" :value="itemmenu.value">
-                                                {{itemmenu.value}}</option>
-                                        </select>
-                                    </f7-list-item>
+                                 </f7-block>
+                                    <f7-block> 
+                                        <div class="activity_mybox">
+                                            <f7-list-item smart-select title="活动类型" class="activity-type-list">
+                                                <!-- Select with values inside -->
+                                            
+                                                    <select v-model="selectOption" name="activityType">
+                                                            <option disabled>{{selectOption}}</option>
+                                                            <option v-for="itemmenu in this.l_activitytype_data" 
+                                                            :key="itemmenu.value" :value="itemmenu.value">
+                                                            {{itemmenu.value}}</option>
+                                                    </select>
+                                                
+                                            </f7-list-item>
+                                        </div>
+                                    </f7-block>
+                                    <f7-block> 
                         <f7-list-item class="list3item1">
-                            <div class="mybox">
+                            <div class="activity_mybox">
                                 <div class="mylabelbox">
                                     <f7-label><font class="mylabelfont">活动日期</font></f7-label>
                                 </div>
-                                <div class="myinputdatebox">
-                                        <input type="date" :value="inputdate" @change="inputdate = $event.target.value">
+                                <div class="myinputbox">
+                                        <f7-input type="date" dir="rtl" align="right" :value="inputdate" @input="inputdate = $event.target.value" clear-button></f7-input>
                                 </div>
                             </div>  
                         </f7-list-item>    
+                                    </f7-block>
+                                    <f7-block> 
                     <f7-list-item class="list3item1">
                         <div class="mybox2">
                                 <div class="mylabelbox">
@@ -880,7 +870,8 @@ div.gap{
                                 </div>
                         </div>  
                     </f7-list-item>
-
+                                    </f7-block>
+                                    <f7-block> 
                     <f7-list-item class="list3item2"> 
                         <div class="mybox3">
                             <div class = "divresponse"> 
@@ -891,7 +882,7 @@ div.gap{
                         </div>
                     </f7-list-item>
                  
-                      
+                                    </f7-block>
 
             </f7-list>
             <f7-list class="list-4">
