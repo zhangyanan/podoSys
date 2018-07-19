@@ -4,7 +4,7 @@
         <div class = "userItem_div">
             <img  class = "back_img" src="@/assets/icon_all/back_white.png" @click="goBack()" /> 
             <img  class = "yz_img" src="@/assets/icon_all/sheep.png" />
-            <img  class = "yz_icon" src="@/assets/icon_all/sheep.png" />
+            <img  class = "yz_icon" src="@/assets/icon_all/listicon_green4@2x.png" />
             <div class = "yz_name">
                 <label class = "namescolor_2">{{YZName}}</label>
             </div>
@@ -140,8 +140,13 @@ export default {
 
 </script>
 <style>
+div.block.back-ground{
+    margin: 0px; 
+    padding: 0px;
+}
+
 .userItem_div{
-    background-color: #FF6D7F;
+    background-color: #54BCBF;
     width: 100%;
     height: 667px;
 }
@@ -271,7 +276,7 @@ gg_status_label{
     height: 31px;    
     left:25px;
     top:28px;
-    color: #FF6D7F;
+    color: #54BCBF;
     font-size: 38px;
 }
 
@@ -283,7 +288,7 @@ gg_status_label{
             top:128.5px;
             background: #ffffff;
             border-radius: 50%;
-            border: #FF6D7F solid 0.5px;
+            border: #54BCBF solid 0.5px;
 }
 
 .gg_status_font{
@@ -292,7 +297,7 @@ gg_status_label{
     height: 26px;    
     left:10px;
     top:5px;
-    color: #FF6D7F;
+    color: #54BCBF;
     font-size: 20px;
 }
 

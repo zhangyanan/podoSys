@@ -206,7 +206,7 @@ export default {
     margin-top: 30px;
 }
 
-.page-content{
+.editinfo .page-content{
     background: #EFF0F4;
 }
 .mybox:hover{
@@ -385,7 +385,7 @@ div.block.first-block{
 
 </style>
 <template>
-  <f7-page>
+  <f7-page class="editinfo">
     <v-addinfo title='编辑资料'></v-addinfo>
     <f7-list accordion class="addinfo-list">
         <f7-list-item accordion-item title="个人资料">
