@@ -355,12 +355,27 @@ div.item-content.item-input{
 div.block.first-block{
     padding-top: 12px;
 }
+.md .list.addinfo-list .item-content {
+    min-height: 48px;
+    padding-left: 0px;
+}
+.md .list.addinfo-list .item-after{
+    padding-left: 245px;
+}
+.md .list.addinfo-list.item-after {
+    color: #757575;
+    font-size: 14px;
+    padding-left: 240px;
+}
+.md .list.addinfo-list input.input-with-value {
+    text-align: right;
+}
 </style>
 <template>
-  <f7-page>
+ <f7-page class="editinfo-page">
     <v-addinfo title='编辑资料'></v-addinfo>
     <f7-list accordion class="addinfo-list">
-        <f7-list-item accordion-item title="个人资料">
+        <f7-list-item accordion-item title="个人资料" class="personinfo-li">
             <f7-accordion-content>
               <f7-block class="first-block">
                 <div class="mybox">
@@ -374,9 +389,6 @@ div.block.first-block{
               </f7-block>
               <f7-block>
                 <div class="mybox">
-                  <div class="mylabelbox">
-                    <f7-label><font class="mylabelfont">性别</font></f7-label>
-                  </div>
                   <div class="myinputbox">
                     <f7-list-item smart-select title="性别">
                         <!-- Select with values inside -->
