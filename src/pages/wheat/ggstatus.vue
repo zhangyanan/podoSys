@@ -79,7 +79,8 @@ export default {
         }
 
         //反馈内容修改了吗
-        if(this.s_response != this.in_gg21Item.状态变更原因 && this.s_response != "")
+        if(this.s_response != this.in_gg21Item.状态变更原因 
+            && this.s_response != "" && this.s_response != "请录入状态变更原因")
         {
             tempNames = tempNames + "状态变更原因,"
             tempValues = tempValues + this.s_response + ","
@@ -121,19 +122,36 @@ export default {
             top:46px;
 }
 
-.title_position {
+.clock_img{
+            position: absolute;
+            width: 199px;
+            height: 199px;
+            left:-52px;
+            top:62px;
+}
+.title_zn_position {
             position: absolute;
             width: 152px;
             height: 52px;
             left:178px;
-            top:112px;
+            top:142px;
 }
 
+.title_en_position {
+            position: absolute;
+            width: 152px;
+            height: 52px;
+            left:210px;
+            top:121px;
+}
 .title_font_big {
+            color: #54BCBF;
+            font-size: 38px;
+}
+.title_font_en {
             color: #54BCBF;
             font-size: 26px;
 }
-
 .downline   {
             position: absolute;
             width: 91px;
@@ -181,7 +199,7 @@ export default {
             width: 17px;
             height: 21px;
             left:31px;
-            top:312px;
+            top:19.5px;
 }
 
 .field_name {
@@ -189,7 +207,7 @@ export default {
             width: 100px;
             height: 21px;
             left:63px;
-            top:312px;
+            top:15.5px;
 }
 
 .value_name {
@@ -197,15 +215,15 @@ export default {
             width: 100px;
             height: 21px;
             right:50px;
-            top:312px;
+            top:15.5px;
 }
 
 .img_2  {
             position: absolute;
             width: 16px;
             height: 18.9px;
-            left:32px;
-            top:375px;
+            left:31px;
+            top:20.5px;
 }
 
 .field_status {
@@ -213,7 +231,7 @@ export default {
             width: 91px;
             height: 21px;
             left:63px;
-            top:379px;
+            top:15.5px;
 }
 
 .value_status {
@@ -221,7 +239,7 @@ export default {
             width: 91px;
             height: 21px;
             right:50px;
-            top:379px;
+            top:15.5px;
 }
 
 .name_font  {
@@ -229,12 +247,12 @@ export default {
             color: #4A4A4A;
 }
 
-.div_reason_box {
+.md .list .div_reason_box input[type=text]  {
             position: absolute;
-            width: 309px;
-            height: 87px;
-            right:32px;
-            top:452px;
+            width:calc(100% - 32px - 32px);
+            height: 87px;   
+            left:32px;
+            top:32.5px;
             background: #F2F2F2;
 }
 
@@ -247,55 +265,127 @@ export default {
 }
 
 .footfont  {
-            position: absolute;
             width: 100%;
             height: 60px;
-            top:607px;
             background: #54BCBF;
+            line-height: 60px;  
+            text-align: center;
+
 }
 
-.footnamepos    {
-            position: absolute;
-            width: 40px;
-            height: 28px;
-            top:16px;
-            left:168px;
-}
 .footnamecolor  {
             color: #ffffff;
             font-size: 20px;
 }
+
+.md .list .ggstatus-list-item-1 .item-content {
+            margin: 0;
+            padding: 0;
+            height: 270.5px;
+}
+
+.md .list .ggstatus-list-item-1 .item-inner {
+            margin: 0;
+            padding: 0;
+}
+
+.md .list .ggstatus-list-item-2 .item-content {
+            margin: 0;
+            padding: 0;
+            height: 60px;
+}
+
+.md .list .ggstatus-list-item-2 .item-inner {
+            margin: 0;
+            padding: 0;
+}
+
+.md .list .ggstatus-list-item-3 .item-content {
+            margin: 0;
+            padding: 0;
+            height: 187.5px;
+}
+
+.md .list .ggstatus-list-item-3 .item-inner {
+            margin: 0;
+            padding: 0;
+}
+
+.md .list .ggstatus-list-item-4 .item-content {
+            margin: 0;
+            padding: 0;
+            height: 60px;
+}
+
+.md .list .ggstatus-list-item-4 .item-inner {
+            margin: 0;
+            padding: 0;
+}
+
+.ggstatus-box {
+            margin: 0;
+            padding: 0;
+}
+
+.ggstatus-page .page-content {
+    background: #ffffff;
+}
+
+.md .value_name .item-input-wrap:after {
+    background-color: #ffffff;
+}
+
+.md .value_status .item-input-wrap:after {
+    background-color: #ffffff;
+}
 </style>
 <template>
-  <f7-page>
-    <div class = "ggstatus_div">
-            <a href="#" @click="goBack()">
-                <img  class = "back_img" src="@/assets/icon_all/back_green.png" />
-            </a>
-            <div class = "title_position">
-                <span><font class = "title_font_big">变更原因</font></span>
+  <f7-page class="ggstatus-page">
+    <f7-list class="ggstatus-list">
+        <f7-list-item class = "ggstatus-list-item-1">
+            <div class = "ggstatus-box">
+                <a href="#" @click="goBack()">
+                    <img  class = "back_img" src="@/assets/icon_all/back_green.png" />
+                </a>
+                <img class = "clock_img" src="@/assets/icon_all/clock@2x.png" />
+                <div class = "title_zn_position">
+                    <span><font class = "title_font_big">变更原因</font></span>
+                </div>
+                <div class = "title_en_position">
+                    <span><font class = "title_font_en">REASONS</font></span>
+                </div>
+                <hr class = "downline">
             </div>
-            <hr class = "downline">
-            <hr class = "line_1">
-            <hr class = "line_2">
-            <hr class = "line_3">
-            <div class = "line_box">
+        </f7-list-item>
+        <f7-list-item  class = "ggstatus-list-item-2">
+            <div class = "ggstatus-box">
                 <img  class = "img_1" src="@/assets/icon_all/account_name.png" />
-                <label class = "field_name"><font class = "name_font">姓名</font></label>
-                <label class = "value_name"><font class = "name_font">{{s_ggName}}</font></label>
+                <f7-label class = "field_name"><font class = "name_font">姓名</font></f7-label>
+                <div class = "value_name">
+                    <f7-input  disabled><font class = "name_font">{{s_ggName}}</font></f7-input>
+                </div>
             </div>
-            <div class = "line_box">
+        </f7-list-item>
+        <f7-list-item class = "ggstatus-list-item-2">
+            <div class = "ggstatus-box">
                 <img  class = "img_2" src="@/assets/icon_all/status_change.png" />
                 <label class = "field_status"><font class = "name_font">状态变为</font></label>
-                <label class = "value_status"><font class = "name_font">{{s_ggStatus}}</font></label>
+                <div class = "value_status">
+                    <f7-input disabled><font class = "name_font">{{s_ggStatus}}</font></f7-input>
+                </div>
             </div>
+        </f7-list-item>
+        <f7-list-item class = "ggstatus-list-item-3">
             <div class = "div_reason_box">
                 <input class = "inputresponsebox" type="text" v-model="s_response">
             </div>
+        </f7-list-item>
+        <f7-list-item  class = "ggstatus-list-item-4">
             <div class = "footfont">
-                <span class = "footnamepos" @click="updateStatusData()"><font class = "footnamecolor">确认</font></span>
+                <span @click="updateStatusData()"><font class = "footnamecolor">确认</font></span>
             </div>
-    </div>
+        </f7-list-item>
+    </f7-list>
   </f7-page>  
 </template>
 <style lang="scss" scoped>
