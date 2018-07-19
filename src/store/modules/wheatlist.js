@@ -8,6 +8,7 @@ export const TEST_FOR_SET = 'TEST_FOR_SET'
 export const TEST_CONN_RECEIVE_USER_INFO = 'TEST_CONN_RECEIVE_USER_INFO'
 
 export const TEST_CONN_RECEIVE_USER_21_MSG = 'TEST_CONN_RECEIVE_USER_21_MSG'
+export const CLEAR_USER_21_MSG = 'CLEAR_USER_21_MSG'
 export const TEST_CONN_RECEIVE_ACTIVITY_MSG = 'TEST_CONN_RECEIVE_ACTIVITY_MSG'
 export const TEST_CONN_RECEIVE_ONLY_ONE_ACTIVITY_MSG = 'TEST_CONN_RECEIVE_ONLY_ONE_ACTIVITY_MSG'
 export const TEST_CONN_RECEIVE_GGSTATUS_MSG = 'TEST_CONN_RECEIVE_GGSTATUS_MSG'
@@ -36,6 +37,9 @@ export const TEST_CONN_RECEIVE_SEARCH_FORM_VALUE = 'TEST_CONN_RECEIVE_SEARCH_FOR
 //返回查询标示
 export const TEST_CONN_RECEIVE_SEARCH_STATUS = 'TEST_CONN_RECEIVE_SEARCH_STATUS'
 
+//得到用户的登陆帐户信息
+export const GET_PERSONAL_LOGIN_DATA = 'GET_PERSONAL_LOGIN_DATA'
+
 const state = {
     l_tempStr:"",
     l_userId:"",
@@ -44,7 +48,7 @@ const state = {
 
     //个人帐户信息
     l_ret_personal_imf_s:[],
-    //个人阶段
+    //个人阶段信息
     l_ret_personal_gg_s:[],
 
     //当前帐户的个人藏单
@@ -78,6 +82,9 @@ const state = {
 
     //gg列表的显示数组 各类的蝈蝈列表都通过这个列表来呈现
     l_ret_gg_imf_s:[],
+
+    //得到用户的登陆帐户信息
+    l_ret_personal_login_imf_s:[]
 }
 
 const getters = {
@@ -108,8 +115,9 @@ const getters = {
     //gg状态标签
     l_ret_gg_status_data: state => state.l_ret_gg_status_data,
 
-    //gg列表数据
+    //用于显示的gg列表数据 该数据中既有收藏 也有搜索...
     l_ret_gg_imf_s: state => state.l_ret_gg_imf_s,
+    //作为引导人的gg列表
     l_ret_my_gg_imf_s: state => state.l_ret_my_gg_imf_s,
     //作为管理员的gg列表
     l_ret_our_gg_imf_s: state => state.l_ret_our_gg_imf_s,
@@ -119,6 +127,9 @@ const getters = {
 
     //搜索的标示
     l_ret_search_none: state => state.l_ret_search_none,
+
+    //得到用户的登陆帐户信息
+    l_ret_personal_login_imf_s: state => state.l_ret_personal_login_imf_s,
 }
 
 const actions = { 
@@ -222,6 +233,8 @@ const actions = {
 
     //根据form_data_id得到精确的21项目的表单记录
     getformvaluesaccurate({commit}, data){
+        //申请清空该条纪录
+        commit(CLEAR_USER_21_MSG, data)
         data = data + ","
         server.getformvaluesaccurate(
           JSON.stringify({ 	
@@ -361,17 +374,15 @@ const actions = {
         console.log(data)
         var  in_data = JSON.parse(data)
         commit(RECEIVE_UPDATE_ACTIVITY_MSG_IN_STORE, in_data)
-      }
-
-    //自动生成部分4.
-    /*
-    getGenderList({commit}){
-        server_c.getGenderList().then(response => {
-          commit(GET_CONFIG_GENDER_DATA, response)
-          })
-        //因为是异步 所以会立即返回 
-        //alert(ret.userName)
-      },*/
+      },
+      //得到用户的登陆帐户信息
+      //GET_PERSONAL_LOGIN_DATA
+      getuserpswbyname({commit}, data)
+      {
+        server.getuserpswbyname(data).then(response => {
+                  commit(GET_PERSONAL_LOGIN_DATA, response)
+                })
+      },
 }
 
 const mutations = {
@@ -394,13 +405,16 @@ const mutations = {
     //得到某引导人的gg列表
     [GET_GG_IMF_DATA](state, data) {
       console.log('get GET_GG_IMF_DATA')
+      //作为引导人的gg列表
       state.l_ret_my_gg_imf_s = data.data;
+      //用于显示的gg列表数据 该数据中既有收藏 也有搜索...
       state.l_ret_gg_imf_s = data.data;
   },
     //得到某管理员的gg列表
     [GET_OUR_GG_IMF_DATA](state, data) {
       console.log('get GET_OUR_GG_IMF_DATA')
       state.l_ret_our_gg_imf_s = data.data;
+      //用于显示的gg列表数据 该数据中既有收藏 也有搜索...
       state.l_ret_gg_imf_s = data.data;
     },
     //返回个人补充信息
@@ -420,24 +434,49 @@ const mutations = {
     //返回个人藏单中所有的蝈蝈信息
     [GET_PERSONAL_FAVORITE_DATA_LIST](state, data) {
       console.log('get GET_PERSONAL_FAVORITE_DATA_LIST')
-      state.l_ret_gg_imf_s = data.data;
       state.l_ret_personal_favorite_list_s = data.data;
+      //用于显示的gg列表数据 该数据中既有收藏 也有搜索...
+      state.l_ret_gg_imf_s = data.data;
+      
     },
     
-    //基本信息
+    //清空gg的21项
+    [CLEAR_USER_21_MSG](state, data){ 
+      state.l_retdata =  JSON.parse(JSON.stringify({
+        "keyid":data, 	
+        "name":"21项信息",
+        "num":"0"}));
+
+        console.log("state.l_retdata:" + state.l_retdata);
+    },
+
+    //gg的21项基本信息
     [TEST_CONN_RECEIVE_USER_21_MSG](state, data){ 
-      state.l_retdata = data.data;
-      var msg = data.data.datas[0];
-      var i = 0;
-      for (var key in msg)
+      /*if(data == null)
       {
-          //console.log("key:" + key + ", value:" ,data.data.datas[0][key]);
-          if(key != '键值' && key != '蝈蝈关联表单')
+        
+          state.l_retdata = JSON.stringify({ 	
+          "name":"21项信息",
+          "num":"0"});
+
+          console.log("state.l_retdata:" + state.l_retdata);
+      }
+      else*/
+      {
+          state.l_retdata = data.data;
+          var msg = data.data.datas[0];
+          var i = 0;
+          for (var key in msg)
           {
-            state.l_retkeyname[i] = key;
-            i = i + 1;
+              //console.log("key:" + key + ", value:" ,data.data.datas[0][key]);
+              if(key != '键值' && key != '蝈蝈关联表单')
+              {
+                state.l_retkeyname[i] = key;
+                i = i + 1;
+              }
           }
       }
+      
     },
       //活动信息
       /*
@@ -463,9 +502,11 @@ const mutations = {
     //得到查询的返回值
     [TEST_CONN_RECEIVE_SEARCH_FORM_VALUE](state, data){ 
       console.log('get TEST_CONN_RECEIVE_SEARCH_FORM_VALUE')
-      state.l_ret_gg_imf_s = data.data;
       state.l_ret_search_data = data.data;
       state.l_ret_search_none = 1;
+      //用于显示的gg列表数据 该数据中既有收藏 也有搜索...
+      state.l_ret_gg_imf_s = data.data;
+      
     //console.log("json key name is ", state.l_retkeyname[4])
   },
 
@@ -496,8 +537,12 @@ const mutations = {
     console.log(index)
     state.l_retactivitydata.datas[index] = data.data;
     console.log(data.data)
-},
-    
+  },
+
+  //得到用户的登陆帐户信息
+  [GET_PERSONAL_LOGIN_DATA](state, data){ 
+    state.l_ret_personal_login_imf_s = data.data;
+  },
 }
 
 export default {
