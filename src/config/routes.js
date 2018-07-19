@@ -7,16 +7,14 @@ import errorPage from '@/pages/common/error'
 import myItemPage from '@/pages/userDetail/myItem'
 import userItemPage from '@/pages/userDetail/userItem'
 import userListPage from '@/pages/userDetail/editinfo'
-import ggFilePage from '@/pages/wheat/gg'
 import allListPage from '@/pages/wheat/gglibrary'
 import activityItemsPage from '@/pages/activityspaces/activityItems'
 import ggStatusPage from '@/pages/wheat/ggstatus'
-import searchListPage  from '@/pages/wheat/searchList'
+import ggFilePage from '@/pages/wheat/gg'
 // zyn
 import panelPage from '@/pages/dashboard/panel'
 import inputformPage from '@/pages/dashboard/inputform'
 import quickPage from '@/pages/dashboard/quick'
-import ggPage from '@/pages/wheat/gg'
 import itemPage from '@/pages/wheat/item'
 
 
@@ -32,11 +30,7 @@ export default [
       {
         path: 'quick/',
         component: quickPage
-      },
-      {
-        path: 'gg/',
-        component: ggPage
-      },     
+      },   
       {
         path: 'item/',
         component: itemPage
@@ -85,11 +79,6 @@ export default [
         // page: 2.1
         path: 'allList/',
         component: allListPage
-      },
-      {
-        // page: 3.4
-        path: 'searchList/',
-        component: searchListPage
       },
       {
         // page: 8.2
