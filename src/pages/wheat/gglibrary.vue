@@ -2,7 +2,7 @@
 <template>
 <f7-page>
   <v-asideheader addPage title=''></v-asideheader>
-  <f7-list v-if="b_render == 2" media-list class="gglibrary">
+  <f7-list v-if="this.b_render == 2" media-list class="gglibrary">
     <f7-list-item v-for="(item, index) in this.l_ret_gg_imf_s.datas" :key="index" 
               @click="local_setSelectedGG(item.键值, index)" :class="item.阶段 + '-bg'">
        <div slot="subtitle" class="gglib-ggname">{{item.姓名}}</div>         
@@ -34,14 +34,7 @@
                     <img v-else-if="item.阶段 == 'RJ'"     v-bind:src="'/static/icon_all/listicon_green1.png'"/> 
                     <img v-else                           v-bind:src="'/static/icon_all/listicon_gray1.png'"/> 
                    
-                    <!--<f7-icon v-if="item.阶段 == 'SW'"                                           material="smartphone" color = "red"></f7-icon>
-                    <f7-icon v-else-if="item.阶段 == 'GD' || item.阶段 == 'FF'"                       material="smartphone" color = "orange"></f7-icon>
-                    <f7-icon v-else-if="item.阶段 == 'CJ' || item.阶段 == 'ZJ' || item.阶段 == 'GJ'"   material="smartphone" color = "blue"></f7-icon>
-                    <f7-icon v-else-if="item.阶段 == 'BLACK'"                                        material="smartphone" color = "black"></f7-icon>
-                    <f7-icon v-else-if="item.阶段 == 'RJ'"                                           material="smartphone" color = "green"></f7-icon> 
-                    <f7-icon v-else                                                             material="smartphone" color = "gray"></f7-icon><!-- 来11:39-40 -->
-                    
-                    </span></div>
+                   </span></div>
                   <div class="col-80"><span class="phone">{{item.手机}}</span></div>
                 </div>
               </div>
@@ -80,7 +73,7 @@
        </div>
     </f7-list-item>
   </f7-list>
-  <f7-list v-else-if="b_render == 1">
+  <f7-list v-else-if="this.b_render == 1">
     <f7-list-item>
       <f7-label>您好，您的{{jump_to}}列表为空，还需要再努力哦^_^</f7-label>
     </f7-list-item>
@@ -95,7 +88,6 @@ export default {
 </script>
 
 <style>
-
 .md .list .gglibrary .gglibrary-item .item-content{
     padding-left: 0px;
 }
@@ -103,7 +95,7 @@ div.list.media-list.gglibrary{
   margin: 0px;
   padding-left: 31px;
 }
-div.navbar-inner.sliding{
+div.list.media-list.navbar-inner.sliding{
   height: 65px;
   background: #FFFFFF;
 }
@@ -359,7 +351,6 @@ span.phone-icon-red,span.phone-icon-green,span.phone-icon-orange,span.phone-icon
     line-height: 17px;
     padding-left: 2px;
 }
-
   .name-bg-SW{
     background-color: #FF6D7F;
     width:59px;
@@ -448,7 +439,8 @@ export default {
             
             b_render:0,
             inputname:"",
-            jump_to:""
+            jump_to:"",
+            b_finishload:false,
             }
   },
   computed: {
@@ -497,21 +489,26 @@ export default {
     //this.get_my_gglist('约翰')
     //cui 是个唯一值
     //根据来源页面的期望加载不同的数据集
-   if(jump.to == "蝈蝈列表"){
-                              this.get_my_gglist(this.l_ret_personal_imf_s.datas[0].个人表单)
-        }else if(jump.to == "协力列表"){
-                              this.get_our_gglist(this.l_ret_personal_imf_s.datas[0].个人表单)
+   if(this.jump_to == "蝈蝈列表"){
+              this.get_my_gglist(this.l_ret_personal_imf_s.datas[0].个人表单)
+        }else if(this.jump_to == "协力列表"){
+              this.get_our_gglist(this.l_ret_personal_imf_s.datas[0].个人表单)
         }
-        else if(jump.to == "收藏列表"){
-                              this.getPersonalFavoriteList(this.l_ret_personal_imf_s.datas[0].个人表单)
+        else if(this.jump_to == "收藏列表"){
+              this.getPersonalFavoriteList(this.l_ret_personal_imf_s.datas[0].个人表单)
         }
 
     //this.getPersonalAccount('cui')
     //如果是查看自己作为管理者的gg 则以自己为管理人查
     //this.get_our_gglist('cui')
     
-    //1s以后进行刷新
-      this.timeout(2000).then(() => {
+    //设置了5s刷新
+    this.loadData(1000,false);
+    this.loadData(2000,false);
+    this.loadData(3000,false);
+    this.loadData(4000,false);
+    this.loadData(5000,true);
+    /*  this.timeout(2000).then(() => {
                 console.log('in vue.timeout')
                 if(jump.to == "收藏列表")
                 {
@@ -553,7 +550,7 @@ export default {
                   else
                     this.b_render = 1
                 }
-      });
+      });*/
   },
   methods: {
     ...mapActions('datainterchange',[
@@ -592,11 +589,63 @@ export default {
         console.log("I'm back!")
     },
 
+    /***************************************************刷新控制**********************************/
     timeout(ms) {
           return new Promise((resolve) => {
             setTimeout(resolve, ms);
                 })
       },
+
+    loadData(ms, b_finish) {
+        this.timeout(ms).then(() => {
+                if(this.b_render == 2)
+                  //不再判断了
+                  return;
+                console.log('in vue.timeout ＝ ' + ms)
+
+                if(this.jump_to == "收藏列表")
+                {
+                  console.log('in 收藏列表')
+                  if(this.l_ret_personal_favorite_list_s != null)
+                  {
+                    this.b_render = 2
+                  }
+                  else if(b_finish)
+                    this.b_render = 1
+                }
+                  
+                else if (this.jump_to == "协力列表")
+                {
+                    console.log('in 协力列表')
+                    if(this.l_ret_our_gg_imf_s != null)
+                    {
+                      this.b_render = 2
+                    }
+                    else if(b_finish)
+                      this.b_render = 1
+                }
+                else if (this.jump_to == "搜索列表")
+                {
+                    console.log('in 搜索列表')
+                    if(this.l_ret_search_data != null)
+                    {
+                      this.b_render = 2
+                    }
+                    else if(b_finish)
+                      this.b_render = 1
+                }
+                else 
+                {
+                  if(this.l_ret_gg_imf_s != null)
+                  {
+                    this.b_render = 2
+                  }
+                  else if(b_finish)
+                    this.b_render = 1
+                }
+      });
+    },
+
 
     local_setSelectedGG(keyid, index){
       //全局设置 ggID
