@@ -94,7 +94,6 @@ export default {
 div.list.media-list.gglibrary{
   margin: 0px;
   padding-left: 31px;
-  background: #FFFFFF;
 }
 div.list.media-list.navbar-inner.sliding{
   height: 65px;
@@ -440,7 +439,8 @@ export default {
             
             b_render:0,
             inputname:"",
-            jump_to:""
+            jump_to:"",
+            b_finishload:false,
             }
   },
   computed: {
@@ -489,21 +489,26 @@ export default {
     //this.get_my_gglist('约翰')
     //cui 是个唯一值
     //根据来源页面的期望加载不同的数据集
-   if(jump.to == "蝈蝈列表"){
-                              this.get_my_gglist(this.l_ret_personal_imf_s.datas[0].个人表单)
-        }else if(jump.to == "协力列表"){
-                              this.get_our_gglist(this.l_ret_personal_imf_s.datas[0].个人表单)
+   if(this.jump_to == "蝈蝈列表"){
+              this.get_my_gglist(this.l_ret_personal_imf_s.datas[0].个人表单)
+        }else if(this.jump_to == "协力列表"){
+              this.get_our_gglist(this.l_ret_personal_imf_s.datas[0].个人表单)
         }
-        else if(jump.to == "收藏列表"){
-                              this.getPersonalFavoriteList(this.l_ret_personal_imf_s.datas[0].个人表单)
+        else if(this.jump_to == "收藏列表"){
+              this.getPersonalFavoriteList(this.l_ret_personal_imf_s.datas[0].个人表单)
         }
 
     //this.getPersonalAccount('cui')
     //如果是查看自己作为管理者的gg 则以自己为管理人查
     //this.get_our_gglist('cui')
     
-    //1s以后进行刷新
-      this.timeout(2000).then(() => {
+    //设置了5s刷新
+    this.loadData(1000,false);
+    this.loadData(2000,false);
+    this.loadData(3000,false);
+    this.loadData(4000,false);
+    this.loadData(5000,true);
+    /*  this.timeout(2000).then(() => {
                 console.log('in vue.timeout')
                 if(jump.to == "收藏列表")
                 {
@@ -545,7 +550,7 @@ export default {
                   else
                     this.b_render = 1
                 }
-      });
+      });*/
   },
   methods: {
     ...mapActions('datainterchange',[
@@ -584,11 +589,63 @@ export default {
         console.log("I'm back!")
     },
 
+    /***************************************************刷新控制**********************************/
     timeout(ms) {
           return new Promise((resolve) => {
             setTimeout(resolve, ms);
                 })
       },
+
+    loadData(ms, b_finish) {
+        this.timeout(ms).then(() => {
+                if(this.b_render == 2)
+                  //不再判断了
+                  return;
+                console.log('in vue.timeout ＝ ' + ms)
+
+                if(this.jump_to == "收藏列表")
+                {
+                  console.log('in 收藏列表')
+                  if(this.l_ret_personal_favorite_list_s != null)
+                  {
+                    this.b_render = 2
+                  }
+                  else if(b_finish)
+                    this.b_render = 1
+                }
+                  
+                else if (this.jump_to == "协力列表")
+                {
+                    console.log('in 协力列表')
+                    if(this.l_ret_our_gg_imf_s != null)
+                    {
+                      this.b_render = 2
+                    }
+                    else if(b_finish)
+                      this.b_render = 1
+                }
+                else if (this.jump_to == "搜索列表")
+                {
+                    console.log('in 搜索列表')
+                    if(this.l_ret_search_data != null)
+                    {
+                      this.b_render = 2
+                    }
+                    else if(b_finish)
+                      this.b_render = 1
+                }
+                else 
+                {
+                  if(this.l_ret_gg_imf_s != null)
+                  {
+                    this.b_render = 2
+                  }
+                  else if(b_finish)
+                    this.b_render = 1
+                }
+      });
+    },
+
 
     local_setSelectedGG(keyid, index){
       //全局设置 ggID
