@@ -442,10 +442,12 @@ $$('#my-range').on('range:change', function (e, range) {
 });*/
 </script>
 <style>
-.md .list.wheat-list{
+/*.md .list{
     margin: 0px;
-}
-
+    }*/
+.page-content{
+    background: #EFF0F4;
+    }
 .mybox:hover{
     border-style:solid; 
     border-width:2px;
@@ -459,6 +461,9 @@ $$('#my-range').on('range:change', function (e, range) {
     border-width:1px;
     border-color:rgb(194, 191, 191);
     margin-top: 6px;
+    margin-left: 12px;
+    margin-right: 12px;
+    height:37px;
     }
 
 .mylabelfont{
@@ -470,16 +475,17 @@ $$('#my-range').on('range:change', function (e, range) {
     line-height: 21px;
     }
 .mylabelbox{
-    display: inline-block;
     text-align:left;
     font-size: 3em;
     width: 110px;
+    position: absolute;
+    margin-left:13px;
+    margin-top:8px;
     }
 .myinputbox{
-    display: inline-block;
+    text-align:right;
     border-width:0px;
     font-size: 2em;
-    width: calc(100% - 130px);
     }
 .comfirmbtn{
     background-color: aquamarine
@@ -588,34 +594,55 @@ div.gap{
     font-size: 22px;
     color: #FFFFFF;
     letter-spacing: 3px;
-    margin-top: 230px;
   }
-.mybox:hover {
-    border-style: solid;
-    border-width: 2px;
-    border-color:#E3E2E2;
-}
-div.item-content.item-input{
-    border-bottom: solid 1px #E3E4E8;
+
+  .md .list .select-box .item-content {
+    padding-left: 0px;
 }
 
-.accordion-item.accordion-item-opened {
-    padding-bottom: 30px;
+.md .list .addinfo-list .item-link .item-inner {
+    padding-right: 42px;
+    padding-left: 13px;
 }
-.accordion-item .block{
-    padding-bottom: 6px;
+
+.md .list .myinputbox input[type=text] {
+    width: 179px;
+    height: 37px;
+    line-height: 37px;
+    background: #FFFFFF;
+    border-radius: 4px;
+    margin-right: 11px;
+    color: #000000;
 }
-div.block.first-block{
-    padding-top: 12px;
+
+.md .list .myinputbox input[type=tel] {
+    width: 179px;
+    height: 37px;
+    line-height: 37px;
+    background: #FFFFFF;
+    border-radius: 4px;
+    margin-right: 11px;
+    color: #000000;
 }
-.md .list .select-box .item-content {
-    padding-left: 0px;
+
+.md .list .myinputbox input[type=date] {
+    width: 130px;
+    height: 37px;
+    line-height: 37px;
+    background: #FFFFFF;
+    border-radius: 4px;
+    margin-right: 11px;
+    color: #000000;
+}
+
+.list .mybox .select-box .item-title {
+    left:12px;
 }
 </style>
 <template>
-  <f7-page class="wheatlist-page">
+  <f7-page>
     <v-addinfo title='添加信息'></v-addinfo>
-    <f7-list accordion class="wheat-list">
+    <f7-list accordion class="addinfo-list">
         <f7-list-item accordion-item title="基本信息">
             <f7-accordion-content>
               <f7-block>
@@ -624,7 +651,7 @@ div.block.first-block{
                     <f7-label><font class="mylabelfont">姓名</font></f7-label>
                   </div>
                   <div class="myinputbox">
-                    <input type="text" dir="rtl" align="right" v-model="l_ggName" clear-button/>
+                    <f7-input type="text" dir="rtl" align="right" :value="l_ggName" @input="l_ggName = $event.target.value" clear-button></f7-input>
                   </div>
                 </div>
             </f7-block>
@@ -647,7 +674,7 @@ div.block.first-block{
                   <f7-label><font class="mylabelfont">微信id</font></f7-label>
                 </div>
                 <div class="myinputbox">
-                  <input type="tel" dir="rtl" v-model="l_weChat" clear-button>
+                  <f7-input type="text" dir="rtl" align="right" :value="l_weChat" @input="l_weChat = $event.target.value" clear-button></f7-input>
                 </div>
                 </div>
             </f7-block>
@@ -657,7 +684,7 @@ div.block.first-block{
                  <f7-label><font class="mylabelfont">手机号</font></f7-label>
                </div>
                <div class="myinputbox">
-                 <input type="tel" dir="rtl" v-model="l_phone" clear-button>
+                 <f7-input type="tel" dir="rtl" :value="l_phone" @input="l_phone = $event.target.value" clear-button></f7-input>
                </div>
               </div>
             </f7-block>
@@ -694,7 +721,7 @@ div.block.first-block{
                           <f7-label><font class="mylabelfont">引导人姓名</font></f7-label>
                       </div>
                       <div class="myinputbox">
-                          <input type="tel" dir="rtl" v-model="l_yzName" disabled>
+                          <f7-input type="text" dir="rtl" :value="l_yzName" disabled></f7-input>
                       </div>
                   </div>
               </f7-block>
@@ -704,7 +731,7 @@ div.block.first-block{
                           <f7-label><font class="mylabelfont">引导人会属</font></f7-label>
                       </div>
                       <div class="myinputbox">
-                          <input type="tel" dir="rtl" v-model="l_yzHs" disabled>
+                          <f7-input type="text" dir="rtl" :value="l_yzHs" disabled></f7-input>
                       </div>
                   </div>
               </f7-block>
@@ -714,7 +741,7 @@ div.block.first-block{
                           <f7-label><font class="mylabelfont">引导人区域</font></f7-label>
                       </div>
                       <div class="myinputbox">
-                          <input type="tel" dir="rtl" v-model="l_yzQy" disabled>
+                          <f7-input type="text" dir="rtl" :value="l_yzQy" disabled></f7-input>
                       </div>
                   </div>
               </f7-block>
@@ -724,7 +751,7 @@ div.block.first-block{
                           <f7-label><font class="mylabelfont">管理者帐号</font></f7-label>
                       </div>
                       <div class="myinputbox">
-                          <input type="tel" dir="rtl" v-model="l_partner" clear-button>
+                          <f7-input type="text" dir="rtl" :value="l_partner" @input="l_partner = $event.target.value" clear-button></f7-input>
                       </div>
                   </div>
               </f7-block>
@@ -866,16 +893,17 @@ div.block.first-block{
                                 {{itemmenu.value}}</option>
                             </select>
                       </div </div>>-->
-                    <f7-list-item smart-select title="果子学历" class="select-box">
-                    <!-- Select with values inside -->
-                        <select v-model="selectEducation" name="activityType">
-                        <option disabled>{{selectEducation}}</option>
-                        <option v-for="itemmenu in this.l_education_data" 
-                                                :key="itemmenu.value" :value="itemmenu.value">
-                                                {{itemmenu.value}}</option>
-                        </select>
-                    </f7-list-item>
-                 
+                      <div class="mybox">
+                        <f7-list-item smart-select title="果子学历" class="select-box">
+                        <!-- Select with values inside -->
+                            <select v-model="selectEducation" name="activityType">
+                            <option disabled>{{selectEducation}}</option>
+                            <option v-for="itemmenu in this.l_education_data" 
+                                                    :key="itemmenu.value" :value="itemmenu.value">
+                                                    {{itemmenu.value}}</option>
+                            </select>
+                        </f7-list-item>
+                      </div>
               </f7-block>
               <f7-block>
                   <!--<div class="mybox">
@@ -891,15 +919,17 @@ div.block.first-block{
                             </select>
                       </div>
                   </div>-->
-                    <f7-list-item smart-select title="果子职业" class="select-box">
-                    <!-- Select with values inside -->
-                        <select v-model="selectOccuption" name="activityType">
-                        <option disabled>{{selectOccuption}}</option>
-                        <option v-for="itemmenu in this.l_occuption_data" 
-                                                :key="itemmenu.value" :value="itemmenu.value">
-                                                {{itemmenu.value}}</option>
-                        </select>
-                    </f7-list-item>
+                    <div class="mybox">
+                        <f7-list-item smart-select title="果子职业" class="select-box">
+                        <!-- Select with values inside -->
+                            <select v-model="selectOccuption" name="activityType">
+                            <option disabled>{{selectOccuption}}</option>
+                            <option v-for="itemmenu in this.l_occuption_data" 
+                                                    :key="itemmenu.value" :value="itemmenu.value">
+                                                    {{itemmenu.value}}</option>
+                            </select>
+                        </f7-list-item>
+                    </div>
               </f7-block>
               <f7-block>
                   <!--<div class="mybox">
@@ -915,15 +945,17 @@ div.block.first-block{
                             </select>
                       </div>
                   </div>-->
-                    <f7-list-item smart-select title="就业情况" class="select-box">
-                    <!-- Select with values inside -->
-                        <select v-model="selectEmployment" name="activityType">
-                        <option disabled>{{selectEmployment}}</option>
-                        <option v-for="itemmenu in this.l_employment_data" 
-                                                :key="itemmenu.value" :value="itemmenu.value">
-                                                {{itemmenu.value}}</option>
-                        </select>
-                    </f7-list-item>
+                    <div class="mybox">
+                        <f7-list-item smart-select title="就业情况" class="select-box">
+                        <!-- Select with values inside -->
+                            <select v-model="selectEmployment" name="activityType">
+                            <option disabled>{{selectEmployment}}</option>
+                            <option v-for="itemmenu in this.l_employment_data" 
+                                                    :key="itemmenu.value" :value="itemmenu.value">
+                                                    {{itemmenu.value}}</option>
+                            </select>
+                        </f7-list-item>
+                    </div>
               </f7-block>
               <f7-block>
                     <!--<div class="mybox">
@@ -938,15 +970,17 @@ div.block.first-block{
                             </select>
                       </div>
                   </div>-->
-                    <f7-list-item smart-select title="负债情况" class="select-box">
-                    <!-- Select with values inside -->
-                        <select v-model="selectDebt" name="activityType">
-                        <option disabled>{{selectDebt}}</option>
-                        <option v-for="itemmenu in this.l_debt_data" 
-                                                :key="itemmenu.value" :value="itemmenu.value">
-                                                {{itemmenu.value}}</option>
-                        </select>
-                    </f7-list-item>
+                    <div class="mybox">
+                        <f7-list-item smart-select title="负债情况" class="select-box">
+                        <!-- Select with values inside -->
+                            <select v-model="selectDebt" name="activityType">
+                            <option disabled>{{selectDebt}}</option>
+                            <option v-for="itemmenu in this.l_debt_data" 
+                                                    :key="itemmenu.value" :value="itemmenu.value">
+                                                    {{itemmenu.value}}</option>
+                            </select>
+                        </f7-list-item>
+                    </div>
               </f7-block>
               <f7-block>
                     <!--<div class="mybox">
@@ -963,15 +997,17 @@ div.block.first-block{
                       </div>
 
                   </div>-->
-                    <f7-list-item smart-select title="健康情况" class="select-box">
-                    <!-- Select with values inside -->
-                        <select v-model="selectHealthy" name="activityType">
-                        <option disabled>{{selectHealthy}}</option>
-                        <option v-for="itemmenu in this.l_health_data" 
-                                                :key="itemmenu.value" :value="itemmenu.value">
-                                                {{itemmenu.value}}</option>
-                        </select>
-                    </f7-list-item>
+                    <div class="mybox">
+                        <f7-list-item smart-select title="健康情况" class="select-box">
+                        <!-- Select with values inside -->
+                            <select v-model="selectHealthy" name="activityType">
+                            <option disabled>{{selectHealthy}}</option>
+                            <option v-for="itemmenu in this.l_health_data" 
+                                                    :key="itemmenu.value" :value="itemmenu.value">
+                                                    {{itemmenu.value}}</option>
+                            </select>
+                        </f7-list-item>
+                    </div>
               </f7-block>
               <f7-block>
                     <!--<div class="mybox">
@@ -987,15 +1023,17 @@ div.block.first-block{
                             </select>
                       </div>
                   </div>-->
-                    <f7-list-item smart-select title="学习计划" class="select-box">
-                    <!-- Select with values inside -->
-                        <select v-model="selectStudySchedules" name="activityType">
-                        <option disabled>{{selectStudySchedules}}</option>
-                        <option v-for="itemmenu in this.l_yesorno_data" 
-                                                :key="itemmenu.value" :value="itemmenu.value">
-                                                {{itemmenu.value}}</option>
-                        </select>
-                    </f7-list-item>
+                    <div class="mybox">
+                        <f7-list-item smart-select title="学习计划" class="select-box">
+                        <!-- Select with values inside -->
+                            <select v-model="selectStudySchedules" name="activityType">
+                            <option disabled>{{selectStudySchedules}}</option>
+                            <option v-for="itemmenu in this.l_yesorno_data" 
+                                                    :key="itemmenu.value" :value="itemmenu.value">
+                                                    {{itemmenu.value}}</option>
+                            </select>
+                        </f7-list-item>
+                    </div>
               </f7-block>
             </f7-accordion-content>
         </f7-list-item>
@@ -1021,7 +1059,7 @@ div.block.first-block{
                           <f7-label><font class="mylabelfont">读经情况</font></f7-label>
                       </div>
                       <div class="myinputbox">
-                          <input type="tel" dir="rtl" v-model="l_reading" clear-button>
+                          <f7-input type="text" dir="rtl" :value="l_reading" @change="l_reading = $event.target.value" clear-button></f7-input>
                       </div>
                   </div>
               </f7-block>
@@ -1031,7 +1069,7 @@ div.block.first-block{
                           <f7-label><font class="mylabelfont">祷告情况</font></f7-label>
                       </div>
                       <div class="myinputbox">
-                          <input type="tel" dir="rtl" v-model="l_praying" clear-button>
+                          <f7-input type="text" dir="rtl" :value="l_praying" @change="l_praying = $event.target.value" clear-button></f7-input>
                       </div>
                   </div>
               </f7-block>
@@ -1041,7 +1079,7 @@ div.block.first-block{
                           <f7-label><font class="mylabelfont">服侍情况</font></f7-label>
                       </div>
                       <div class="myinputbox">
-                          <input type="tel" dir="rtl" v-model="l_service" clear-button>
+                          <f7-input type="text" dir="rtl" :value="l_service" @change="l_service = $event.target.value" clear-button></f7-input>
                       </div>
                   </div>
               </f7-block>
@@ -1051,7 +1089,7 @@ div.block.first-block{
                           <f7-label><font class="mylabelfont">戒备情况</font></f7-label>
                       </div>
                       <div class="myinputbox">
-                          <input type="tel" dir="rtl" v-model="l_vigilant" clear-button>
+                          <f7-input type="text" dir="rtl" :value="l_vigilant" @change="l_vigilant = $event.target.value" clear-button></f7-input>
                       </div>
                   </div>
               </f7-block>
@@ -1066,3 +1104,4 @@ div.block.first-block{
 <style lang="scss" scoped>
 
 </style>
+
