@@ -73,14 +73,16 @@
          <f7-row no-gap class="gg-tab">
             <f7-col>
                 <f7-toolbar tabbar class = "gg-toolbar">
-                        <f7-link  tab-link="#tab-1" class="baselink">基本信息</f7-link>
-                        <f7-link  tab-link="#tab-2" class="baselink">活动记录</f7-link>
+                        <f7-link  :tab-link-active="'蝈蝈活动' != jumpTo" tab-link="#tab-1" class="baselink">基本信息</f7-link>
+                        
+                        <f7-link  :tab-link-active="'蝈蝈活动' == jumpTo" tab-link="#tab-2" class="baselink">活动记录</f7-link>
+
                         <f7-link tab-link="#tab-3" class="baselink">修改历史</f7-link>
                 </f7-toolbar>
-                <f7-tabs animated>
+                <f7-tabs><!-- 不能用animated属性 -->
                     <!--<f7-tab v-if="(jumpTo == '蝈蝈信息')" id="tab-1" class="page-content" tab-active>
                     <f7-tab v-else id="tab-1" class="page-content" tab-inactive> :title="item.value"-->
-                    <f7-tab  id="tab-1" class="page-content">
+                    <f7-tab  id="tab-1" class="page-content" :tab-active="'蝈蝈活动' != jumpTo">
                         <f7-block>
                           <f7-list  media-list v-if="b_load_21Item == 1" class="baseinfo">
                               
@@ -98,7 +100,7 @@
                     </f7-tab>
                     <!--<f7-tab v-if="(jumpTo == '蝈蝈活动')" id="tab-2" class="page-content" tab-active>
                     <f7-tab v-if="(jumpTo != '蝈蝈活动')" id="tab-2" class="page-content" tab-inactive>-->
-                    <f7-tab id="tab-2" class="page-content">
+                    <f7-tab  id="tab-2" class="page-content" :tab-active="'蝈蝈活动' == jumpTo">  
                         <f7-block>
                             <f7-list media-list v-if="b_load_activity == 1 && relation_of_this_one > 1" class="baseinfo">
                                 <f7-list-item v-for="(item, index) in l_retactivitydata.datas"
@@ -283,6 +285,7 @@ div.list.baseinfo .staticmsgbox{
 div.list.baseinfo .staticmsgbox .item-content{
     margin: 0px;
     padding-left: 30px;
+    height: 61.5px;
 }
 
 .staticmsgbox {
@@ -478,29 +481,32 @@ export default {
     //得到蝈蝈的键值
     var keyid = this.in_21Item_Short.键值
 
-    //console.log('this.isMyGG(keyid)' + JSON.stringify(this.isMyGG(keyid))) 
+    //console.log('this.isMyGG(keyid)' + JSON.stringify(this.isMyGG(keyid))) console.log("loadData = ", );
     //得到唯一表单
     this.getformvaluesaccurate(keyid).then((res) => {
-                console.log('in vue.getformvaluesaccurate')
+                console.log('in vue.getformvaluesaccurate num = ' +  this.l_retdata.num)
                 //this.b_load_21Item = 1
             })
     //得到活动记录列表
     this.getAllActivity(keyid)
     
     //1s以后进行刷新
-    this.timeout(2000).then(() => {
+    this.loadData(1000, keyid, false)
+    this.loadData(2000, keyid, false)
+    this.loadData(3000, keyid, true)
+    /*this.timeout(2000).then(() => {
                 console.log('in gg create.timeout')
 
                 //设置权限
                 if(this.isMyGG(keyid))
-                          this.relation_of_this_one = 3
+                        this.relation_of_this_one = 3
                 else if (this.isOurGG(keyid))
-                                    this.relation_of_this_one = 2
+                        this.relation_of_this_one = 2
                 else if (this.in_self_favorite != null && this.in_self_favorite.收藏内容 != null && 
                         this.is_my_favorite(keyid, this.in_self_favorite.收藏内容))
-                                    this.relation_of_this_one = 1
+                        this.relation_of_this_one = 1
                 else
-                                    this.relation_of_this_one = 0
+                        this.relation_of_this_one = 0
 
                 //得到需要显示的21项 选项字段列表
                 this.get_l_showggtitle_datalist(this.relation_of_this_one)
@@ -509,7 +515,7 @@ export default {
 
                 this.b_load_21Item = 1
                 this.b_load_activity = 1
-      });
+      });*/
     
     //得到当前帐户信息
     this.in_self_msg = this.l_ret_personal_imf_s.datas[0]
@@ -688,6 +694,36 @@ export default {
                 })
       },
 
+    loadData(ms, s_keyid, b_finish) {
+        this.timeout(ms).then(() => {
+                console.log('in gg create.timeout = ' + ms)
+                if(this.b_load_21Item == 1)
+                  //不再判断了
+                  return;
+
+                if(this.l_retdata.num != 0)
+                {
+                    //设置权限
+                    if(this.isMyGG(s_keyid))
+                        this.relation_of_this_one = 3
+                    else if (this.isOurGG(s_keyid))
+                        this.relation_of_this_one = 2
+                    else if (this.in_self_favorite != null && this.in_self_favorite.收藏内容 != null && 
+                        this.is_my_favorite(s_keyid, this.in_self_favorite.收藏内容))
+                        this.relation_of_this_one = 1
+                    else
+                        this.relation_of_this_one = 0
+
+                    //得到需要显示的21项 选项字段列表
+                    this.get_l_showggtitle_datalist(this.relation_of_this_one)
+                    //this.relation_of_this_one = 0
+                    console.log('relation_of_this_one = ' + this.relation_of_this_one)
+
+                    this.b_load_21Item = 1
+                    this.b_load_activity = 1
+                }
+      });
+    },
     //从我的收藏夹里删除
     delete_my_favorite(anyid, favoritelist) {
       var findid = "-" + anyid + "-"
