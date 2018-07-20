@@ -309,9 +309,12 @@ div.list.baseinfo .bottomcomfirm .item-content .item-inner{
     height: 60px;
     width: 100%;
     background: #FF6D7F;
-    color: #fff;
     text-align: center;
     line-height: 60px;
+    font-family: PingFangSC-Semibold;
+    font-size: 20px;
+    color: #FFFFFF;
+    letter-spacing: 0;
 }
 
 .more .more-link {
