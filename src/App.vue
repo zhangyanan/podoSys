@@ -319,10 +319,10 @@ li.panel_menu{
     padding-top: 15px;
 }
 div.list.myItem-list ul:before,div.list.myItem-list ul:after{
-  background-color: #54BCBF;
+  background-color: transparent;
 }
 div.list.myItem-list div.item-inner:before,div.list.myItem-list div.item-inner:after{
-    background-color: #54BCBF;
+    background-color: transparent;
 }
 li.search{
     width: 190px;
