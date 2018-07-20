@@ -259,7 +259,7 @@ div.userstatus span{
     font-size: 20px;
     color: #FFFFFF;
     letter-spacing: 1px;
-    font-weight: 1000
+    font-weight: 800
 }
 span.username{
     font-family: PFSquareSansPro-Bold;
