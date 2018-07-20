@@ -232,6 +232,7 @@ export default {
 }
 .myItem-page .page-content{
     background: #54BCBF;
+    padding-top: 50px;
 }
 
 .md .list .myItem-list-item .item-content {
@@ -286,6 +287,7 @@ li.li-username{
 li.li-userwechat{
     margin-left: 40px;
     margin-top: -25px;
+    padding-bottom: 40px;
 }
 .md .list .myItem-list .item-media {
     padding-top: 13px;
