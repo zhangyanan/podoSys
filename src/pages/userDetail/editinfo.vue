@@ -262,10 +262,6 @@ export default {
     letter-spacing: -0.09px;
     line-height: 19px;
 }
-div.navbar-inner.sliding{
-    background: #54BCBF;
-    color:#FFFFFF;
-}
 .md .navbar .content-title {
     font-family: PingFangSC-Semibold;
     font-size: 22px;
@@ -273,11 +269,6 @@ div.navbar-inner.sliding{
     letter-spacing: -0.09px;
     line-height: 19px;
     padding-left: 90px;
-}
-div.navbar-inner.sliding{
-    background: #54BCBF;
-    color:#FFFFFF;
-    height: 65px;
 }
 .list.addinfo-list{
     margin: 19px 11px;
@@ -382,11 +373,16 @@ div.block.first-block{
 .list .mybox .select-box .item-title {
     left: 12px;
 }
+div.navbar.addinfo-nav{
+    background: #54BCBF;
+    color:#FFFFFF;
+    height: 65px;
+}
 
 </style>
 <template>
   <f7-page class="editinfo">
-    <v-addinfo title='编辑资料'></v-addinfo>
+    <v-addinfo class="addinfo-nav" title='编辑资料'></v-addinfo>
     <f7-list accordion class="addinfo-list">
         <f7-list-item accordion-item title="个人资料">
             <f7-accordion-content>
