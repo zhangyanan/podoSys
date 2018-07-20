@@ -175,7 +175,7 @@ export default {
               </f7-list-item>
               <f7-list-item class="search">            
                   <div class="item-input-wrap">
-                      <input type="text" class="searchinput" placeholder="搜索" v-model="search_msg">
+                      <input type="text" class="searchinput" placeholder="搜索微信/手机/姓名" v-model="search_msg">
                       <div slot="media" class="search-div">
                           <f7-link @click="onSearch(search_msg)"><img class="search-icon" src="@/assets/icon_all/search_blue.png"/></f7-link>
                       </div>
@@ -258,7 +258,8 @@ div.userstatus span{
     font-family: PFSquareSansPro-ExtraBlack;
     font-size: 20px;
     color: #FFFFFF;
-    letter-spacing: -1.29px;
+    letter-spacing: 1px;
+    font-weight: 1000
 }
 span.username{
     font-family: PFSquareSansPro-Bold;
@@ -266,12 +267,14 @@ span.username{
     color: #FFFFFF;
     letter-spacing: 0;
     line-height: 8px;
+    font-weight: 600;
 }
 span.userwechat{
     font-family: PFSquareSansPro-Light;
     font-size: 16px;
     color: #FFFFFF;
     letter-spacing: 0;
+    padding-top: 5px;
 }
 .row .app-row{
     margin-left: 40px;
@@ -305,9 +308,9 @@ div .myItem-list .item-title{
     text-align: left;
     font-family: PingFangSC-Regular;
     font-size: 16px;
-    letter-spacing: 0;
+    letter-spacing: 2px;
     line-height: 21px;
-    padding-left: 15px;
+    padding-left: 0px;
     }
 div.search-div{
     width:25px;
@@ -317,6 +320,12 @@ div.search-div{
 }
 li.panel_menu{
     padding-top: 15px;
+}
+li.panel_menu .item-media{
+    padding-left: 40px;
+}
+li.panel_menu img.help-icon{
+    margin-top: 5px;
 }
 div.list.myItem-list ul:before,div.list.myItem-list ul:after{
   background-color: transparent;
