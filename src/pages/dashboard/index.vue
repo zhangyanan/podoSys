@@ -38,7 +38,7 @@
   div.page.index-page.page-current {
     background-image: url("../../assets/icon_all/login_bg.png")
   }
-  .md .index .list {
+  .md .index .list.welcome-list {
       margin: 0px;
   }
   .md div.list.smiler-list .item-content {

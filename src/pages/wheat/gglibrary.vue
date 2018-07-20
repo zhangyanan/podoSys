@@ -89,11 +89,17 @@ export default {
 
 <style>
 .md .list .gglibrary .gglibrary-item .item-content{
-    padding-left: 0px;
+    padding-left: 25px;
 }
-div.list.media-list.gglibrary{
+.md .list .item-inner:after{
+  background-color: rgba(0,0,0,0); 
+}
+.md .list .gglibrary .item-inner:after{
+  background-color: rgba(0,0,0,0); 
+  height: 0px;
+}
+div.list.gglibrary.media-list{
   margin: 0px;
-  padding-left: 31px;
 }
 div.list.media-list.navbar-inner.sliding{
   height: 65px;
