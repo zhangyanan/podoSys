@@ -68,9 +68,7 @@
               </div>
           </div>
        </div>
-       <div slot="root-end">
-          <div class="div-border"></div>
-       </div>
+       
     </f7-list-item>
   </f7-list>
   <f7-list v-else-if="this.b_render == 1">
@@ -106,7 +104,7 @@ div.list.media-list.navbar-inner.sliding{
   background: #FFFFFF;
 }
 div.list.gglibrary.media-list ul li{
-  border: 0px solid #E9E9E9;
+  border: 0.5px solid #E9E9E9;
   height: 95px;
   padding-left: 0px;
 }
