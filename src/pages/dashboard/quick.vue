@@ -292,9 +292,10 @@ import { mapState, mapGetters, mapActions, mapMutations, Store } from 'vuex'
   };
 </script>
 <style lang="scss">
-    .md .list {
+    .md .list.quick-list {
         margin: 0px;
         font-size: 16px;
+        margin-top: 65px;
     }
     .quickIcon{
         width: 96px;
