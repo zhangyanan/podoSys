@@ -1,13 +1,8 @@
 <!-- 当前页面名称： 蝈蝈列表 收藏列表 协力列表 搜索列表 -->
 <template>
-<<<<<<< HEAD
 <f7-page class="gglist-page">
   <v-addinfo v-if="currentPage != '蝈蝈列表'" :title='currentPage'></v-addinfo>
   <v-asideheader v-else addPage :title='currentPage'></v-asideheader>
-=======
-<f7-page>
-  <v-asideheader addPage title=''></v-asideheader>
->>>>>>> 93dcda60e360461c8984394c5912a4adbd99546c
   <f7-list v-if="this.b_render == 2" media-list class="gglibrary">
     <f7-list-item v-for="(item, index) in this.l_ret_gg_imf_s.datas" :key="index" 
               @click="local_setSelectedGG(item.键值, index)" class="gglibrary-list-item">
@@ -79,10 +74,7 @@
        </div>
     </f7-list-item>
   </f7-list>
-<<<<<<< HEAD
   
-=======
->>>>>>> 93dcda60e360461c8984394c5912a4adbd99546c
   <f7-list v-else-if="this.b_render == 1">
     <f7-list-item>
       <f7-label>您好，您的{{jump_to}}列表为空，还需要再努力哦^_^</f7-label>
@@ -98,7 +90,6 @@ export default {
 </script>
 
 <style>
-<<<<<<< HEAD
 div .gglist-page .navbar-inner.sliding{
     background: #fff;
     color:#FFFFFF;
@@ -135,10 +126,6 @@ div .gglist-page .navbar-inner.sliding{
 /*addinfo*/
 .md .gglist-page .navbar .left, .navbar .right {
     padding-left: 19px;
-=======
-.md .list .gglibrary .gglibrary-item .item-content{
-    padding-left: 0px;
->>>>>>> 93dcda60e360461c8984394c5912a4adbd99546c
 }
 /**/
 
@@ -146,7 +133,6 @@ div .gglist-page .navbar-inner.sliding{
     margin: 0;
     padding: 0;
 }
-<<<<<<< HEAD
 
 .md .gglist-page .list {
     padding: 0px;
@@ -176,8 +162,6 @@ div .gglist-page .navbar-inner.sliding{
     padding-bottom: 14px;
 }
 
-=======
->>>>>>> 93dcda60e360461c8984394c5912a4adbd99546c
 div.list.media-list.navbar-inner.sliding{
   height: 65px;
   background: #FFFFFF;
