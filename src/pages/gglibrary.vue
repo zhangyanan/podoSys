@@ -2,6 +2,7 @@
 <template>
 <f7-page class="gglist-page">
   <v-addinfo v-if="currentPage != '蝈蝈列表'" :title='currentPage'></v-addinfo>
+  <v-asideheader v-else addPage :title='currentPage'></v-asideheader>
   <f7-list v-if="this.b_render == 2" media-list class="gglibrary">
     <f7-list-item v-for="(item, index) in this.l_ret_gg_imf_s.datas" :key="index" 
               @click="local_setSelectedGG(item.键值, index)" class="gglibrary-list-item">
@@ -68,9 +69,12 @@
               </div>
           </div>
        </div>
-       
+       <div slot="root-end">
+          <div class="div-border"></div>
+       </div>
     </f7-list-item>
   </f7-list>
+  
   <f7-list v-else-if="this.b_render == 1">
     <f7-list-item>
       <f7-label>您好，您的{{jump_to}}列表为空，还需要再努力哦^_^</f7-label>
@@ -86,20 +90,6 @@ export default {
 </script>
 
 <style>
-.md .list .gglibrary .gglibrary-item .item-content{
-    padding-left: 25px;
-}
-.md .list .item-inner:after{
-  background-color: rgba(0,0,0,0); 
-}
-.md .list .gglibrary .item-inner:after{
-  background-color: rgba(0,0,0,0); 
-  height: 0px;
-}
-div.list.gglibrary.media-list{
-  margin: 0px;
-}
-
 div .gglist-page .navbar-inner.sliding{
     background: #fff;
     color:#FFFFFF;
@@ -137,10 +127,6 @@ div .gglist-page .navbar-inner.sliding{
 .md .gglist-page .navbar .left, .navbar .right {
     padding-left: 19px;
 }
-
-.md .list .gglibrary .gglibrary-item .item-content{
-    padding-left: 0px;
-}
 /**/
 
 .md .gglist-page .navbar .right {
@@ -175,15 +161,10 @@ div .gglist-page .navbar-inner.sliding{
     padding-left:19px;
     padding-bottom: 14px;
 }
+
 div.list.media-list.navbar-inner.sliding{
   height: 65px;
   background: #FFFFFF;
-}
-
-div.list.gglibrary.media-list ul li{
-  border: 0.5px solid #E9E9E9;
-  height: 95px;
-  padding-left: 0px;
 }
 
 label.firstcharacter{

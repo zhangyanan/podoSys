@@ -205,7 +205,7 @@ export default {
 
 		//访问用户登陆帐户信息表
 		getuserpswbyname(data){
-			const url = 'http://207.246.110.27/lifetree-0.1/callcenter/sp_get_user_psw_by_name'
+			const url = 'http://207.246.110.27/lifetree-0.1/callcenter/checkLoginInfo'
 			console.log(data)
 			return new Promise((resolve, reject) => {
 				axios.defaults.headers['Content-Type'] = "application/json;charset=UTF-8"

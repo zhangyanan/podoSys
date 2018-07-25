@@ -1,5 +1,5 @@
 <template>
-  <f7-page>
+  <f7-page class="userItem-page">
       <f7-block class="back-ground">
         <div class = "userItem_div">
             <img  class = "back_img" src="@/assets/icon_all/back_white.png" @click="goBack()" /> 
@@ -51,10 +51,8 @@
                 <span class="menu_5">所属</span>
                 <span class="value_5">{{l_ret_personal_imf_s.datas[0].会属 + ' ' + l_ret_personal_imf_s.datas[0].区域}}</span> 
             </div>
-            <div class = "userItem_bottom">
-                <a href='javascript:;' class="myconcert_link" @click="goNext()">
+            <div class = "userItem_bottom" @click="goNext()">
                     <label class = "footnamecolor">编辑资料</label>
-                </a>
             </div>
         </div>
     </f7-block>
@@ -140,9 +138,10 @@ export default {
 
 </script>
 <style>
-div.block.back-ground{
-    margin: 0px; 
-    padding: 0px;
+.md .userItem-page .block {
+    margin: 0; 
+    padding: 0;
+
 }
 
 .userItem_div{
@@ -217,7 +216,7 @@ div.block.back-ground{
             position: absolute;
             width: 55px;
             height: 53.5px;
-            left:294.5px;
+            right:25.5px;
             top:55px;
             border-radius: 50%;
 }
@@ -228,8 +227,6 @@ div.block.back-ground{
     background: #FFFFFF;
     border-radius: 21px;
     position: absolute;
-    right: 21px;
-    top: calc(100px - 12px);
 }
 
 
@@ -237,7 +234,7 @@ div.block.back-ground{
     position: absolute;
     width: 43px;
     height: 18px;    
-    left:310px;
+    right:31px;
     top:106px;
 }
 
@@ -274,14 +271,13 @@ gg_status_label{
 .gg_identity_font{
     position: absolute;
     width: 37px;
-    height: 31px;
-    left: 30px;
-    top: 40px;
+    height: 31px;    
+    left:31px;
+    top:38px;
     color: #54BCBF;
     font-size: 38px;
-    font-family: PingFangSC-Semibold;
-    font-size: 38px;
     letter-spacing: 0;
+    font-family: PingFangSC-Semibold;
     line-height: 21px;
 }
 
@@ -299,9 +295,9 @@ gg_status_label{
 .gg_status_font{
     position: absolute;
     width: 32px;
-    height: 26px;    
-    left:10px;
-    top:5px;
+    height: 26px;
+    left:8px;
+    top:10px;
     color: #54BCBF;
     font-size: 20px;
     letter-spacing: 1.3px;
@@ -351,10 +347,11 @@ gg_status_label{
 
 .menuitem{
             position: absolute;
-            width: 77px;
+            width: 100%;
             height: 21px;
-            left:160px;
             top:256px;
+            line-height: 21px;
+            text-align: center;
 }
 
 .menuitemcolor{
@@ -470,8 +467,9 @@ gg_status_label{
             position: absolute;
             width: 100%;
             height: 60px;
-            left:0px;
             top:607px;
+            line-height: 60px;
+            text-align: center;
 }
 
 .md .button {

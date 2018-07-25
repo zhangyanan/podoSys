@@ -10,13 +10,16 @@ import userListPage from '@/pages/userDetail/editinfo'
 import allListPage from '@/pages/wheat/gglibrary'
 import activityItemsPage from '@/pages/activityspaces/activityItems'
 import ggStatusPage from '@/pages/wheat/ggstatus'
+
 import ggFilePage from '@/pages/wheat/gg'
+
+
 // zyn
 import panelPage from '@/pages/dashboard/panel'
 import inputformPage from '@/pages/dashboard/inputform'
 import quickPage from '@/pages/dashboard/quick'
-import itemPage from '@/pages/wheat/item'
 
+import testPage from '@/pages/test/testlist'
 
 export default [
   {
@@ -31,10 +34,6 @@ export default [
         path: 'quick/',
         component: quickPage
       },   
-      {
-        path: 'item/',
-        component: itemPage
-      },     
       {
         path: 'panel/',
         component: panelPage
@@ -76,7 +75,7 @@ export default [
         component: userItemPage
       },
       {
-        // page: 2.1
+        // page: 2.1 page: 3.4
         path: 'allList/',
         component: allListPage
       },
@@ -95,6 +94,12 @@ export default [
         path: 'userList/',
         component: userListPage
       },
+      {
+        // page: 2.4
+        path: 'test/',
+        component: testPage
+      },
+      
       {
         path: '',
         component: dashboardPage

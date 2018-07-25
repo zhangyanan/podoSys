@@ -35,6 +35,14 @@
 
 </script>
 <style lang="scss">
+  .md body {
+    font-family: Roboto,Noto,Helvetica,Arial,sans-serif;
+    color: #212121;
+    line-height: 25px;
+  }
+  .md .index-page .list .item-inner:after {
+    background-color: rgba(0, 0, 0, 0)
+  }
   div.page.index-page.page-current {
     background-image: url("../../assets/icon_all/login_bg.png")
   }
@@ -53,7 +61,7 @@
     padding-top: 35px;
     padding-left: 35px;
   }
-  .md .list .item-subtitle1 {
+  .md .login .list .item-subtitle1 {
     font-size: 18px;
     color: white;
     line-height: 22px;
@@ -62,7 +70,7 @@
     padding-top: 45px;
     padding-left: 35px;
   }
-  .md .list .item-subtitle2 {
+  .md .login .list .item-subtitle2 {
     font-size: 18px;
     color: white;
     line-height: 22px;
@@ -117,8 +125,11 @@
  .md .list.welcome-list .item-inner:after,.md .list.smiler-list .item-inner:after{
    background-color: transparent;
  }
-  div.row.smileform.no-gap {
+  div .login .row.no-gap {
       margin-top: 285px;
+  }
+   .md .login .list ul:before, .md .login .list ul:after, .md .login .item-input-wrap:after, .md .login .list .item-inner:after {
+    background-color: transparent;
   }
   div.list.smiler-list ul li{
     height: 30px;

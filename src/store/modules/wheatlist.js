@@ -1,6 +1,4 @@
 import server from '@/models/formitemlist'
-import server_w from '@/models/workarea'
-import server_c from '@/models/configdata'
 import server_db from '@/models/dbconn'
 
 export const TEST_FOR_SET = 'TEST_FOR_SET'
@@ -40,6 +38,9 @@ export const TEST_CONN_RECEIVE_SEARCH_STATUS = 'TEST_CONN_RECEIVE_SEARCH_STATUS'
 //得到用户的登陆帐户信息
 export const GET_PERSONAL_LOGIN_DATA = 'GET_PERSONAL_LOGIN_DATA'
 
+
+//实现罐装数据
+export const TRANSPORT_DATA_2_RENDER = 'TRANSPORT_DATA_2_RENDER'
 const state = {
     l_tempStr:"",
     l_userId:"",
@@ -77,7 +78,7 @@ const state = {
 
     //搜索的返回值
     l_ret_search_data:[],
-    //搜索的标示
+    //搜索的标示 =0为没有重复 =-1是返回错误 >0是重复
     l_ret_search_none:"",
 
     //gg列表的显示数组 各类的蝈蝈列表都通过这个列表来呈现
@@ -133,6 +134,16 @@ const getters = {
 }
 
 const actions = { 
+
+    //设置罐装数据->gglibrary
+    //data:1 蝈蝈列表 －> render
+    //data:2 协作列表 －> render
+    //data:3 收藏列表 －> render
+    //data:4 搜索列表 －> render
+    transportdata2render({commit}, data){
+        commit(TRANSPORT_DATA_2_RENDER, data)
+    },
+
     getfolderlist({commit}){
       server.getfolderlist().then(response => {
         //response.userId = response.userId
@@ -152,6 +163,9 @@ const actions = {
 
     //按照名字或微信进行查询
     getFormValuesByName({commit}, data){   
+      //先设置返回值为负
+      commit(TEST_CONN_RECEIVE_SEARCH_STATUS, '－1')
+
       server.get21FormValuesByName(data).then(response => {
         var num = response.data.num
         if(num > 0)
@@ -186,7 +200,8 @@ const actions = {
                     //this.$f7router.navigate('/searchList/')
                 }
                 else
-                    commit(TEST_CONN_RECEIVE_SEARCH_STATUS, response)
+                    //查无此信息
+                    commit(TEST_CONN_RECEIVE_SEARCH_STATUS, 0)
               })
             }
             })
@@ -326,7 +341,6 @@ const actions = {
         server_db.getPersonalFavorite(data).then(response => {
           //response.userId = response.userId
           commit(GET_PERSONAL_FAVORITE_DATA, response)
-          //alert(response.userName)
           })
         //因为是异步 所以会立即返回 
         //alert(ret.userName)
@@ -452,16 +466,6 @@ const mutations = {
 
     //gg的21项基本信息
     [TEST_CONN_RECEIVE_USER_21_MSG](state, data){ 
-      /*if(data == null)
-      {
-        
-          state.l_retdata = JSON.stringify({ 	
-          "name":"21项信息",
-          "num":"0"});
-
-          console.log("state.l_retdata:" + state.l_retdata);
-      }
-      else*/
       {
           state.l_retdata = data.data;
           var msg = data.data.datas[0];
@@ -512,7 +516,7 @@ const mutations = {
 
   [TEST_CONN_RECEIVE_SEARCH_STATUS](state, data){ 
     console.log('get TEST_CONN_RECEIVE_SEARCH_STATUS')
-    state.l_ret_search_none = 0;
+    state.l_ret_search_none = data;
   //console.log("json key name is ", state.l_retkeyname[4])
 },
   
@@ -541,7 +545,20 @@ const mutations = {
 
   //得到用户的登陆帐户信息
   [GET_PERSONAL_LOGIN_DATA](state, data){ 
+    console.log(data.data)
     state.l_ret_personal_login_imf_s = data.data;
+  },
+
+  //实现罐装数据
+  [TRANSPORT_DATA_2_RENDER](state, data){
+    if(data == 1)
+      state.l_ret_gg_imf_s = state.l_ret_my_gg_imf_s
+    if(data == 2)
+      state.l_ret_gg_imf_s = state.l_ret_our_gg_imf_s
+    if(data == 3)
+      state.l_ret_gg_imf_s = state.l_ret_personal_favorite_list_s
+    if(data == 4)
+      state.l_ret_gg_imf_s = state.l_ret_search_data
   },
 }
 

@@ -85,14 +85,6 @@ export default {
     'gotoPodosysAnyPage'
     ]),
 
-    goBack()    {
-        //设置激活的tab
-        //sessionStorage.setItem('hotPageAtGGFile',1)
-        //window.location.href ='/gglist/'
-        this.gotoPodosysAnyPage('蝈蝈活动')
-        this.$f7router.navigate('/gglist/')
-    },
-
     comfirmActivityData()   {
         if (this.l_title_name == "编辑记录")  
             this.local_updateActivityData()
@@ -100,6 +92,14 @@ export default {
             this.local_insertActivityData()
 
         //this.goBack()
+    },
+
+    //通过正则表达式实现将strSrc中的strOld全部替换strNew
+    reg_replace(strSrc, strOld, strNew)
+    {
+        var reg = new RegExp(strOld, "g")
+        var newstr = strSrc.replace(reg, strNew);
+        return newstr
     },
 
     local_insertActivityData()    {
@@ -134,7 +134,8 @@ export default {
         if(this.inputresponse != "")
         {
             tempNames = tempNames + "活动反馈,"
-            tempValues = tempValues + this.inputresponse + ","
+            var tempStr = this.reg_replace(this.inputresponse, ',', '，')
+            tempValues = tempValues + tempStr + ","
             bInsert = true
         }    
 
@@ -191,7 +192,8 @@ export default {
         if(this.inputresponse != this.in_activity_datas.活动反馈)
         {
             tempNames = tempNames + "活动反馈,"
-            tempValues = tempValues + this.inputresponse + ","
+            var tempStr = this.reg_replace(this.inputresponse, ',', '，')
+            tempValues = tempValues + tempStr + ","
             bUpdate = true
         }    
 
@@ -242,6 +244,9 @@ $$('#my-range').on('range:change', function (e, range) {
     width: 100%;
 }
 
+.md .activity-page .navbar .content-title {
+    color: #ffffff
+}
 .divheader{
             position: absolute;
             width: 100%;
@@ -385,7 +390,15 @@ $$('#my-range').on('range:change', function (e, range) {
 
 .md .list .divresponse .inputdiv {
     color: #000000;
-    
+    height:100%;
+}
+.md .list .divresponse .inputnum {
+    position: absolute;
+    right:12px;
+    top:106px;
+    width:20%;
+    size: 15px;
+    text-align: right;
 }
 
 .divtitle   {
@@ -495,7 +508,7 @@ $$('#my-range').on('range:change', function (e, range) {
 
 .md .liststyle-item a.link{
             padding-left: 0px;
-            background: #FF6D7F;
+            background: #54BCBF;
 }
 
 .md .list .activity-col-header-title .item-content {
@@ -829,7 +842,8 @@ div.gap{
                                                 <f7-label><font class="mylabelfont">活动名称</font></f7-label>
                                             </div>
                                             <div class="myinputbox">
-                                                <f7-input type="text" dir="rtl" align="right" :value="inputname" @input="inputname = $event.target.value" clear-button></f7-input>
+
+                                                <f7-input type="text" dir="rtl" align="right" maxlength="10" :value="inputname" @input="inputname = $event.target.value" clear-button></f7-input>
                                             </div>
                                         </div>
                                        
@@ -837,12 +851,12 @@ div.gap{
                                  </f7-block>
                                     <f7-block> 
                                         <div class="activity_mybox">
-                                            <f7-list-item smart-select title="活动类型" class="activity-type-list">
+                                            <f7-list-item smart-select :smart-select-params="{openIn: 'popover'}" title="活动类型" class="activity-type-list">
                                                 <!-- Select with values inside -->
                                             
                                                     <select v-model="selectOption" name="activityType">
                                                             <option disabled>{{selectOption}}</option>
-                                                            <option v-for="itemmenu in this.l_activitytype_data" 
+                                                            <option v-for="itemmenu in this.l_activitytype_data"                                                        v-if="selectOption != itemmenu.value"
                                                             :key="itemmenu.value" :value="itemmenu.value">
                                                             {{itemmenu.value}}</option>
                                                     </select>
@@ -876,8 +890,9 @@ div.gap{
                         <div class="mybox3">
                             <div class = "divresponse"> 
                                 <!--<div textareaclass = "divresponse2">-->
-                                    <input class="inputdiv" type="text" :value="inputresponse" @input="inputresponse = $event.target.value">           
+                                    <f7-input class="inputdiv" type="textarea" maxlength="100" :value="inputresponse" @input="inputresponse = $event.target.value"></f7-input>         
                                 <!--</div>-->
+                                    <f7-label class="inputnum">{{inputresponse.length + '/100'}}</f7-label>
                             </div>
                         </div>
                     </f7-list-item>

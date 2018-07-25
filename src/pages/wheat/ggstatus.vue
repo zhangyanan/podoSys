@@ -35,7 +35,22 @@ export default {
       'updateformvalues'
     ]),
 
+    //返回上一个页面 无需参数
+    ...mapActions('datainterchange',[
+    'gotoPrevPage'
+    ]),
+
+    //通过正则表达式实现将strSrc中的strOld全部替换strNew
+    reg_replace(strSrc, strOld, strNew)
+    {
+        var reg = new RegExp(strOld, "g")
+        var newstr = strSrc.replace(reg, strNew);
+        return newstr
+    },
+
     goBack()    {
+        //this.gotoPodosysAnyPage('')
+        this.gotoPrevPage('')
         this.$f7router.navigate('/gglist/')
     },
 
@@ -83,7 +98,8 @@ export default {
             && this.s_response != "" && this.s_response != "请录入状态变更原因")
         {
             tempNames = tempNames + "状态变更原因,"
-            tempValues = tempValues + this.s_response + ","
+            var tempstr = this.reg_replace(this.s_response, ',', '，')
+            tempValues = tempValues + tempstr + ","
             bUpdate = true
         }    
 
@@ -214,8 +230,8 @@ export default {
             position: absolute;
             width: 100px;
             height: 21px;
-            right:50px;
-            top:15.5px;
+            right:0px;
+            top:17.5px;
 }
 
 .img_2  {
@@ -231,14 +247,14 @@ export default {
             width: 91px;
             height: 21px;
             left:63px;
-            top:15.5px;
+            top:18.5px;
 }
 
 .value_status {
             position: absolute;
             width: 91px;
             height: 21px;
-            right:50px;
+            right:10px;
             top:15.5px;
 }
 
@@ -246,22 +262,26 @@ export default {
             font-size: 16px;
             color: #4A4A4A;
 }
-
-.md .list .div_reason_box input[type=text]  {
-            position: absolute;
-            width:calc(100% - 32px - 32px);
-            height: 87px;   
-            left:32px;
-            top:32.5px;
-            background: #F2F2F2;
+.md .list .div_reason_box {
+            height:87px;
+            margin-left:32px;
+            margin-right:32px;
+            background: #f2f2f2
+}
+.md .list .div_reason_box .inputnum {
+    position: absolute;
+    right:32px;
+    top:115px;
+    width:20%;
+    size: 15px;
+    text-align: right;
 }
 
 .inputresponsebox   {
-            position: absolute;
-            width: 276px;
-            height: 34px;
-            left:17px;
-            top:26px;
+            margin-left:17px;
+            margin-right:17px;
+            margin-top:26px;
+            margin-bottom:26px;
 }
 
 .footfont  {
@@ -377,7 +397,8 @@ export default {
         </f7-list-item>
         <f7-list-item class = "ggstatus-list-item-3">
             <div class = "div_reason_box">
-                <input class = "inputresponsebox" type="text" v-model="s_response">
+                <f7-input class = "inputresponsebox" type="textarea" maxlength="50" :value="s_response" @input="s_response = $event.target.value"></f7-input>
+                <f7-label class="inputnum">{{s_response.length + '/50'}}</f7-label>
             </div>
         </f7-list-item>
         <f7-list-item  class = "ggstatus-list-item-4">

@@ -251,6 +251,23 @@ export default {
     return result
   },
 
+  get_l_yearsoffaith_datalist() {
+    var result = instance.get(api.get_l_yearsoffaith_datalist)
+
+    result = new Promise(function (resolve, reject) {
+      resolve({data: {
+        30160: {value: '未知'},
+        30161: {value: '无'},
+        30162: {value: '一年以内'},
+        30163: {value: '三年以内'},
+        30164: {value: '五年以内'},
+        30165: {value: '十年以内'},
+        30166: {value: '十年以上'}
+      }})
+    })
+    return result
+  },
+
   get_l_yesorno_datalist() {
     var result = instance.get(api.get_l_yesorno_datalist)
 

@@ -27,7 +27,7 @@
             <div class="item-inner">
               <div class="item-title item-label"><span class="icon-image"><img class="name-img" src="@/assets/icon_all/account_name.png" /></span>账号</div>
               <div class="inputform item-input-wrap">
-                <input type="text" placeholder="默认为手机号">
+                <input type="text" placeholder="默认为手机号" v-model="s_username">
                 <span class="input-clear-button"></span>
               </div>
             </div>
@@ -39,7 +39,7 @@
             <div class="item-inner">
               <div class="item-title item-label"><span class="icon-image"><img src="@/assets/icon_all/password.png" /></span>密码</div>
               <div class="inputform item-input-wrap">
-                <input type="password" placeholder="请输入">
+                <input type="password" placeholder="请输入" v-model="s_userpsw">
                 <span class="input-clear-button"></span>
               </div>
             </div>
@@ -74,6 +74,10 @@
   .inputform-row{
     margin-top: 0px;
   }
+  .md .inputform .inline-labels .item-label {
+    top: 26px;
+  }
+
   div.list.inpurtform_text-list{
     margin-top: 80px;
     margin-left: 30px;
@@ -183,16 +187,30 @@
   .md .item-input-focused .item-label{
     color:#5F5F5F;
   }
-  .md .input.list.inline-labels input[type=text], .md .input.list.inline-labels input[type=password] {
+  .md .inputform .list.inline-labels input[type=text] {
     font-family: PingFangSC-Semibold;
     font-size: 16px;
     color: #4A4A4A;
     letter-spacing: 0;
     line-height: 21px;
     text-align: right;
-    padding-right: 15px;
+    padding:0px;
+    width: calc(100% - 120px);
+    margin:0px;
   }
  
+ .md .inputform .list.inline-labels input[type=password] {
+    font-family: PingFangSC-Semibold;
+    font-size: 16px;
+    color: #4A4A4A;
+    letter-spacing: 0;
+    line-height: 21px;
+    text-align: right;
+    width: calc(100% - 120px);
+    padding:0px;
+    margin:0px;
+  }
+
   span.span-forgot{
     font-size: 18px;
     margin-left: 155px;
@@ -241,6 +259,8 @@ export default {
   
   data() {
     return {
+      s_username:"ivy",
+      s_userpsw:"ivyxtd",
     }
   },
   computed: {
@@ -250,6 +270,14 @@ export default {
 
     ...mapGetters('listdata',[
         'l_ret_personal_gg_s'
+    ]),
+
+    ...mapGetters('listdata',[
+        'l_ret_personal_login_imf_s'
+    ]),
+
+    ...mapGetters('datainterchange',[
+        'loginSuccess'
     ]),
   },
   created () {
@@ -268,36 +296,142 @@ export default {
     ]),
 
     ...mapActions('datainterchange',[
-    'gotoPodosysAnyPage'
+      'gotoPodosysAnyPage'
     ]),
 
     ...mapActions('listdata',[
       'getPersonalFavorite'
     ]),
- 
+
+    ...mapActions('listdata',[
+      'getuserpswbyname'
+    ]),
+
+    //前进到下一个页面 需要该页面的名称
+    ...mapActions('datainterchange',[
+    'gotoNextPage'
+    ]),
+
     timeout(ms) {
                   return new Promise((resolve) => {
                     setTimeout(resolve, ms);
                   });
     },
 
+    openVerticalButtons(s_title, s_msg) {
+        const app = this.$f7;
+        app.dialog.create({
+          title: s_title,
+          text: s_msg,
+          buttons: [
+            {
+              text: '确定'
+            }
+          ],
+          verticalButtons: true
+        }).open();
+      },
+
+    //帐号校验
+    loadAccountData(ms, b_finish) {
+      //能登陆则退出
+      if(this.loginSuccess == 1)
+        return
+
+      this.timeout(ms).then(() => {
+            
+            console.log('loadAccountData = ' +  ms)
+            if(this.l_ret_personal_login_imf_s != null)
+            {
+              if(this.l_ret_personal_login_imf_s.num == 0)
+              {
+                //登陆失败
+                if(b_finish)
+                {
+                  this.openVerticalButtons('提示','登陆失败，请确认您的帐户信息')
+                  return
+                }
+              }
+              else{
+                  //得到个人信息
+                  this.getPersonalAccount(this.l_ret_personal_login_imf_s.username)
+                  //得到个人藏单
+                  this.getPersonalFavorite(this.l_ret_personal_login_imf_s.username)
+
+                  this.loadData(1000,false)
+                  this.loadData(2000,false)
+                  this.loadData(3000,true)
+                  return
+              }
+            }
+      })
+    },
+
+    loadData(ms, b_finish) {
+        this.timeout(ms).then(() => {
+            
+            //能登陆则退出
+            if(this.loginSuccess == 1)
+              return
+
+            console.log('inputform = ' +  ms)
+
+            if(this.l_ret_personal_imf_s != null
+               && this.l_ret_personal_gg_s != null)
+            {
+
+                this.setloginSuccess('1')
+                //如果是首登 跳转补充信息
+                if(this.l_ret_personal_login_imf_s.datas[0].created_date == this.l_ret_personal_login_imf_s.datas[0].logintime)
+                {
+                  this.gotoNextPage("编辑资料")
+                  this.$f7router.navigate('/userList/')
+                }
+                else
+                {
+                  this.gotoNextPage("蝈蝈列表")
+                  this.$f7router.navigate('/alllist/')
+                }
+                
+                //更新本次登陆时间
+                
+            }
+            else if(b_finish)
+            {
+                this.$f7router.navigate('/error/')
+            }
+        })
+    },
+
+    //尝试进行帐号验证 登陆操作
+    p_loginIn() {
+                if(this.s_username == '' || this.s_userpsw == '')
+                    this.openVerticalButtons('提示', '请填写登陆信息')
+                else
+                    {
+                        var sqldata = JSON.stringify({
+                            "in_username":this.s_username,
+                            "in_userpsw":this.s_userpsw})
+                      
+                        this.getuserpswbyname(sqldata)
+
+                        this.loadAccountData(1000, false)
+                        this.loadAccountData(2000, true)
+                    }
+    },
+
     loginIn() {
+      this.p_loginIn()
+      /**************直接登陆 */
       //得到个人信息
-      this.getPersonalAccount('ivy')
+      /*this.getPersonalAccount('cui')
       //得到个人藏单
-      this.getPersonalFavorite('ivy')
+      this.getPersonalFavorite('cui')
 
-      this.timeout(1000).then(() => {
-            console.log("in timeout of inputform.vue")
-            //设置登陆成功标示
-            //如果是禁止登陆的角色需要拒绝
-            //if(this.l_ret_personal_imf_s.data[0].阶段)
-
-            this.setloginSuccess('1')
-            this.$f7router.navigate('/alllist/')
-        });
+      this.loadData(1000,false)
+      this.loadData(2000,false)
+      this.loadData(3000,true)*/
     }
   }
 }
-
 </script>

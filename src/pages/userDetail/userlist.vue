@@ -268,9 +268,11 @@ $$('#my-range').on('range:change', function (e, range) {
     letter-spacing: -0.09px;
     line-height: 19px;
 }
+
 div.navbar-inner.sliding{
     background: #54BCBF;
     color:#FFFFFF;
+    height: 65px;
 }
 .md .navbar .content-title {
     font-family: PingFangSC-Semibold;
@@ -280,11 +282,7 @@ div.navbar-inner.sliding{
     line-height: 19px;
     padding-left: 90px;
 }
-div.navbar-inner.sliding{
-    background: #54BCBF;
-    color:#FFFFFF;
-    height: 65px;
-}
+
 .list.addinfo-list{
     margin: 19px 11px;
     background: #FFFFFF;
