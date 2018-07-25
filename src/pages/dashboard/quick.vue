@@ -1,5 +1,5 @@
 <template>
-  <f7-page>
+  <f7-page class="quick-page">
     <form class="quick-form" v-on:submit.prevent="submit" no-hairlines-md>
       <f7-list calss="quick-list">
         <f7-list-item class="text-center b-0">
@@ -22,7 +22,7 @@
             <div class="item-inner">
               <div class="item-title item-label"><span class="icon-image"><img src="@/assets/icon_all/account_name.png" /></span><label>姓名</label></div>
               <div class="item-input-wrap">
-                <input type="text" placeholder="请输入" v-model="s_name">
+                <f7-input type="text" dir='rtl' placeholder="请输入" :value="s_name" @input="s_name = $event.target.value"></f7-input>
                 <span class="input-clear-button"></span>
               </div>
             </div>
@@ -54,9 +54,9 @@
             </div>
             <div class="item-inner">
               <div class="item-title item-label"><span class="icon-image"><img src="@/assets/icon_all/wechat.png" /></span><label>微信ID</label></div>
-                <div class="wrong-message-icon"><f7-button @click="onSearch(s_weChat)"><img src="@/assets/icon_all/wrong_green.png" /></f7-button></div>
+                <div class="wrong-message-icon"><f7-button @click="onSearch(s_weChat, '请输入微信号', '此微信号已重复')"><img src="@/assets/icon_all/wrong_green.png" /></f7-button></div>
                 <div class="item-input-wrap">
-                    <input type="text" placeholder="请输入" v-model="s_weChat">
+                    <f7-input type="text" dir='rtl' placeholder="请输入" :value="s_weChat" @input="s_weChat = $event.target.value"></f7-input>
                     <span class="input-clear-button"></span>
                 </div>
             </div>
@@ -68,7 +68,7 @@
             <div class="item-inner">
               <div class="item-title item-label"><span class="icon-image"><img src="@/assets/icon_all/phone.png" /></span><label>手机号</label></div>
               <div class="item-input-wrap">
-                <input type="text" placeholder="请输入" v-model="s_phone">
+                <f7-input type="text"  dir='rtl' placeholder="请输入" :value="s_phone" @input="s_phone = $event.target.value"></f7-input>
                 <span class="input-clear-button"></span>
               </div>
             </div>
@@ -80,7 +80,7 @@
             <div class="item-inner">
               <div class="item-title item-label"><span class="icon-image"><img src="@/assets/icon_all/qq_id.png" /></span><label class="qq-label">QQ号</label></div>
               <div class="item-input-wrap">
-                <input type="text" placeholder="选填">
+                <f7-input type="text" dir='rtl' placeholder="选填" :value="s_qq" @input="s_qq = $event.target.value"></f7-input>
                 <span class="input-clear-button"></span>
               </div>
             </div>
@@ -90,211 +90,21 @@
       <div class="list links-list">
         <ul>
             <li>
-                <a href="/wheat/" @click="submitForm()">完成</a>
+                <a  v-if="s_weChat.length > 0" href="/wheat/" @click="submitForm()">完成</a>
+                <a  v-else href="#">完成</a>
             </li>
         </ul>
      </div>
   </f7-page>
 </template>
-<script>
-import { mapState, mapGetters, mapActions, mapMutations, Store } from 'vuex'
-  export default {
-    data() {
-    return {
-              male_selected:true,
-              female_selected:false,
-              s_name:"",
-              s_gender:"",
-              s_weChat:"",
-              s_qq:"",
-              s_phone:"",
-            }
-  },
-    computed:{
-      ...mapGetters('listdata',[
-        'l_ret_personal_imf_s'
-    ]),
-      ...mapGetters('listdata',[
-        'l_ret_search_none'
-    ]),
-
-    ...mapGetters('listdata',[
-        'l_ret_search_data'
-    ]),
-
-    },
-    methods: {
-      ...mapActions('listdata',[
-      'insertformvalues'
-      ]),
-      ...mapActions('datainterchange',[
-      'setPageNavigation'
-      ]),
-
-      ...mapActions('datainterchange',[
-      'gotoPodosysAnyPage'
-      ]),
-
-      ...mapActions('listdata',[
-      'getFormValuesByName'
-      ]),
-
-      timeout(ms) {
-          return new Promise((resolve) => {
-            setTimeout(resolve, ms);
-                })
-      },
-
-      onSearch(param) {
-                        if(param != "")
-                        {
-                          this.getFormValuesByName(param)
-                          this.timeout(2000).then(() => {
-                              console.log('this.l_ret_search_none.num = ' + this.l_ret_search_none.num)
-                              if(this.l_ret_search_none > 0)
-                                {
-                                  //添加重复 请确认
-                                  this.openVerticalButtons('提示', '此微信号已重复')
-                                }
-                              /*else
-                              {
-                                  //可以添加
-                                  this.local_insert21Data()
-                              }*/
-                          });
-                        }
-                        else
-                        {
-                          //为空
-                          this.openVerticalButtons('提示','请输入微信号')
-                        }
-              
-      },
-
-      goback()  {
-          //设置跳转来源
-          var str = '{"from":"快速注册","to":"蝈蝈列表"}'
-          this.setPageNavigation(str)
-          //this.gotoPodosysAnyPage('蝈蝈列表')
-          this.$f7router.navigate('/allList/')
-      },
-
-      submitForm()  {
-          this.onSearch(this.s_weChat)
-          this.onSearch(this.s_phone)
-          this.timeout(2000).then(() => {
-                              if(this.l_ret_search_none == 0)
-                              {
-                                  this.local_insert21Data()
-                              }
-          })
-      },
-
-      //姓名 性别 和 微信 是必填的
-      local_insert21Data()    {
-        var tempNames = ""
-        var tempValues = ""
-        var bInsert = false;
-
-        //姓名修改了吗
-        if(this.s_name != "")
-        {
-            tempNames = tempNames + "姓名,"
-            tempValues = tempValues + this.s_name + ","
-        }
-        else
-        {
-            this.openVerticalButtons('请输入姓名')
-        }    
-        //性别修改了吗
-        if(this.male_selected == true)
-        {
-            tempNames = tempNames + "性别,"
-            tempValues = tempValues + "男,"
-        }    
-        else{
-            tempNames = tempNames + "性别,"
-            tempValues = tempValues + "女,"
-        }
-        //微信修改了吗
-        if(this.s_weChat != "")
-        {
-            tempNames = tempNames + "微信,"
-            tempValues = tempValues + this.s_weChat + ","
-            bInsert = true
-        }    
-
-        //手机修改了吗
-        if(this.s_phone != "")
-        {
-            tempNames = tempNames + "手机,"
-            tempValues = tempValues + this.s_phone + ","
-        }    
-
-        //是否有了重复
-        if(bInsert == true)
-        {
-            //默认填入的信息部分
-            //保存蝈蝈的引导人
-            tempNames = tempNames + "引导人,"
-            tempValues = tempValues + this.l_ret_personal_imf_s.datas[0].个人表单 + ","
-            tempNames = tempNames + "引导人姓名,"
-            tempValues = tempValues + this.l_ret_personal_imf_s.datas[0].姓名 + ","
-            tempNames = tempNames + "引导人会属,"
-            tempValues = tempValues + this.l_ret_personal_imf_s.datas[0].会属 + ","
-            tempNames = tempNames + "引导人区域,"
-            tempValues = tempValues + this.l_ret_personal_imf_s.datas[0].区域 + ","
-            //保存蝈蝈的状态和阶段
-            tempNames = tempNames + "状态,"
-            tempValues = tempValues + "正常,"
-
-            tempNames = tempNames + "阶段,"
-            tempValues = tempValues + "SW,"
-
-            var sqldata = JSON.stringify({
-                    "in_tablename":"21项表单",
-                    "in_username":this.l_ret_personal_imf_s.datas[0].个人表单,
-                    "in_fieldnames":tempNames,
-                    "in_fieldvalues":tempValues,
-					})
-            console.log(sqldata)
-            this.insertformvalues(sqldata)
-        }
-    },
-      openVerticalButtons(s_title, s_msg) {
-        const app = this.$f7;
-        app.dialog.create({
-          title: s_title,
-          text: s_msg,
-          buttons: [
-            {
-              text: '确定'
-            }
-          ],
-          verticalButtons: true
-        }).open();
-      },
-
-      hit(param)  {
-        console.log(param)
-        if (param == 1)
-        {
-          this.male_selected = true
-          this.female_selected = false
-        }
-        else
-        {
-          this.male_selected = false
-          this.female_selected = true
-        }
-      }
-    },
-  };
-</script>
 <style lang="scss">
-    .md .list {
+    .md .list{
+      margin: 0px;
+    }
+    .md .list.quick-list {
         margin: 0px;
         font-size: 16px;
+        margin-top: 65px;
     }
     .quickIcon{
         width: 96px;
@@ -311,9 +121,9 @@ import { mapState, mapGetters, mapActions, mapMutations, Store } from 'vuex'
   .md .quick-form .list {
       margin: 0px;
   }
-    .md .list .item-media+.item-inner {
-        margin-left: -20px;
-    }
+div.quick.list.inline-labels{
+  margin-left: -40px
+}
   .quick-form {
     text-align: center;
 
@@ -380,9 +190,10 @@ import { mapState, mapGetters, mapActions, mapMutations, Store } from 'vuex'
   span.icon-image{
     margin-right: 10px;
   }
-  .md .inline-labels .item-label {
+  .md .quick-page .inline-labels .item-label {
       padding-top: 15px;
-      width: 85px;
+      width: 80px;
+      flex-shrink: 0;
   }
   span.icon-image{
     margin-right: 10px;
@@ -390,7 +201,7 @@ import { mapState, mapGetters, mapActions, mapMutations, Store } from 'vuex'
   span.icon-image img{
     margin-bottom: -3px;
     width: 17px;
-    height: 21px;
+    height: 17px;
   }
   div.item-title.item-label label{
     font-family: PingFangSC-Semibold;
@@ -412,7 +223,7 @@ import { mapState, mapGetters, mapActions, mapMutations, Store } from 'vuex'
     padding-right: 15px;
   }
   p.gender-p{
-    margin-left: 50px;
+    margin-left: calc(100% - 170px);
     font-family: PingFangSC-Semibold;
     font-size: 16px;
     color: #4A4A4A;
@@ -437,6 +248,7 @@ import { mapState, mapGetters, mapActions, mapMutations, Store } from 'vuex'
     letter-spacing: 0;
     padding-left: 160px;
   }
+  
   div.wrong-message-icon{
       padding-left: 0px;
   }
@@ -487,10 +299,10 @@ import { mapState, mapGetters, mapActions, mapMutations, Store } from 'vuex'
     text-align: right;
     height: 34px;
     width: 84px;
-    line-height: 48px;
+    line-height: 33px;
     border-radius: 68px;
     background-color: #54BCBF;
-    padding-right: 20px;
+    padding-right: 24px;
 }
 
   .md .dialog-button{
@@ -501,4 +313,231 @@ import { mapState, mapGetters, mapActions, mapMutations, Store } from 'vuex'
   div.dialog-text{
       margin-left: 20px;
   }
+   .md .input-focused:after,.md .item-input-focused .item-input-wrap:after{
+    background:#FFFFFF;
+  }
+
+  .md .quick-page .list .item-input-wrap input[type=text] {
+    margin-right: 0px;
+    width: calc(100% - 30px);
+}
+
 </style>
+<script>
+import { mapState, mapGetters, mapActions, mapMutations, Store } from 'vuex'
+  export default {
+    data() {
+    return {
+              male_selected:true,
+              female_selected:false,
+              s_name:"",
+              s_gender:"",
+              s_weChat:"",
+              s_qq:"",
+              s_phone:"",
+              b_insert:false,
+            }
+  },
+    computed:{
+      ...mapGetters('listdata',[
+        'l_ret_personal_imf_s'
+    ]),
+      ...mapGetters('listdata',[
+        'l_ret_search_none'
+    ]),
+
+    ...mapGetters('listdata',[
+        'l_ret_search_data'
+    ]),
+
+    },
+    methods: {
+      ...mapActions('listdata',[
+      'insertformvalues'
+      ]),
+      ...mapActions('datainterchange',[
+      'setPageNavigation'
+      ]),
+
+      ...mapActions('datainterchange',[
+      'gotoPodosysAnyPage'
+      ]),
+
+      ...mapActions('listdata',[
+      'getFormValuesByName'
+      ]),
+
+      timeout(ms) {
+          return new Promise((resolve) => {
+            setTimeout(resolve, ms);
+                })
+      },
+
+      onSearch(param, errormsg, othermsg) {
+                        if(param != "")
+                        {
+                          this.getFormValuesByName(param)
+                          this.timeout(2000).then(() => {
+                              console.log('this.l_ret_search_none.num = ' + this.l_ret_search_none.num)
+                              if(this.l_ret_search_none > 0)
+                                {
+                                  //添加重复 请确认
+                                  //重置其为不插入 便于马上再次录入
+                                  this.b_insert = false
+                                  this.openVerticalButtons('提示', othermsg)
+                                }
+                              else if(this.l_ret_search_none == 0)
+                              {
+                                  //可以添加
+                                  if(this.b_insert)
+                                  {
+                                    //检查姓名是否为空
+                                    var ret = this.local_insert21Data()
+                                  
+                                    //重置其为不插入 便于马上再次录入
+                                    this.b_insert = false
+                                    if(ret)
+                                      //添加成功
+                                      this.openVerticalButtons('提示', '添加成功!')
+                                  }
+                                  else{
+                                    //添加成功
+                                    this.openVerticalButtons('提示', '没有查询到对应的蝈蝈信息')
+                                  }
+                              }
+                              else{
+                                  //重置其为不插入 便于马上再次录入
+                                  this.b_insert = false
+                                  this.openVerticalButtons('提示', '返回失败，请确认网络状况并重试!')
+                              }
+                          });
+                        }
+                        else
+                        {
+                          //为空
+                          this.openVerticalButtons('提示',errormsg)
+                        }
+              
+      },
+
+      goback()  {
+          //设置跳转来源
+          //var str = '{"from":"快速注册","to":"蝈蝈列表"}'
+          //this.setPageNavigation(str)
+          //this.gotoPodosysAnyPage('蝈蝈列表')
+          this.$f7router.navigate('/allList/')
+      },
+
+      submitForm()  {
+          this.onSearch(this.s_weChat, '请输入微信号', '此微信号已重复')
+          //this.onSearch(this.s_phone, '请输入手机号', '此手机号已重复')
+          //this.onSearch(this.s_name, '请输入姓名', '此姓名已重复')
+          this.b_insert = true
+      },
+
+      //姓名 性别 和 微信 是必填的
+      local_insert21Data()    {
+        var tempNames = ""
+        var tempValues = ""
+        var bInsert = false;
+
+        //姓名修改了吗
+        if(this.s_name != "")
+        {
+            tempNames = tempNames + "姓名,"
+            tempValues = tempValues + this.s_name + ","
+        }
+        else
+        {
+            this.openVerticalButtons('提示','请输入姓名')
+            return false
+        }    
+        //性别修改了吗
+        if(this.male_selected == true)
+        {
+            tempNames = tempNames + "性别,"
+            tempValues = tempValues + "男,"
+        }    
+        else{
+            tempNames = tempNames + "性别,"
+            tempValues = tempValues + "女,"
+        }
+        //微信修改了吗
+        if(this.s_weChat != "")
+        {
+            tempNames = tempNames + "微信,"
+            tempValues = tempValues + this.s_weChat + ","
+            bInsert = true
+        }    
+
+        //手机修改了吗
+        if(this.s_phone != "")
+        {
+            tempNames = tempNames + "手机,"
+            tempValues = tempValues + this.s_phone + ","
+        }    
+
+        //是否有了重复
+        if(bInsert == true)
+        {
+            //默认填入的信息部分
+            //保存蝈蝈的引导人
+            tempNames = tempNames + "引导人,"
+            tempValues = tempValues + this.l_ret_personal_imf_s.datas[0].个人表单 + ","
+            tempNames = tempNames + "引导人姓名,"
+            tempValues = tempValues + this.l_ret_personal_imf_s.datas[0].姓名 + ","
+            tempNames = tempNames + "引导人会属,"
+            tempValues = tempValues + this.l_ret_personal_imf_s.datas[0].会属 + ","
+            tempNames = tempNames + "引导人区域,"
+            tempValues = tempValues + this.l_ret_personal_imf_s.datas[0].区域 + ","
+            //保存蝈蝈的状态和阶段
+            tempNames = tempNames + "状态,"
+            tempValues = tempValues + "正常,"
+
+            tempNames = tempNames + "阶段,"
+            tempValues = tempValues + "SW,"
+
+            var sqldata = JSON.stringify({
+                    "in_tablename":"21项表单",
+                    "in_username":this.l_ret_personal_imf_s.datas[0].个人表单,
+                    "in_fieldnames":tempNames,
+                    "in_fieldvalues":tempValues,
+					})
+            console.log(sqldata)
+            this.insertformvalues(sqldata)
+
+            return true
+        }
+
+        return false
+    },
+      openVerticalButtons(s_title, s_msg) {
+        const app = this.$f7;
+        app.dialog.create({
+          title: s_title,
+          text: s_msg,
+          buttons: [
+            {
+              text: '确定'
+            }
+          ],
+          verticalButtons: true
+        }).open();
+      },
+
+      hit(param)  {
+        console.log(param)
+        if (param == 1)
+        {
+          this.male_selected = true
+          this.female_selected = false
+        }
+        else
+        {
+          this.male_selected = false
+          this.female_selected = true
+        }
+      }
+    },
+  };
+</script>

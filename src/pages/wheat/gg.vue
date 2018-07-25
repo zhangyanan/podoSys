@@ -12,6 +12,10 @@
                                 </f7-link>
                             </div>
                             <div class="name"><span>{{b_load_21Item == 0?'稍等':l_retdata.datas[0].姓名.substr(0,1)}}</span></div>
+                            <div class = "headidentity_2">
+                                <p class = "rcorners1_2"></p>
+                                <label class = "useridentity_font_2">{{l_retdata.datas[0].阶段}}</label>                
+                            </div>
                             <div class="ggname">{{b_load_21Item == 0?'稍等':l_retdata.datas[0].姓名}}</div>
                             <div class="ggwechat">{{b_load_21Item == 0?'稍等':l_retdata.datas[0].微信}}</div>
                         </f7-list-item>             
@@ -73,14 +77,16 @@
          <f7-row no-gap class="gg-tab">
             <f7-col>
                 <f7-toolbar tabbar class = "gg-toolbar">
-                        <f7-link  tab-link="#tab-1" class="baselink">基本信息</f7-link>
-                        <f7-link  tab-link="#tab-2" class="baselink">活动记录</f7-link>
+                        <f7-link  :tab-link-active="'蝈蝈活动' != jumpTo" tab-link="#tab-1" class="baselink">基本信息</f7-link>
+                        
+                        <f7-link  :tab-link-active="'蝈蝈活动' == jumpTo" tab-link="#tab-2" class="baselink">活动记录</f7-link>
+
                         <f7-link tab-link="#tab-3" class="baselink">修改历史</f7-link>
                 </f7-toolbar>
-                <f7-tabs animated>
+                <f7-tabs><!-- 不能用animated属性 -->
                     <!--<f7-tab v-if="(jumpTo == '蝈蝈信息')" id="tab-1" class="page-content" tab-active>
                     <f7-tab v-else id="tab-1" class="page-content" tab-inactive> :title="item.value"-->
-                    <f7-tab  id="tab-1" class="page-content">
+                    <f7-tab  id="tab-1" class="page-content" :tab-active="'蝈蝈活动' != jumpTo">
                         <f7-block>
                           <f7-list  media-list v-if="b_load_21Item == 1" class="baseinfo">
                               
@@ -90,7 +96,7 @@
                             </f7-list-item>
                             <f7-list-item @click="add21Item()" class="bottomcomfirm">
                                 <div v-if="relation_of_this_one == 3 || relation_of_this_one == 2" class="bottombtn">添加信息</div>
-                                <div v-else-if="relation_of_this_one == 1" class="bottombtn">取消收藏</div>
+                                <div v-else-if="relation_of_this_one == 1" class="bottombtn-2">已收藏<img src="@/assets/icon_all/listicon_SW5.png"/></div>
                                 <div v-else class="bottombtn">收藏</div>
                             </f7-list-item>    
                             </f7-list>
@@ -98,7 +104,7 @@
                     </f7-tab>
                     <!--<f7-tab v-if="(jumpTo == '蝈蝈活动')" id="tab-2" class="page-content" tab-active>
                     <f7-tab v-if="(jumpTo != '蝈蝈活动')" id="tab-2" class="page-content" tab-inactive>-->
-                    <f7-tab id="tab-2" class="page-content">
+                    <f7-tab  id="tab-2" class="page-content" :tab-active="'蝈蝈活动' == jumpTo">  
                         <f7-block>
                             <f7-list media-list v-if="b_load_activity == 1 && relation_of_this_one > 1" class="baseinfo">
                                 <f7-list-item v-for="(item, index) in l_retactivitydata.datas"
@@ -138,20 +144,32 @@ import { mapGetters } from "vuex";
 
 </script>
 <style lang="scss">
+
 .md .block {
     margin: 0px; 
     padding: 0px; 
 }
+
+.md .col-70 .list {
+    margin: 0;
+    font-size: 16px;
+}
+
+.md .col-30 .list {
+    margin: 0;
+    font-size: 16px;
+}
+
 .md .toolbar-inner {
     overflow: hidden;
-    background: #FF6D7F;
+    background: #54BCBF;
 }
 .md a.link.baselink {
-    background: #FF6D7F;
+    background: #54BCBF;
 }
 
 .gg-row-header{
-    background: #FF6D7F;
+    background: #54BCBF;
 }
 div.list.gg-list-header{
     margin: 0px;
@@ -159,7 +177,7 @@ div.list.gg-list-header{
 
 div.goback{
     position:absolute;
-    top:14px;
+    top:46px;
     left: 19px;
 }
 
@@ -169,7 +187,7 @@ div.name {
     background: #FFFFFF;
     border-radius: 50px;
     position:absolute;
-    top:35px;
+    top:67px;
     left: 138px;
 }
 div.ggname{
@@ -179,7 +197,7 @@ div.ggname{
     letter-spacing: 0.2px;
     line-height: 40px;
     position:absolute;
-    top:148px;
+    top:180px;
     left: 134px;
     width: 110px;
     text-align: center;
@@ -191,7 +209,7 @@ div.ggwechat{
     letter-spacing: 0.5px;
     line-height: 40px;
     position:absolute;
-    top:calc(210px - 32px);
+    top:210px;
     left: 88.5px;
     width: 200px;
     text-align: center;
@@ -203,16 +221,17 @@ div.leafname{
     letter-spacing: 0;
     line-height: 18px;
     position: absolute;
-    top:calc(106px - 32px);
+    top:106px;
     right:33px;
 }
 
 #more-btn{
     position: absolute;
-    top:10px;
+    top:45px;
     right:39px; 
     margin:0px;
     padding: 0px;
+    -webkit-box-shadow: 0;
     box-shadow: 0;
 }
 
@@ -229,7 +248,7 @@ div.littleleaf{
     border-radius: 10px;
     position:absolute;
     right:21px;
-    top:calc(79px - 32px);
+    top:79px;
 }
 img.leaf-little-icon{
     width: 13px;
@@ -239,7 +258,7 @@ img.leaf-little-icon{
 div.name span {
     font-family: PingFangSC-Semibold;
     font-size: 38px;
-    color: #FF6D7F;
+    color: #54BCBF;
     letter-spacing: 0;
     line-height: 21px;
     margin-left: 30px;
@@ -252,7 +271,7 @@ div.name span {
     width:56px;
     height: 56px;
     border-radius: 28px;
-    top:calc(45px - 32px);
+    top:45px;
     right:25.5px;
     position: absolute;
 }
@@ -283,11 +302,13 @@ div.list.baseinfo .staticmsgbox{
 div.list.baseinfo .staticmsgbox .item-content{
     margin: 0px;
     padding-left: 30px;
+    height: 61.5px;
 }
 
 .staticmsgbox {
     min-height: 61.5px;
     padding-left: 14px;
+    -webkit-box-shadow: 0 0 0 1px rgba(74, 74, 74, 0.1);
     box-shadow: 0 0 0 1px rgba(74, 74, 74, 0.1);
     background: #fff;
 }
@@ -305,8 +326,18 @@ div.list.baseinfo .bottomcomfirm .item-content .item-inner{
     //padding-left: 120px;
     height: 60px;
     width: 100%;
-    background: #FF6D7F;
+    background: #54BCBF;
     color: #fff;
+    text-align: center;
+    line-height: 60px;
+}
+
+.bottombtn-2 {
+    //padding-left: 120px;
+    height: 60px;
+    width: 100%;
+    background: #fff;
+    color: #FF6D7F;
     text-align: center;
     line-height: 60px;
 }
@@ -329,7 +360,7 @@ div.list.baseinfo .bottomcomfirm .item-content .item-inner{
 .md .list .col-30-more-item .item-content{
     padding: 0px;
     margin: 0px;
-    height: 40px;
+    height: 112.5px;
 }
 
 .md .list .col-30-more-item .item-inner{
@@ -338,7 +369,7 @@ div.list.baseinfo .bottomcomfirm .item-content .item-inner{
 }
 
 .status-sheet {
-    height: calc(100% - 245px);
+    height: calc(100% - 247px);
 }
 
 .md .list .col-70-gg-item .item-content{
@@ -364,6 +395,36 @@ div.list.baseinfo .bottomcomfirm .item-content .item-inner{
     padding: 0px;
     margin: 0px;
 }
+
+.headidentity_2{
+            position: absolute;
+            width: 39px;
+            height: 39px; 
+            left:204.5px;
+            top:129px;
+}
+
+.rcorners1_2 {
+    border-radius: 50%;
+    background: #fff;
+    position: absolute;
+    color: #54BCBF;
+    width: 39px;
+    height: 39px;    
+    left:0px;
+    top:0px;
+    border: solid 0.5px;
+}
+
+.useridentity_font_2{
+    position: absolute;
+    width: 27px;
+    height: 26px;    
+    left:6px;
+    top:25px;
+    color: #54BCBF;
+    font-size: 20px;
+}
 </style>
 
 <script>
@@ -381,10 +442,9 @@ export default {
             in_self_msg:"",
             //保存蝈蝈信息 这部分信息在这个页面上是不会更改的
             in_21Item_Short:"",
-            in_self_favorite:"",
-            //页面来自于
-            jumpFrom:"",
-            //页面要去
+            //in_self_favorite:"",
+            
+            //当前页面
             jumpTo:"",
             //判断当前帐户与该gg的关系  0:没有关系  1:收藏关系  2.协力关系  3.母子关系
             relation_of_this_one:0,
@@ -402,6 +462,7 @@ export default {
     //...mapGetters('listdata',['l_retkeyname']),
     ...mapGetters('datainterchange', ['selectedUser']),
     
+    ...mapGetters('listdata',['l_tempStr']),
     ...mapGetters('listdata',['l_retactivitydata']),
     ...mapGetters('listdata',['l_retkeyactivityname']),
     ...mapGetters('listdata',['l_ret_gg_status_data']),
@@ -447,8 +508,14 @@ export default {
     ]),
 
     ...mapGetters('configdata',['l_ggstudystatus_data']),
+    
+    //得到当前页面
+    ...mapGetters('datainterchange',['currentPage']),
+
+    //得到当前页面的上一个页面
+    ...mapGetters('datainterchange',['prevPage']),
   },
-  
+    
   created () {
     //蝈蝈的所有状态信息
     this.get_l_ggstatus_datalist()
@@ -456,51 +523,60 @@ export default {
     this.get_l_ggstudystatus_datalist()
     //得到所选用户
     var index = this.selectedUser
+
+    //this.jumpTo = this.currentPage
+    console.log('1. jumpTo = ' + this.currentPage + " and jumpFrom = " + this.prevPage)
+    //从下层返回的页面
+    if(this.currentPage == '蝈蝈活动')
+    {   
+        this.jumpTo = this.currentPage
+        this.gotoPrevPage('')
+    }    
     
-    this.jumpFrom = this.getSourcePos()
-    this.jumpTo = this.getDesPos()
+    console.log('2. jumpTo = ' + this.currentPage + " and jumpFrom = " + this.prevPage)
 
-    console.log("I'm jump from " + this.jumpFrom + " to " + this.jumpTo)
-
-    if(this.jumpFrom == "收藏列表")
+    if(this.prevPage == "收藏列表")
     {
       this.in_21Item_Short = this.l_ret_personal_favorite_list_s.datas[index]
     }
-    else if(this.jumpFrom == "协力列表")
+    else if(this.prevPage == "协力列表")
     {
       this.in_21Item_Short = this.l_ret_our_gg_imf_s.datas[index]
     }
-    else if(this.jumpFrom == "搜索列表")
+    else if(this.prevPage == "搜索列表")
       this.in_21Item_Short = this.l_ret_search_data.datas[index]
-    else
+    else 
       this.in_21Item_Short = this.l_ret_my_gg_imf_s.datas[index]
     
     //得到蝈蝈的键值
     var keyid = this.in_21Item_Short.键值
 
-    //console.log('this.isMyGG(keyid)' + JSON.stringify(this.isMyGG(keyid))) 
+    //console.log('this.isMyGG(keyid)' + JSON.stringify(this.isMyGG(keyid))) console.log("loadData = ", );
     //得到唯一表单
     this.getformvaluesaccurate(keyid).then((res) => {
-                console.log('in vue.getformvaluesaccurate')
+                console.log('in vue.getformvaluesaccurate num = ' +  this.l_retdata.num)
                 //this.b_load_21Item = 1
             })
     //得到活动记录列表
     this.getAllActivity(keyid)
     
     //1s以后进行刷新
-    this.timeout(2000).then(() => {
+    this.loadData(1000, keyid, false)
+    this.loadData(2000, keyid, false)
+    this.loadData(3000, keyid, true)
+    /*this.timeout(2000).then(() => {
                 console.log('in gg create.timeout')
 
                 //设置权限
                 if(this.isMyGG(keyid))
-                          this.relation_of_this_one = 3
+                        this.relation_of_this_one = 3
                 else if (this.isOurGG(keyid))
-                                    this.relation_of_this_one = 2
+                        this.relation_of_this_one = 2
                 else if (this.in_self_favorite != null && this.in_self_favorite.收藏内容 != null && 
                         this.is_my_favorite(keyid, this.in_self_favorite.收藏内容))
-                                    this.relation_of_this_one = 1
+                        this.relation_of_this_one = 1
                 else
-                                    this.relation_of_this_one = 0
+                        this.relation_of_this_one = 0
 
                 //得到需要显示的21项 选项字段列表
                 this.get_l_showggtitle_datalist(this.relation_of_this_one)
@@ -509,19 +585,19 @@ export default {
 
                 this.b_load_21Item = 1
                 this.b_load_activity = 1
-      });
+      });*/
     
     //得到当前帐户信息
     this.in_self_msg = this.l_ret_personal_imf_s.datas[0]
     
     //得到个人藏单 
-    if(JSON.stringify(this.l_ret_personal_favorite_s.datas[0]) != '{}')
+    /*if(JSON.stringify(this.l_ret_personal_favorite_s.datas[0]) != '{}')
     {
       this.in_self_favorite = this.l_ret_personal_favorite_s.datas[0]
       console.log(this.in_self_favorite)
     }
     else
-      this.in_self_favorite = null
+      this.in_self_favorite = null*/
 
  },
   methods: {
@@ -570,8 +646,23 @@ export default {
     ...mapActions('listdata',[
       'getPersonalFavorite'
     ]),
+
+    ...mapActions('listdata',[
+      'getPersonalFavoriteList'
+    ]),
     
     ...mapActions('configdata',['get_l_ggstudystatus_datalist']),
+
+    //返回上一个页面 无需参数
+    ...mapActions('datainterchange',[
+    'gotoPrevPage'
+    ]),
+
+    //前进到下一个页面 需要该页面的名称
+    ...mapActions('datainterchange',[
+    'gotoNextPage'
+    ]),
+
 
     getSourcePos() {
       var jump = ""
@@ -608,15 +699,18 @@ export default {
     },
     //判断其是否是当前帐号下需管理的蝈蝈
     isOurGG(ggid){
-      
-      for (var i=0; i<this.l_ret_our_gg_imf_s.datas.length; i++)
+      if(this.l_ret_our_gg_imf_s != null && this.l_ret_our_gg_imf_s.length != 0)
       {
-          //console.log("key:" + key + ", value:" ,data.data.datas[0][key]);
-          if(this.l_ret_our_gg_imf_s.datas[i].键值 == ggid)
-          {
-            return true
-          }
+            for (var i=0; i<this.l_ret_our_gg_imf_s.datas.length; i++)
+            {
+                //console.log("key:" + key + ", value:" ,data.data.datas[0][key]);
+                if(this.l_ret_our_gg_imf_s.datas[i].键值 == ggid)
+                {
+                    return true
+                }
+            }
       }
+      
 
       return false
     },
@@ -688,6 +782,50 @@ export default {
                 })
       },
 
+    //得到私藏数据
+    loadPrivateData(ms, b_finish) {
+        this.timeout(ms).then(() => {
+            if(this.l_tempStr == '200')
+            {
+                //重新获得一次收藏表单
+                this.getPersonalFavorite(this.l_ret_personal_imf_s.datas[0].个人表单)
+                return true
+            }
+        })
+
+        return false
+    },
+
+    loadData(ms, s_keyid, b_finish) {
+        this.timeout(ms).then(() => {
+                console.log('in gg create.timeout = ' + ms)
+                if(this.b_load_21Item == 1)
+                  //不再判断了
+                  return;
+
+                if(this.l_retdata.num != 0)
+                {
+                    //设置权限
+                    if(this.isMyGG(s_keyid))
+                        this.relation_of_this_one = 3
+                    else if (this.isOurGG(s_keyid))
+                        this.relation_of_this_one = 2
+                    else if (this.l_ret_personal_favorite_s.datas[0] != null && this.l_ret_personal_favorite_s.datas[0].收藏内容 != null && 
+                        this.is_my_favorite(s_keyid, this.l_ret_personal_favorite_s.datas[0].收藏内容))
+                        this.relation_of_this_one = 1
+                    else
+                        this.relation_of_this_one = 0
+
+                    //得到需要显示的21项 选项字段列表
+                    this.get_l_showggtitle_datalist(this.relation_of_this_one)
+                    //this.relation_of_this_one = 0
+                    console.log('relation_of_this_one = ' + this.relation_of_this_one)
+
+                    this.b_load_21Item = 1
+                    this.b_load_activity = 1
+                }
+      });
+    },
     //从我的收藏夹里删除
     delete_my_favorite(anyid, favoritelist) {
       var findid = "-" + anyid + "-"
@@ -704,56 +842,26 @@ export default {
 
     //添加我的收藏夹
     add_my_favorite(anyid, favoritelist) {
-      var str
-      if(favoritelist.length == 0)
-      {
-        return "-" + anyid + "-"
-      }
-      else 
-      {
-        return favoritelist + anyid + "-"
-      } 
+        var str
+        if(favoritelist.length == 0)
+        {
+            return "-" + anyid + "-"
+        }
+        else 
+        {
+            return favoritelist + anyid + "-"
+        } 
 
     },
 
     goBack()    {
         //取消激活的tab
         //设置跳转来源
-        //var str = '{"from":"' + this.getDesPos() + '","to":"' + this.getSourcePos() + '"}'
-        //console.log(str)
-        //this.setPageNavigation(str)
-        this.gotoPodosysAnyPage('')
+        
+        //this.gotoPodosysAnyPage('')
+        this.gotoPrevPage("")
         this.$f7router.navigate('/allList/')
     },
-
-    /*createPopup()   {
-        const self = this;
-        // Create popup
-        if (!self.popup) {
-          self.popup = self.$f7.popup.create({
-            content: `
-              <div class="popup">
-                <div class="page">
-                  <div class="navbar">
-                    <div class="navbar-inner">
-                      <div class="title">Dynamic Popup</div>
-                      <div class="right"><a href="#" class="link popup-close">Close</a></div>
-                    </div>
-                  </div>
-                  <div class="page-content">
-                    <div class="block">
-                      <p>This popup was created dynamically</p>
-                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse faucibus mauris leo, eu bibendum neque congue non...</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            `.trim(),
-          });
-        }
-        // Open it
-        self.popup.open();
-    },*/
 
     getGGStatus(ggid)  {
       var formname = "状态标签"
@@ -792,16 +900,7 @@ export default {
     local_setSelectedActivity(actid, actindex)  {
       //跳转到对应的活动页面 
       //设置活动数据id
-      //sessionStorage.setItem('selectedActivityId', actid)
-      //再次更新 ggid了
-      //sessionStorage.setItem('selectedGGId', this.l_retdata.datas[0].键值)
-      //全局设置 设置gg姓名
-      //sessionStorage.setItem('selectedGGName', this.l_retdata.datas[0].姓名)
-      //设置该条纪录对象
-      //sessionStorage.setItem('selectedActivityData', JSON.stringify(this.l_retactivitydata.datas[actindex]))
-
-      //window.location.href ='/activityItems/'
-      this.gotoPodosysAnyPage('活动编辑')
+      this.gotoNextPage("活动编辑")
       this.setSelectedActivity(actindex)
       this.$f7router.navigate('/activityItems/')
     },
@@ -822,8 +921,7 @@ export default {
       //保存 gg的21项数据
       //sessionStorage.setItem('selectedGG21Item', JSON.stringify(this.l_retdata.datas[0]))
       //保存 将要更改的状态
-      console.log("in goto_ggstatus")
-      this.gotoPodosysAnyPage('蝈蝈状态')
+      this.gotoNextPage("状态变更")
       this.setSelectedGGStatus(newStatus)
       this.$f7router.navigate('/ggStatus/')
     },
@@ -831,15 +929,7 @@ export default {
     //添加活动页面
     addActivity() {
       //再次更新 ggid了
-      //sessionStorage.setItem('selectedGGId', this.l_retdata.datas[0].键值)
-      //全局设置 设置gg姓名
-      //sessionStorage.setItem('selectedGGName', this.l_retdata.datas[0].姓名)
-      //删除可能存在的活动纪录 便于活动页面打开时做判断
-      //sessionStorage.removeItem('selectedActivityData')
-
-      //window.location.href ='/activityItems/'
-      //console.log("addActivity")
-      this.gotoPodosysAnyPage('活动编辑')
+      this.gotoNextPage("活动编辑")
       this.setSelectedActivity('－1')
       this.$f7router.navigate('/activityItems/')
     },
@@ -854,8 +944,7 @@ export default {
       if (this.relation_of_this_one == 2 || this.relation_of_this_one == 3)
       {
           //更新 gg的21项数据
-          //sessionStorage.setItem('selectedGG21Item', JSON.stringify(this.in_21Item_Short.键值))
-          //window.location.href ='/21ItemList/'
+          this.gotoNextPage("21项表单")
           this.$f7router.navigate('/21ItemList/')
       }
       else if (this.relation_of_this_one == 1)
@@ -877,11 +966,16 @@ export default {
           this.relation_of_this_one = 0
 
           //重新获得一次收藏表单
-          this.getPersonalFavorite(this.l_ret_personal_imf_s.datas[0].个人表单)
+          //this.getPersonalFavorite(this.l_ret_personal_imf_s.datas[0].个人表单)
+          //this.getPersonalFavoriteList(this.l_ret_personal_imf_s.datas[0].个人表单)
+          var b_finish = false;
+          b_finish = this.loadPrivateData(1000, b_finish)
+          if(b_finish == false)
+                this.loadPrivateData(1000, true)
       }
       else if (this.relation_of_this_one == 0)
       {
-          if(this.in_self_favorite == null)
+          if(this.l_ret_personal_favorite_s.datas[0] == null)
           {
               //连收藏表单都不存在
               favorite = this.add_my_favorite(this.in_21Item_Short.键值, '')
@@ -903,29 +997,40 @@ export default {
               this.relation_of_this_one = 1
           }
           else{
-              if(this.in_self_favorite.收藏内容 == null)
-                  favorite = this.add_my_favorite(this.in_21Item_Short.键值, '')
+              if(this.l_ret_personal_favorite_s.datas[0].收藏内容 == null)
+                    favorite = this.add_my_favorite(this.in_21Item_Short.键值, '')
               else
-                  //添加收藏
-                  favorite = this.add_my_favorite(this.in_21Item_Short.键值, 
-                                              this.l_ret_personal_favorite_s.datas[0].收藏内容)
+              {
+                    //蝈蝈已经在收藏夹了吗
+                    if(this.is_my_favorite(this.in_21Item_Short.键值, this.l_ret_personal_favorite_s.datas[0].收藏内容))
+                        return 
+                    
+                    //添加收藏
+                    favorite = this.add_my_favorite(this.in_21Item_Short.键值, 
+                                                this.l_ret_personal_favorite_s.datas[0].收藏内容)
 
-              var msgid = this.l_ret_personal_favorite_s.datas[0].键值
-                var sqldata = JSON.stringify({
-              "in_formdataid":msgid,
-              "in_username":this.l_ret_personal_imf_s.datas[0].个人表单,
-              "in_fieldnames":tempNames,
-              "in_fieldvalues":favorite,
-              })
+                    var msgid = this.l_ret_personal_favorite_s.datas[0].键值
+                    var sqldata = JSON.stringify({
+                    "in_formdataid":msgid,
+                    "in_username":this.l_ret_personal_imf_s.datas[0].个人表单,
+                    "in_fieldnames":tempNames,
+                    "in_fieldvalues":favorite,
+                    })
 
-              console.log(sqldata)
-              this.updateformvalues(sqldata)
+                    console.log(sqldata)
+                    this.updateformvalues(sqldata)
 
-              this.relation_of_this_one = 1
+                    this.relation_of_this_one = 1
+              }
           }
           
           //重新获得一次收藏表单
-          this.getPersonalFavorite(this.l_ret_personal_imf_s.datas[0].个人表单)
+          //this.getPersonalFavorite(this.l_ret_personal_imf_s.datas[0].个人表单)
+          //this.getPersonalFavoriteList(this.l_ret_personal_imf_s.datas[0].个人表单)
+          var b_finish = false;
+          b_finish = this.loadPrivateData(1000, b_finish)
+          if(b_finish == false)
+            this.loadPrivateData(1000, true)
       }
     }
   }

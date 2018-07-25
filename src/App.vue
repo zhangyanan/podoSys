@@ -43,24 +43,22 @@ export default {
     ...mapGetters('datainterchange',[
         'loginSuccess'
     ]),
+
+    //得到当前页面
+    ...mapGetters('datainterchange',[
+    'currentPage'
+]),
   },
   created () {
     console.log('in App.created()')
   },
   methods: {
     ...mapActions('listdata',[
-      'getPersonalAccount'
-    ]),
-    ...mapActions('listdata',[
       'getFormValuesByName'
     ]),
 
     ...mapActions('datainterchange',[
       'setPageNavigation'
-    ]),
-
-    ...mapActions('listdata',[
-      'getPersonalFavoriteList'
     ]),
 
     ...mapActions('listdata',[
@@ -83,6 +81,16 @@ export default {
     'gotoPodosysAnyPage'
     ]),
 
+    //前进到下一个页面 需要该页面的名称
+    ...mapActions('datainterchange',[
+    'gotoNextPage'
+    ]),
+
+    //返回上一个页面 无需参数
+    ...mapActions('datainterchange',[
+    'gotoPrevPage'
+    ]),
+
     timeout(ms) {
                   return new Promise((resolve) => {
                     setTimeout(resolve, ms);
@@ -98,9 +106,12 @@ export default {
             if(this.l_ret_search_none > 0)
               {
                 //设置跳转来源
-                var str = '{"from":"个人主页","to":"搜索列表"}'
-                this.setPageNavigation(str)
+                //var str = '{"from":"个人主页","to":"搜索列表"}'
+                //this.setPageNavigation(str)
                 //this.gotoPodosysAnyPage('搜索列表')
+                if(this.currentPage != "蝈蝈列表")
+                    this.gotoPrevPage('')
+                this.gotoNextPage('搜索列表')
               }
             else
               this.openVerticalButtons('查重提示','没有找到对应的蝈蝈')
@@ -131,8 +142,11 @@ export default {
       this.getPersonalFavoriteList(this.l_ret_personal_imf_s.datas[0].个人表单)
               {
                 //设置跳转来源
-                var str = '{"from":"个人主页","to":"收藏列表"}'
-                this.setPageNavigation(str)
+                //var str = '{"from":"个人主页","to":"收藏列表"}'
+                //this.setPageNavigation(str)
+                if(this.currentPage != "蝈蝈列表")
+                    this.gotoPrevPage('')
+                this.gotoNextPage('收藏列表')
                 //this.gotoPodosysAnyPage('收藏列表')
               }
     },
@@ -140,10 +154,13 @@ export default {
     gotoOurGGList() {
       this.get_our_gglist(this.l_ret_personal_imf_s.datas[0].个人表单)
       //设置跳转来源
-      var str = '{"from":"个人主页","to":"协力列表"}'
-      this.setPageNavigation(str)
+      //var str = '{"from":"个人主页","to":"协力列表"}'
+      //this.setPageNavigation(str)
       //this.gotoPodosysAnyPage('协力列表')
       //this.$f7router.navigate('/allList/')
+      if(this.currentPage != "蝈蝈列表")
+            this.gotoPrevPage('')
+      this.gotoNextPage('协力列表')
     }
   }
 }
@@ -227,8 +244,9 @@ export default {
 </template>
 
 <style lang="scss">
-.md .myItem-list .list {
-    margin: 55px 0px 0px 0px;
+.md .myItem-page .list {
+    margin: 0;
+    padding: 0;
 
 }
 .myItem-page .page-content{
@@ -237,6 +255,7 @@ export default {
 
 .md .list .myItem-list-item .item-content {
     padding-left: 48px;
+    padding-top: 65px;
 }
 
 .md .list .search .item-content {
@@ -306,7 +325,7 @@ div .myItem-list .item-title{
     letter-spacing: 0;
     line-height: 21px;
 }
-.md .list input[type=text]{
+.md .list .item-input-wrap input[type=text]{
     width:179px;
     height: 39px;
     line-height: 39px;

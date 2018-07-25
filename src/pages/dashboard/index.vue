@@ -40,7 +40,7 @@
     color: #212121;
     line-height: 25px;
   }
-  .md .list .item-inner:after {
+  .md .index-page .list .item-inner:after {
     background-color: rgba(0, 0, 0, 0)
   }
   div.page.index-page.page-current {
@@ -57,11 +57,11 @@
     margin-top: 74px;
     margin-left: 40px;
   }
-  .md .list .item-text{
+  .md .login .list .item-text{
     padding-top: 35px;
     padding-left: 35px;
   }
-  .md .list .item-subtitle1 {
+  .md .login .list .item-subtitle1 {
     font-size: 18px;
     color: white;
     line-height: 22px;
@@ -70,7 +70,7 @@
     padding-top: 45px;
     padding-left: 35px;
   }
-  .md .list .item-subtitle2 {
+  .md .login .list .item-subtitle2 {
     font-size: 18px;
     color: white;
     line-height: 22px;
@@ -124,11 +124,11 @@
       background-color: #3cc8b4;
     }
   }
-  .md .list ul:before, .md .list ul:after, .md .item-input-wrap:after, .md .list .item-inner:after {
+  .md .login .list ul:before, .md .login .list ul:after, .md .login .item-input-wrap:after, .md .login .list .item-inner:after {
     background-color: transparent;
   }
 
-  div.row.no-gap {
+  div .login .row.no-gap {
       margin-top: 285px;
   }
   .md .row.no-gap .col-30 {

@@ -11,13 +11,12 @@ import ggFilePage from '@/pages/wheat/gg'
 import allListPage from '@/pages/wheat/gglibrary'
 import activityItemsPage from '@/pages/activityspaces/activityItems'
 import ggStatusPage from '@/pages/wheat/ggstatus'
-import searchListPage  from '@/pages/wheat/searchList'
 // zyn
 import panelPage from '@/pages/dashboard/panel'
 import inputformPage from '@/pages/dashboard/inputform'
 import quickPage from '@/pages/dashboard/quick'
-import ggPage from '@/pages/wheat/gg'
 
+import testPage from '@/pages/test/testlist'
 
 export default [
   {
@@ -31,10 +30,6 @@ export default [
       {
         path: 'quick/',
         component: quickPage
-      },
-      {
-        path: 'gg/',
-        component: ggPage
       },
       {
         path: 'panel/',
@@ -77,14 +72,9 @@ export default [
         component: userItemPage
       },
       {
-        // page: 2.1
+        // page: 2.1 page: 3.4
         path: 'allList/',
         component: allListPage
-      },
-      {
-        // page: 3.4
-        path: 'searchList/',
-        component: searchListPage
       },
       {
         // page: 8.2
@@ -101,6 +91,12 @@ export default [
         path: 'userList/',
         component: userListPage
       },
+      {
+        // page: 2.4
+        path: 'test/',
+        component: testPage
+      },
+      
       {
         path: '',
         component: dashboardPage

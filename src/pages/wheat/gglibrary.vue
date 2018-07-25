@@ -1,13 +1,14 @@
 <!-- 当前页面名称： 蝈蝈列表 收藏列表 协力列表 搜索列表 -->
 <template>
-<f7-page>
-  <v-asideheader addPage title=''></v-asideheader>
-  <f7-list v-if="b_render == 2" media-list class="gglibrary">
+<f7-page class="gglist-page">
+  <v-addinfo v-if="currentPage != '蝈蝈列表'" :title='currentPage'></v-addinfo>
+  <v-asideheader v-else addPage :title='currentPage'></v-asideheader>
+  <f7-list v-if="this.b_render == 2" media-list class="gglibrary">
     <f7-list-item v-for="(item, index) in this.l_ret_gg_imf_s.datas" :key="index" 
-              @click="local_setSelectedGG(item.键值, index)" :class="item.阶段 + '-bg'">
+              @click="local_setSelectedGG(item.键值, index)" class="gglibrary-list-item">
        <div slot="subtitle" class="gglib-ggname">{{item.姓名}}</div>         
        <div slot="media">
-         <div :class="'name-bg-' +item.阶段" ><span class="surname">{{item.姓名.substr(0,1)}}</span></div>
+         <div :class="'name-bg-' +item.阶段" ><span class="surname">{{item.姓名!=''?item.姓名.substr(0,1):''}}</span></div>
        </div>
       <div slot="subtitle">
         <div class="row">
@@ -34,14 +35,7 @@
                     <img v-else-if="item.阶段 == 'RJ'"     v-bind:src="'/static/icon_all/listicon_green1.png'"/> 
                     <img v-else                           v-bind:src="'/static/icon_all/listicon_gray1.png'"/> 
                    
-                    <!--<f7-icon v-if="item.阶段 == 'SW'"                                           material="smartphone" color = "red"></f7-icon>
-                    <f7-icon v-else-if="item.阶段 == 'GD' || item.阶段 == 'FF'"                       material="smartphone" color = "orange"></f7-icon>
-                    <f7-icon v-else-if="item.阶段 == 'CJ' || item.阶段 == 'ZJ' || item.阶段 == 'GJ'"   material="smartphone" color = "blue"></f7-icon>
-                    <f7-icon v-else-if="item.阶段 == 'BLACK'"                                        material="smartphone" color = "black"></f7-icon>
-                    <f7-icon v-else-if="item.阶段 == 'RJ'"                                           material="smartphone" color = "green"></f7-icon> 
-                    <f7-icon v-else                                                             material="smartphone" color = "gray"></f7-icon><!-- 来11:39-40 -->
-                    
-                    </span></div>
+                   </span></div>
                   <div class="col-80"><span class="phone">{{item.手机}}</span></div>
                 </div>
               </div>
@@ -80,7 +74,8 @@
        </div>
     </f7-list-item>
   </f7-list>
-  <f7-list v-else-if="b_render == 1">
+  
+  <f7-list v-else-if="this.b_render == 1">
     <f7-list-item>
       <f7-label>您好，您的{{jump_to}}列表为空，还需要再努力哦^_^</f7-label>
     </f7-list-item>
@@ -95,23 +90,83 @@ export default {
 </script>
 
 <style>
+div .gglist-page .navbar-inner.sliding{
+    background: #fff;
+    color:#FFFFFF;
+    margin: 0;
+    padding:0;
+    -webkit-box-shadow: 0 0 0 1px rgba(74, 74, 74, 0.1);
+    box-shadow: 0 0 0 1px rgba(74, 74, 74, 0.1);
+    height: 100%;
+}
 
-.md .list .gglibrary .gglibrary-item .item-content{
-    padding-left: 0px;
+.md .gglist-page .navbar .button:not(.button-fill):not(.button-fill-md), .md .subnavbar .button:not(.button-fill):not(.button-fill-md), .md .toolbar .button:not(.button-fill):not(.button-fill-md) {
+    color: #fff;
+    padding: 0px;
+    margin: 0;
 }
-div.list.media-list.gglibrary{
-  margin: 0px;
-  padding-left: 31px;
+
+.md .gglist-page .navbar .header-content-title[data-v-15dce536] {
+    color: #000;
+    padding-left: calc(50% - 40px);
 }
-div.navbar-inner.sliding{
+
+/*使得标题居中的样式*/
+.md .gglist-page .navbar .content-title[data-v-01bba122] {
+    padding-left: calc(50% - 20px);
+    color: #000000;
+}
+.md .gglist-page .navbar .title {
+    margin: 0;
+    line-height: 1.2;
+    text-align: left;
+    width: calc(100% - 100px);
+}
+
+/*addinfo*/
+.md .gglist-page .navbar .left, .navbar .right {
+    padding-left: 19px;
+}
+/**/
+
+.md .gglist-page .navbar .right {
+    margin: 0;
+    padding: 0;
+}
+
+.md .gglist-page .list {
+    padding: 0px;
+    margin:0px;
+}
+
+.md .list   .gglibrary-list-item .item-content{
+    padding: 0px;
+    margin:0px;
+    height:104.5px;
+}
+
+.md .list   .gglibrary-list-item .item-content .item-media {
+    padding-top: 24px;
+    padding-left: 31px;
+}
+
+.md .list  .gglibrary-list-item .item-inner{
+    padding: 26px,0px,0px,0px;
+    margin:0px;
+    height:100%;
+}
+
+.md .media-list .gglibrary-list-item .item-inner, .md li.media-item .gglibrary-list-item .item-inner {
+    padding-top: 24px;
+    padding-left:19px;
+    padding-bottom: 14px;
+}
+
+div.list.media-list.navbar-inner.sliding{
   height: 65px;
   background: #FFFFFF;
 }
-div.list.gglibrary.media-list ul li{
-  border: 0px solid #E9E9E9;
-  height: 95px;
-  padding-left: 0px;
-}
+
 label.firstcharacter{
   margin-top: -20px;
   margin-left: -20px;
@@ -137,7 +192,7 @@ div.item-subtitle{
   line-height: 18px;
 }
 .md .list li.SW_bg .item-after{
-  background: #FF6D7F;
+  background: #54BCBF;
   border-radius: 32.4px;
   width: 22px;
   height: 15px;
@@ -359,7 +414,6 @@ span.phone-icon-red,span.phone-icon-green,span.phone-icon-orange,span.phone-icon
     line-height: 17px;
     padding-left: 2px;
 }
-
   .name-bg-SW{
     background-color: #FF6D7F;
     width:59px;
@@ -448,7 +502,8 @@ export default {
             
             b_render:0,
             inputname:"",
-            jump_to:""
+            jump_to:"",
+            b_finishload:false,
             }
   },
   computed: {
@@ -482,36 +537,46 @@ export default {
     ...mapGetters('datainterchange',[
       'pageNavigation'
     ]),
+
+    //得到当前页面
+    ...mapGetters('datainterchange',[
+    'currentPage'
+    ]),
   },
   created () {
     //需要一个重加载标志表明是否需要刷新
     this.b_render = 0
-    var jump = ""
+    /*var jump = ""
     if(this.pageNavigation != null)
-        jump = JSON.parse(this.pageNavigation)
-    this.jump_to = jump.to
-    console.log("I'm jump from " + jump.from + " to " + jump.to)
+        jump = JSON.parse(this.pageNavigation)*/
+    this.jump_to = this.currentPage
+    //console.log("I'm jump from " + jump.from + " to " + jump.to)
 
     //得到当前登陆用户的gg列表
     //如果是查看自己的gg 则以自己为引导人查看
     //this.get_my_gglist('约翰')
     //cui 是个唯一值
     //根据来源页面的期望加载不同的数据集
-   if(jump.to == "蝈蝈列表"){
-                              this.get_my_gglist(this.l_ret_personal_imf_s.datas[0].个人表单)
-        }else if(jump.to == "协力列表"){
-                              this.get_our_gglist(this.l_ret_personal_imf_s.datas[0].个人表单)
+   if(this.jump_to == "蝈蝈列表"){
+              this.get_my_gglist(this.l_ret_personal_imf_s.datas[0].个人表单)
+        }else if(this.jump_to == "协力列表"){
+              this.get_our_gglist(this.l_ret_personal_imf_s.datas[0].个人表单)
         }
-        else if(jump.to == "收藏列表"){
-                              this.getPersonalFavoriteList(this.l_ret_personal_imf_s.datas[0].个人表单)
+        else if(this.jump_to == "收藏列表"){
+              this.getPersonalFavoriteList(this.l_ret_personal_imf_s.datas[0].个人表单)
         }
 
     //this.getPersonalAccount('cui')
     //如果是查看自己作为管理者的gg 则以自己为管理人查
     //this.get_our_gglist('cui')
     
-    //1s以后进行刷新
-      this.timeout(2000).then(() => {
+    //设置了5s刷新
+    this.loadData(1000,false);
+    this.loadData(2000,false);
+    this.loadData(3000,false);
+    this.loadData(4000,false);
+    this.loadData(5000,true);
+    /*  this.timeout(2000).then(() => {
                 console.log('in vue.timeout')
                 if(jump.to == "收藏列表")
                 {
@@ -553,7 +618,7 @@ export default {
                   else
                     this.b_render = 1
                 }
-      });
+      });*/
   },
   methods: {
     ...mapActions('datainterchange',[
@@ -588,23 +653,87 @@ export default {
     'gotoPodosysAnyPage'
     ]),
 
+    //返回上一个页面 无需参数
+    ...mapActions('datainterchange',[
+    'gotoPrevPage'
+    ]),
+
+    //前进到下一个页面 需要该页面的名称
+    ...mapActions('datainterchange',[
+    'gotoNextPage'
+    ]),
+
     reflash() {
         console.log("I'm back!")
     },
 
+    /***************************************************刷新控制**********************************/
     timeout(ms) {
           return new Promise((resolve) => {
             setTimeout(resolve, ms);
                 })
       },
 
+    loadData(ms, b_finish) {
+        this.timeout(ms).then(() => {
+                if(this.b_render == 2)
+                  //不再判断了
+                  return;
+                console.log('in vue.timeout ＝ ' + ms)
+
+                if(this.jump_to == "收藏列表")
+                {
+                  console.log('in 收藏列表')
+                  if(this.l_ret_personal_favorite_list_s != null)
+                  {
+                    this.b_render = 2
+                  }
+                  else if(b_finish)
+                    this.b_render = 1
+                }
+                  
+                else if (this.jump_to == "协力列表")
+                {
+                    console.log('in 协力列表')
+                    if(this.l_ret_our_gg_imf_s != null)
+                    {
+                      this.b_render = 2
+                    }
+                    else if(b_finish)
+                      this.b_render = 1
+                }
+                else if (this.jump_to == "搜索列表")
+                {
+                    console.log('in 搜索列表')
+                    if(this.l_ret_search_data != null)
+                    {
+                      this.b_render = 2
+                    }
+                    else if(b_finish)
+                      this.b_render = 1
+                }
+                else 
+                {
+                  if(this.l_ret_gg_imf_s != null)
+                  {
+                    this.b_render = 2
+                  }
+                  else if(b_finish)
+                    this.b_render = 1
+                }
+      });
+    },
+
+
     local_setSelectedGG(keyid, index){
       //全局设置 ggID
       this.setSelectedUser(index)
       //设置跳转来源
       /*var str = '{"from":"' + this.jump_to + '","to":"蝈蝈信息"}'
-      this.setPageNavigation(str)*/
-      this.gotoPodosysAnyPage('蝈蝈信息')
+      console.log(str)
+      */
+      this.gotoNextPage("蝈蝈信息")
+      //this.gotoPodosysAnyPage('蝈蝈信息')
       this.$f7router.navigate('/gglist/')
     }
   }

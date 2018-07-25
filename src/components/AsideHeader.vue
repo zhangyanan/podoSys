@@ -1,9 +1,23 @@
 <style lang="scss" scoped>
   .md .navbar {
-      height: 67px;
+      height: 86px;
       color: #fff;
       font-size: 20px;
   }
+
+  .md .navbar .header-content-title {
+      color:#000;
+  }
+
+  div.navbar-inner.sliding{
+  height: 65px;
+  background: #ffffff;
+}
+
+.navbar-inner {
+    padding-left: 0px;
+}
+
   .pull-out-icon{
     width: 28px;
     height: 28px;
@@ -21,29 +35,6 @@
     height: 28px;
     
   }
-
-  .header {
-    position: relative;
-    line-height: 38px;
-    color: #fff;
-    text-align: center;
-    background: #222;
-    .item {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      z-index: 1;
-      a {
-        color: #fff;
-      }
-    }
-    .left {
-      left: 10px;
-    }
-    .right {
-      right: 10px;
-    }
-  }
   .md .button.button-raised {
      -webkit-box-shadow: 0 0px 0px rgba(0,0,0,0), 0 0px 0px rgba(0,0,0,0);
      box-shadow: 0 0px 0px rgba(0,0,0,0), 0 0px 0px rgba(0,0,0,0); 
@@ -52,15 +43,14 @@
 <template>
   <f7-navbar>
     <f7-nav-left>
-    </f7-nav-left>
-    <f7-nav-title>
-      <label class="site-title">
         <f7-link href="/myItem/" no-link-class>
           <span class="pull-out-icon">
             <f7-button raised panel-open="left"><img src="@/assets/icon_all/pull_out@2x.png"/></f7-button>
           </span>
-      </label>
-      <label class="content-title">{{title}}</label>
+        </f7-link>
+    </f7-nav-left>
+    <f7-nav-title>
+      <label class="header-content-title"></label>
     </f7-nav-title>
     <f7-nav-right>
       <f7-link addPage v-if="addPage" href="/quick/">
