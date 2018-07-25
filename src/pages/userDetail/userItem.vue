@@ -223,13 +223,13 @@ div.block.back-ground{
 }
 
 .yz_icon {
-    border-radius: 50%;
-    background: #FFFFFF;
-    position: absolute;
     width: 18px;
-    height: 18px;    
-    left:335px;
-    top:90px;
+    height: 18px;
+    background: #FFFFFF;
+    border-radius: 21px;
+    position: absolute;
+    right: 21px;
+    top: calc(100px - 12px);
 }
 
 
@@ -274,11 +274,15 @@ gg_status_label{
 .gg_identity_font{
     position: absolute;
     width: 37px;
-    height: 31px;    
-    left:25px;
-    top:28px;
+    height: 31px;
+    left: 30px;
+    top: 40px;
     color: #54BCBF;
     font-size: 38px;
+    font-family: PingFangSC-Semibold;
+    font-size: 38px;
+    letter-spacing: 0;
+    line-height: 21px;
 }
 
 .gg_statusidentity{
