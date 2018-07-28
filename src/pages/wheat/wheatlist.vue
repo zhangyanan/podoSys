@@ -443,9 +443,12 @@ $$('#my-range').on('range:change', function (e, range) {
 });*/
 </script>
 <style>
+/*.md .list{
+    margin: 0px;
+    }*/
 .wheatlist-page .page-content{
     background: #EFF0F4;
-}
+    }
 .mybox:hover{
     border-style:solid; 
     border-width:2px;
@@ -633,6 +636,7 @@ div.gap{
 .list .mybox .select-box .item-title {
     left:12px;
 }
+
 .md .wheatlist-page .navbar .content-title {
     color: #ffffff
 }
@@ -903,7 +907,7 @@ div.gap{
                         <!-- Select with values inside -->
                             <select v-model="selectEducation" name="activityType">
                             <option disabled>{{selectEducation}}</option>
-                            <option v-for="itemmenu in this.l_education_data"
+                            <option v-for="itemmenu in this.l_education_data" 
                                                     v-if="selectEducation != itemmenu.value"
                                                     :key="itemmenu.value" :value="itemmenu.value">
                                                     {{itemmenu.value}}</option>
@@ -930,7 +934,7 @@ div.gap{
                         <!-- Select with values inside -->
                             <select v-model="selectOccuption" name="activityType">
                             <option disabled>{{selectOccuption}}</option>
-                            <option v-for="itemmenu in this.l_occuption_data"
+                            <option v-for="itemmenu in this.l_occuption_data" 
                                                     v-if="selectOccuption != itemmenu.value"
                                                     :key="itemmenu.value" :value="itemmenu.value">
                                                     {{itemmenu.value}}</option>
