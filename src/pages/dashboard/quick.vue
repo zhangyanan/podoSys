@@ -22,7 +22,7 @@
             <div class="item-inner">
               <div class="item-title item-label"><span class="icon-image"><img src="@/assets/icon_all/account_name.png" /></span><label>姓名</label></div>
               <div class="item-input-wrap">
-                <f7-input type="text" dir='rtl' placeholder="请输入" :value="s_name" @input="s_name = $event.target.value"></f7-input>
+                <f7-input type="text" dir='rtl' align="right" placeholder="请输入" :value="s_name" @input="s_name = $event.target.value"></f7-input>
                 <span class="input-clear-button"></span>
               </div>
             </div>
@@ -56,7 +56,7 @@
               <div class="item-title item-label"><span class="icon-image"><img src="@/assets/icon_all/wechat.png" /></span><label>微信ID</label></div>
                 <div class="wrong-message-icon"><f7-button @click="onSearch(s_weChat, '请输入微信号', '此微信号已重复')"><img src="@/assets/icon_all/wrong_green.png" /></f7-button></div>
                 <div class="item-input-wrap">
-                    <f7-input type="text" dir='rtl' placeholder="请输入" :value="s_weChat" @input="s_weChat = $event.target.value"></f7-input>
+                    <f7-input type="text" dir='rtl' align="right" placeholder="请输入" :value="s_weChat" @input="s_weChat = $event.target.value"></f7-input>
                     <span class="input-clear-button"></span>
                 </div>
             </div>
@@ -68,7 +68,7 @@
             <div class="item-inner">
               <div class="item-title item-label"><span class="icon-image"><img src="@/assets/icon_all/phone.png" /></span><label>手机号</label></div>
               <div class="item-input-wrap">
-                <f7-input type="text"  dir='rtl' placeholder="请输入" :value="s_phone" @input="s_phone = $event.target.value"></f7-input>
+                <f7-input type="text"  dir='rtl'  align="right" placeholder="请输入" :value="s_phone" @input="s_phone = $event.target.value"></f7-input>
                 <span class="input-clear-button"></span>
               </div>
             </div>
@@ -80,7 +80,7 @@
             <div class="item-inner">
               <div class="item-title item-label"><span class="icon-image"><img src="@/assets/icon_all/qq_id.png" /></span><label class="qq-label">QQ号</label></div>
               <div class="item-input-wrap">
-                <f7-input type="text" dir='rtl' placeholder="选填" :value="s_qq" @input="s_qq = $event.target.value"></f7-input>
+                <f7-input type="text" dir='rtl' align="right" placeholder="选填" :value="s_qq" @input="s_qq = $event.target.value"></f7-input>
                 <span class="input-clear-button"></span>
               </div>
             </div>
@@ -90,8 +90,8 @@
       <div class="list links-list">
         <ul>
             <li>
-                <a  v-if="s_weChat.length > 0" href="/wheat/" @click="submitForm()">完成</a>
-                <a  v-else href="#">完成</a>
+              <f7-button v-if="s_weChat.length > 0" class="finished-btn" big fill @click="submitForm()">完成</f7-button>
+              <f7-button v-else @click="openVerticalButtons('提示','请添加必要信息')" class="finished-btn" big fill>完成</f7-button>
             </li>
         </ul>
      </div>
@@ -321,6 +321,13 @@ div.quick.list.inline-labels{
     margin-right: 0px;
     width: calc(100% - 30px);
 }
+  a.finished-btn.button-fill.button-big.button{
+    background-color: #54BCBF;
+    height: 60px;
+    font-size: 22px;
+    padding-top: 6px;
+    margin: 0px;
+  }
 
 </style>
 <script>
