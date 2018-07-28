@@ -91,30 +91,47 @@ export default {
     'gotoPrevPage'
     ]),
 
+    ...mapActions('listdata',[
+    'transportdata2render'
+    ]),
+
     timeout(ms) {
                   return new Promise((resolve) => {
                     setTimeout(resolve, ms);
                   });
     },
     
+    waitForSearch(){
+                //while(this.l_ret_search_data.num == null);
+    },
+
     onSearch(param) {
       if(param != "")
       {
-        this.getFormValuesByName(param)
-        this.timeout(1000).then(() => {
+            this.transportdata2render(5)
+            this.getFormValuesByName(param)
+            this.timeout(2000).then(() => {
+            //this.waitForSearch().then(() => {
             //console.log('this.l_ret_gg_imf_s.num = ' + this.l_ret_gg_imf_s.num)
-            if(this.l_ret_search_none > 0)
-              {
+            if(this.l_ret_search_data.num != null)
+            {
+                console.log('*****test for search*****')
                 //设置跳转来源
                 //var str = '{"from":"个人主页","to":"搜索列表"}'
                 //this.setPageNavigation(str)
                 //this.gotoPodosysAnyPage('搜索列表')
-                if(this.currentPage != "蝈蝈列表")
-                    this.gotoPrevPage('')
-                this.gotoNextPage('搜索列表')
-              }
+                if(this.l_ret_search_data.num > 0)
+                {
+                    if(this.currentPage != "蝈蝈列表")
+                        this.gotoPrevPage('')
+                    this.gotoNextPage('搜索列表')
+                }
+                else{
+                    this.openVerticalButtons('查重提示','没有找到对应的蝈蝈')
+                }
+            }
             else
-              this.openVerticalButtons('查重提示','没有找到对应的蝈蝈')
+              this.openVerticalButtons('查重提示','获取数据失败，请检查网络环境')
         });
       }
       else{
@@ -161,6 +178,10 @@ export default {
       if(this.currentPage != "蝈蝈列表")
             this.gotoPrevPage('')
       this.gotoNextPage('协力列表')
+    },
+
+    loginOut() {
+         this.$f7router.navigate('/inputform/')
     }
   }
 }
@@ -170,6 +191,7 @@ export default {
 <template>
   <div id="app">
     <f7-panel left reveal>
+      <f7-block-title>我是左侧面板</f7-block-title>
           <f7-page class="myItem-page">
             <f7-list class="myItem-list" v-if="this.loginSuccess == 1">
               <f7-list-item class="myItem-list-item">
@@ -192,7 +214,7 @@ export default {
               </f7-list-item>
               <f7-list-item class="search">            
                   <div class="item-input-wrap">
-                      <input type="text" class="searchinput" placeholder="搜索微信/手机/姓名" v-model="search_msg">
+                      <f7-input  type="text" align="left" placeholder="搜索手机/微信/姓名" :value="search_msg" @input="search_msg = $event.target.value"></f7-input>
                       <div slot="media" class="search-div">
                           <f7-link @click="onSearch(search_msg)"><img class="search-icon" src="@/assets/icon_all/search_blue.png"/></f7-link>
                       </div>
@@ -218,27 +240,16 @@ export default {
                     <img class="help-icon" src="@/assets/icon_all/panel_setting.png"/>
                   </div>
               </f7-list-item>
-              <f7-list-item class="panel_menu" title="退出" @click="openVerticalButtons('提示','栏目建设中...')">
+              <f7-list-item class="panel_menu" title="退出" @click="loginOut()">
                   <div slot="media">
                     <img class="help-icon" src="@/assets/icon_all/panel_logout.png"/>
                   </div>
               </f7-list-item>
             </f7-list>
           </f7-page>  
-      </f7-panel>
-    
-      <!--<f7-panel right cover>
-        <f7-block-title>我是右侧面板</f7-block-title>
-            <f7-page>
-              <div class="bottom_part">
-              <img src="@/assets/icon_all/selection_green.png" />
-              </div>
-            </f7-page>  
-      </f7-panel>-->
-   
+      </f7-panel>  
     
     <f7-view :pushState="true" main/>
-    <!--<v-menu></v-menu>-->
   </div>
 </template>
 
@@ -250,7 +261,6 @@ export default {
 }
 .myItem-page .page-content{
     background: #54BCBF;
-    padding-top: 50px;
 }
 
 .md .list .myItem-list-item .item-content {
@@ -278,8 +288,7 @@ div.userstatus span{
     font-family: PFSquareSansPro-ExtraBlack;
     font-size: 20px;
     color: #FFFFFF;
-    letter-spacing: 1px;
-    font-weight: 800
+    letter-spacing: -1.29px;
 }
 span.username{
     font-family: PFSquareSansPro-Bold;
@@ -287,14 +296,12 @@ span.username{
     color: #FFFFFF;
     letter-spacing: 0;
     line-height: 8px;
-    font-weight: 600;
 }
 span.userwechat{
     font-family: PFSquareSansPro-Light;
     font-size: 16px;
     color: #FFFFFF;
     letter-spacing: 0;
-    padding-top: 5px;
 }
 .row .app-row{
     margin-left: 40px;
@@ -306,7 +313,9 @@ li.li-username{
 li.li-userwechat{
     margin-left: 40px;
     margin-top: -25px;
-    padding-bottom: 40px;
+}
+.md .myItem-page .myItem-list .item-inner:after{
+    background: transparent;
 }
 .md .list .myItem-list .item-media {
     padding-top: 13px;
@@ -320,6 +329,15 @@ div .myItem-list .item-title{
     letter-spacing: 0;
     line-height: 21px;
 }
+.md .myItem-page .myItem-list .item-input-wrap input[type=text]{
+    width:179px;
+    height: 39px;
+    line-height: 39px;
+    background: #FFFFFF;
+    border-radius:4px;
+    color: #54BCBF;
+    margin-left:31px;
+}
  input::-webkit-input-placeholder {
     /* placeholder颜色  */
     color: #54BCBF;
@@ -329,9 +347,9 @@ div .myItem-list .item-title{
     text-align: left;
     font-family: PingFangSC-Regular;
     font-size: 16px;
-    letter-spacing: 2px;
+    letter-spacing: 0;
     line-height: 21px;
-    padding-left: 0px;
+    padding-left: 15px;
     }
 div.search-div{
     width:25px;
@@ -342,26 +360,11 @@ div.search-div{
 li.panel_menu{
     padding-top: 15px;
 }
-li.panel_menu .item-media{
-    padding-left: 40px;
+li.panel_menu img{
+    padding-left: 25px;
+    padding-top: 7px;
 }
-li.panel_menu img.help-icon{
-    margin-top: 5px;
-}
-div.list.myItem-list ul:before,div.list.myItem-list ul:after{
-  background-color: transparent;
-}
-div.list.myItem-list div.item-inner:before,div.list.myItem-list div.item-inner:after{
-    background-color: transparent;
-}
-li.search{
-    width: 190px;
-    height: 39px;
-}
-input.searchinput{
-    border-radius: 4px;
-    background-color: #FFFFFF;
-    margin-left: 31px;
-    text-align: right;
+.md .myItem-page .item-input-wrap:after{
+    background-color:#54BCBF;
 }
 </style>
