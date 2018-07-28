@@ -252,7 +252,6 @@
     background-color: #54BCBF;
     margin-top: 145px;
     height: 60px;
-    font-size: 22px;
     font-size: 20px;
     padding-top: 6px;
   }
