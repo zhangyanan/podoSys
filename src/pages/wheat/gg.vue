@@ -1,7 +1,8 @@
 <!-- 当前页面名称： 蝈蝈信息 蝈蝈活动-->
 <template>
   <f7-page>
-    <f7-block v-if="b_load_21Item == 1 && b_load_activity == 1">
+    <!--<f7-block v-if="b_load_21Item == 1 && b_load_activity == 1">-->
+    <f7-block v-if="this.l_retdata.num != null && this.l_retdata.num > 0">
         <f7-row no-gap class="gg-row-header">
                 <f7-col class="col-70" width="70">
                     <f7-list class="list-70">
@@ -11,13 +12,13 @@
                                     <img src="@/assets/icon_all/back_white.png"/>
                                 </f7-link>
                             </div>
-                            <div class="name"><span>{{b_load_21Item == 0?'稍等':l_retdata.datas[0].姓名.substr(0,1)}}</span></div>
+                            <div class="name"><span>{{l_retdata.datas[0].姓名.substr(0,1)}}</span></div>
                             <div class = "headidentity_2">
                                 <p class = "rcorners1_2"></p>
                                 <label class = "useridentity_font_2">{{l_retdata.datas[0].阶段}}</label>                
                             </div>
-                            <div class="ggname">{{b_load_21Item == 0?'稍等':l_retdata.datas[0].姓名}}</div>
-                            <div class="ggwechat">{{b_load_21Item == 0?'稍等':l_retdata.datas[0].微信}}</div>
+                            <div class="ggname">{{l_retdata.datas[0].姓名}}</div>
+                            <div class="ggwechat">{{l_retdata.datas[0].微信}}</div>
                         </f7-list-item>             
                     </f7-list>
                 </f7-col>
@@ -88,16 +89,16 @@
                     <f7-tab v-else id="tab-1" class="page-content" tab-inactive> :title="item.value"-->
                     <f7-tab  id="tab-1" class="page-content" :tab-active="'蝈蝈活动' != jumpTo">
                         <f7-block>
-                          <f7-list  media-list v-if="b_load_21Item == 1" class="baseinfo">
+                          <f7-list  media-list v-if="this.b_load_21Item == 1" class="baseinfo">
                               
                             <f7-list-item v-for="(item, index) in this.l_showggtitle_data"
                                 :key="index"
                                 v-if="l_retdata.datas[0][item.value] != null" :title="item.value" :text="l_retdata.datas[0][item.value]" class="staticmsgbox">
                             </f7-list-item>
                             <f7-list-item @click="add21Item()" class="bottomcomfirm">
-                                <div v-if="relation_of_this_one == 3 || relation_of_this_one == 2" class="bottombtn">添加信息</div>
-                                <div v-else-if="relation_of_this_one == 1" class="bottombtn-2">已收藏<img src="@/assets/icon_all/listicon_SW5.png"/></div>
-                                <div v-else class="bottombtn">收藏</div>
+                                <f7-button v-if="relation_of_this_one == 3 || relation_of_this_one == 2" class="addinfo-btn" big fill>添加信息</f7-button>
+                                <f7-button v-else-if="relation_of_this_one == 1" class="bottombtn-2" big fill>已收藏</f7-button>
+                                <f7-button v-else class="addinfo-btn" big fill>收藏</f7-button>
                             </f7-list-item>    
                             </f7-list>
                         </f7-block>
@@ -106,15 +107,15 @@
                     <f7-tab v-if="(jumpTo != '蝈蝈活动')" id="tab-2" class="page-content" tab-inactive>-->
                     <f7-tab  id="tab-2" class="page-content" :tab-active="'蝈蝈活动' == jumpTo">  
                         <f7-block>
-                            <f7-list media-list v-if="b_load_activity == 1 && relation_of_this_one > 1" class="baseinfo">
+                            <f7-list media-list v-if="l_retactivitydata.num != null && relation_of_this_one > 1" class="baseinfo">
                                 <f7-list-item v-for="(item, index) in l_retactivitydata.datas"
                                     :key="index" :title="item.活动名称" :text="item.活动日期" @click="local_setSelectedActivity(item.键值, index)"  class="staticmsgbox">
                                 </f7-list-item>
                                 <f7-list-item @click="addActivity()" class="bottomcomfirm">
-                                    <div class="bottombtn">添加记录</div>
+                                    <f7-button class="addinfo-btn" big fill>添加记录</f7-button>
                                 </f7-list-item>
                             </f7-list>
-                            <f7-list v-else>
+                            <f7-list v-else-if="relation_of_this_one > -1">
                                 <f7-list-item>
                                     <f7-label>
                                           亲爱的佳人，您好，想一起培育🍇 {{l_retdata.datas[0].姓名}} 吗？
@@ -330,10 +331,6 @@ div.list.baseinfo .bottomcomfirm .item-content .item-inner{
     color: #fff;
     text-align: center;
     line-height: 60px;
-    font-family: PingFangSC-Semibold;
-    font-size: 20px;
-    color: #FFFFFF;
-    letter-spacing: 0;
 }
 
 .bottombtn-2 {
@@ -429,6 +426,13 @@ div.list.baseinfo .bottomcomfirm .item-content .item-inner{
     color: #54BCBF;
     font-size: 20px;
 }
+  a.addinfo-btn.button-fill.button-big.button{
+    background-color: #54BCBF;
+    height: 60px;
+    font-size: 22px;
+    padding-top: 6px;
+    margin: 0px;
+  }
 </style>
 
 <script>
@@ -450,8 +454,8 @@ export default {
             
             //当前页面
             jumpTo:"",
-            //判断当前帐户与该gg的关系  0:没有关系  1:收藏关系  2.协力关系  3.母子关系
-            relation_of_this_one:0,
+            //判断当前帐户与该gg的关系  -1: 未知关系 0:没有关系  1:收藏关系  2.协力关系  3.母子关系
+            relation_of_this_one:-1,
 
             //加载21项成功
             b_load_21Item:0,
@@ -521,9 +525,9 @@ export default {
   },
     
   created () {
-    //蝈蝈的所有状态信息
+    //控件中蝈蝈的所有状态信息
     this.get_l_ggstatus_datalist()
-    //蝈蝈的所有学习信息
+    //控件中蝈蝈的所有学习信息
     this.get_l_ggstudystatus_datalist()
     //得到所选用户
     var index = this.selectedUser
@@ -667,35 +671,9 @@ export default {
     'gotoNextPage'
     ]),
 
-
-    getSourcePos() {
-      var jump = ""
-      jump = JSON.parse(this.pageNavigation)
-      
-      console.log("It is from " + jump.from)
-      return jump.from
-    },
-
-    getDesPos() {
-      var jump = ""
-      jump = JSON.parse(this.pageNavigation)
-      
-      console.log("I'm at " + jump.to)
-      return jump.to
-    },
-
     /******************************当前帐户与当前蝈蝈的权限判断********************************* */
     //判断其是否是当前帐号的蝈蝈 传入gg的键值
     isMyGG(ggid){
-      
-      /*for (var i=0; i<this.l_ret_my_gg_imf_s.datas.length; i++)
-      {
-          //console.log("key:" + key + ", value:" ,data.data.datas[0][key]);
-          if(this.l_ret_my_gg_imf_s.datas[i].键值 == ggid)
-          {
-            return true
-          }
-      }*/
         if(this.l_retdata.datas[0].引导人 == this.l_ret_personal_imf_s.datas[0].个人表单)
             return true;
 
@@ -703,7 +681,7 @@ export default {
     },
     //判断其是否是当前帐号下需管理的蝈蝈
     isOurGG(ggid){
-      if(this.l_ret_our_gg_imf_s != null && this.l_ret_our_gg_imf_s.length != 0)
+      if(this.l_ret_our_gg_imf_s.num != null)
       {
             for (var i=0; i<this.l_ret_our_gg_imf_s.datas.length; i++)
             {
@@ -785,6 +763,7 @@ export default {
             setTimeout(resolve, ms);
                 })
       },
+
     //得到私藏数据
     loadPrivateData(ms, b_finish) {
         this.timeout(ms).then(() => {
@@ -798,6 +777,7 @@ export default {
 
         return false
     },
+
     loadData(ms, s_keyid, b_finish) {
         this.timeout(ms).then(() => {
                 console.log('in gg create.timeout = ' + ms)
@@ -812,7 +792,7 @@ export default {
                         this.relation_of_this_one = 3
                     else if (this.isOurGG(s_keyid))
                         this.relation_of_this_one = 2
-                    else if (this.l_ret_personal_favorite_s.datas[0] != null && this.l_ret_personal_favorite_s.datas[0].收藏内容 != null && 
+                    else if (this.l_ret_personal_favorite_s.num != null && this.l_ret_personal_favorite_s.datas[0].收藏内容 != null && 
                         this.is_my_favorite(s_keyid, this.l_ret_personal_favorite_s.datas[0].收藏内容))
                         this.relation_of_this_one = 1
                     else
