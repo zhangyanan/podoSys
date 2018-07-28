@@ -8,13 +8,13 @@
       <f7-row class="smileform" no-gap>
         <f7-col width="70">
           <f7-list class="smiler-list">
-            <f7-list-item><div class="item-text-smiler"><img src="@/assets/icon_all/smiler.png" /></div></f7-list-item>
-            <f7-list-item><div class="item-subtitle1">BEING A SMILER</div></f7-list-item>
-            <f7-list-item><div class="item-subtitle2">永远微笑的活着</div></f7-list-item>
+            <f7-list-item class="yellow-icon"><img src="@/assets/icon_all/smiler.png" /></f7-list-item>
+            <f7-list-item class="being-smiler-title">BEING A SMILER</f7-list-item>
+            <f7-list-item class="forever-live-title">永远微笑的活着</f7-list-item>
           </f7-list>
         </f7-col>
         <f7-col width="30">
-          <f7-list class="group-list">
+          <f7-list class="group-list group-icon">
             <f7-list-item>
               <f7-link href="/inputform/"><img src="@/assets/icon_all/Group.png"/></f7-link>           
             </f7-list-item>
@@ -33,26 +33,26 @@
   .md .list.welcome-list {
       margin: 0px;
   }
-  .md .list .item-text-smiler{
-    padding-top: 35px;
+li.yellow-icon{
+    padding-top: 60px;
     padding-left: 35px;
   }
-  .md .list .item-subtitle1 {
+li.being-smiler-title {
     font-size: 18px;
     color: white;
     line-height: 22px;
     font-family: PFSquareSansPro-Medium;
     letter-spacing: 2px;
-    padding-top: 45px;
+    padding-top: 20px;
     padding-left: 35px;
   }
-  .md .list .item-subtitle2 {
+li.forever-live-title {
     font-size: 18px;
     color: white;
     line-height: 22px;
     font-family: PFSquareSansPro-Medium;
     letter-spacing: 2px;
-    padding-top: 45px;
+    padding-top: 20px;
     padding-left: 35px;
   }
   .welcome-title{
@@ -79,6 +79,9 @@
     margin-top: -30px;
     margin-left: 40px;
   }
+  div.list.group-list.group-icon{
+    margin-top: 60px;
+  }
    div.list.welcome-list ul:before, div.list.welcome-list ul:after,div.list.group-list ul:before,div.list.group-list ul:after {
     background-color: transparent;
   }
@@ -92,7 +95,7 @@
    background-color: transparent;
  }
   div.row.smileform.no-gap {
-      margin-top: 60%;
+      margin-top: 55%;
   }
   div.list.smiler-list ul li{
     height: 30px;
