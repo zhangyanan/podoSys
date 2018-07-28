@@ -17,63 +17,100 @@
         </f7-list>
       </f7-col>
     </f7-row>    
-  <form class="inputform" v-on:submit.prevent="submit" no-hairlines-md>
-      <div class="input list inline-labels">
-        <ul>
-          <li class="item-content item-input">
-            <div class="item-media">
-              <i class="icon demo-list-icon"></i>
+    <f7-row class="inputform-row">
+      <f7-list class="inputform-list">
+        <f7-list-item class = "inputform-list-item">
+            <div class = "inputform-box">
+                <img  class = "img_1" src="@/assets/icon_all/account_name.png" />
+                <f7-label class = "field_name"><font class = "name_font">帐号</font></f7-label>
+                <div class = "value_name">
+                    <f7-input type="text"  dir="rtl" maxlength="20" placeholder="默认为手机号" :value="s_username" @input="s_username = $event.target.value"></f7-input>
+                </div>
             </div>
-            <div class="item-inner">
-              <div class="item-title item-label"><span class="icon-image"><img class="name-img" src="@/assets/icon_all/account_name.png" /></span>账号</div>
-              <div class="inputform item-input-wrap">
-                <input type="text" placeholder="默认为手机号" v-model="s_username">
-                <span class="input-clear-button"></span>
-              </div>
+        </f7-list-item>
+        <f7-list-item class = "inputform-list-item">
+            <div class = "inputform-box">
+                <img  class = "img_1" src="@/assets/icon_all/password.png" />
+                <f7-label class = "field_name"><font class = "name_font">密码</font></f7-label>
+                <div class = "value_name">
+                    <f7-input type="password" dir="rtl" maxlength="20" placeholder="请输入" :value="s_userpsw" @input="s_userpsw = $event.target.value"></f7-input>
+                </div>
             </div>
-          </li>
-          <li class="item-content item-input">
-            <div class="item-media">
-              <i class="icon demo-list-icon"></i>
-            </div>
-            <div class="item-inner">
-              <div class="item-title item-label"><span class="icon-image"><img src="@/assets/icon_all/password.png" /></span>密码</div>
-              <div class="inputform item-input-wrap">
-                <input type="password" placeholder="请输入" v-model="s_userpsw">
-                <span class="input-clear-button"></span>
-              </div>
-            </div>
-          </li>
-          <li class="item-content item-input">
-            <div class="item-media">
-              <i class="icon demo-list-icon"></i>
-            </div>
-            <div class="item-inner forgot-pass">
-              <div class="item-title item-label"></div>
-              <div class="inputform item-input-wrap">
-                <span class="span-forgot">
-                  <a class="forgot-pass" href="#">忘记密码<img src="@/assets/icon_all/password_forgot.png" /></a>
-                </span>
-              </div>
-            </div>
-          </li>
-        </ul>
-      </div>
-      <f7-button class="login_button" href="#" big text="登录" fill @click="loginIn()"></f7-button>
-  </form>  
+        </f7-list-item>
+      </f7-list>
+    </f7-row>
+    <f7-link href="#" class="forgot-pass">忘记密码<img src="@/assets/icon_all/password_forgot.png" /></f7-link>
+    <f7-button class="loginbtn" big fill @click="loginIn()">登录</f7-button>
+          <p id="demo-determinate-container"></p>
 </f7-page>
 </template>
 <script>
 
 </script>
 <style lang="scss">
-  //div.row.no-gap 
   .inputform_page{
     background: #fff;
   }
   .inputform-row{
     margin-top: 0px;
+    width: 100%;
   }
+.md .inputform-row .inputform-list {
+            width:100%
+}
+.md .inputform-row .inputform-list-item {
+            width: 100%;
+}
+.md .list .inputform-list-item .item-content {
+            margin: 0;
+            padding: 0;
+            height: 60px;
+            
+}
+.md .list .inputform-list-item .item-inner {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+}
+.inputform-box {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+}
+.inputform-box .img_1 {
+            position:absolute;
+            left:31px;
+            top:19.5px;
+            width:17px;
+            padding-top: 3px;
+}
+.inputform-box .field_name {
+            position:absolute;
+            left:63px;
+            top:25.5px;
+            width:40px;
+}
+.inputform-box .value_name {
+            position:absolute;
+            left:103px;
+            top:10.5px;
+            width: calc(100% - 103px - 47px);
+            margin-right:47px;
+}
+.footfont  {
+            width: 100%;
+            height: 60px;
+            background: #54BCBF;
+            line-height: 60px;  
+            text-align: center;
+            margin-top: 75%;
+
+}
+.footnamecolor  {
+            color: #ffffff;
+            font-size: 20px;
+}
   .md .inputform .inline-labels .item-label {
     top: 26px;
   }
@@ -145,22 +182,7 @@
  .md .inputform.item-input-wrap:after{
    background: #FFFFFF;
  }
-  a.login_button.button-fill.button-big.button {
-    background-color: #54BCBF;
-    margin-top: 81px;
-  }
-  a.login_button.button-fill.button-big.button {
-    height: 60px;
-    line-height: 60px;
-    border-radius: 0px;
-  }
-  a.login_button.button-fill.button-big.button span{
-    font-family: PingFangSC-Semibold;
-    font-size: 20px;
-    color: #FFFFFF;
-    letter-spacing: 0;
-    padding-left: 70px;
-  }
+  
   div.input.list.inline-labels{
     padding-top: 30px;
   }
@@ -210,11 +232,6 @@
     padding:0px;
     margin:0px;
   }
-
-  span.span-forgot{
-    font-size: 18px;
-    margin-left: 155px;
-  }
   .md a.forgot-pass{
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -224,30 +241,31 @@
     font-size: 16px;
     color: #54BCBF;
     letter-spacing: 1.5px;
+    margin-left: 60%;
   }
   .md a.forgot-pass img{
     width:18px;
     height: 18px;
     padding-left: 2px;
   }
-  div.item-inner.forgot-pass{
-    margin-top: 25px;
+  a.loginbtn.button-fill.button-big.button{
+    background-color: #54BCBF;
+    margin-top: 145px;
+    height: 60px;
+    font-size: 22px;
+    font-size: 20px;
+    padding-top: 6px;
   }
-  div.list.links-list {
-    margin-top: 112px;
-    margin-bottom: 0px;
-  }
-  .md .input-focused:after,.md .item-input-focused .item-input-wrap:after{
-    background:#FFFFFF;
-  }
-   input::-webkit-input-placeholder {
+  .name_font{
     font-family: PingFangSC-Semibold;
     font-size: 16px;
-    color: #E5E5E5;
+    color: #4A4A4A;
     letter-spacing: 0;
     line-height: 21px;
-    text-align: right;
-    }
+  }
+  .md .inputform_page .item-input-wrap:after{
+    background-color:#FFFFFF;
+}
 </style>
 
 
@@ -259,8 +277,9 @@ export default {
   
   data() {
     return {
-      s_username:"ivy",
-      s_userpsw:"ivyxtd",
+      s_username:"cui",
+      s_userpsw:"cuixtd",
+      b_validAccount:false,
     }
   },
   computed: {
@@ -334,35 +353,40 @@ export default {
 
     //帐号校验
     loadAccountData(ms, b_finish) {
-      //能登陆则退出
-      if(this.loginSuccess == 1)
-        return
-
+    
       this.timeout(ms).then(() => {
-            
+            //能登陆则退出
+            if(this.b_validAccount)
+              return
             console.log('loadAccountData = ' +  ms)
-            if(this.l_ret_personal_login_imf_s != null)
+            if(this.l_ret_personal_login_imf_s.num != null)
             {
+              this.b_validAccount = true
               if(this.l_ret_personal_login_imf_s.num == 0)
               {
-                //登陆失败
-                if(b_finish)
-                {
+                  //登陆失败
                   this.openVerticalButtons('提示','登陆失败，请确认您的帐户信息')
                   return
-                }
               }
               else{
+                  console.log('*** getPersonalAccount ***')
                   //得到个人信息
                   this.getPersonalAccount(this.l_ret_personal_login_imf_s.username)
                   //得到个人藏单
                   this.getPersonalFavorite(this.l_ret_personal_login_imf_s.username)
 
-                  this.loadData(1000,false)
-                  this.loadData(2000,false)
-                  this.loadData(3000,true)
+                  var i = 0;
+                  for(i=0;i<5;i++)
+                    this.loadData(1000+1000*i, false) 
+                  this.loadData(5000, true)
+                  
                   return
               }
+            }
+            //没有返回帐号检测信息且最终检测时间还没有到
+            else if(!this.b_validAccount && b_finish)
+            {
+              this.$f7router.navigate('/error/')
             }
       })
     },
@@ -370,16 +394,14 @@ export default {
     loadData(ms, b_finish) {
         this.timeout(ms).then(() => {
             
-            //能登陆则退出
+            //已经登陆到蝈蝈列表了
             if(this.loginSuccess == 1)
               return
-
-            console.log('inputform = ' +  ms)
-
-            if(this.l_ret_personal_imf_s != null
-               && this.l_ret_personal_gg_s != null)
+            console.log('loadData = ' + ms)
+            
+            if(this.l_ret_personal_imf_s.num != null
+               && this.l_ret_personal_gg_s.num != null)
             {
-
                 this.setloginSuccess('1')
                 //如果是首登 跳转补充信息
                 if(this.l_ret_personal_login_imf_s.datas[0].created_date == this.l_ret_personal_login_imf_s.datas[0].logintime)
@@ -412,16 +434,21 @@ export default {
                         var sqldata = JSON.stringify({
                             "in_username":this.s_username,
                             "in_userpsw":this.s_userpsw})
-                      
+                        //请求帐号验证
                         this.getuserpswbyname(sqldata)
-
-                        this.loadAccountData(1000, false)
-                        this.loadAccountData(2000, true)
+                        var i = 0;
+                        for(i=0;i<5;i++)
+                          this.loadAccountData(1000+1000*i, false)
+                      
+                        this.loadAccountData(5000, true)
+                        
                     }
     },
 
     loginIn() {
+      this.b_validAccount = false
       this.p_loginIn()
+      this.showDeterminate(true)
       /**************直接登陆 */
       //得到个人信息
       /*this.getPersonalAccount('cui')
@@ -431,7 +458,36 @@ export default {
       this.loadData(1000,false)
       this.loadData(2000,false)
       this.loadData(3000,true)*/
-    }
+    },
+
+    showDeterminate(inline) {
+        const self = this;
+        const app = self.$f7;
+        if (self.determinateLoading) return;
+        self.determinateLoading = true;
+        let progressBarEl;
+        if (inline) {
+          progressBarEl = app.progressbar.show('#demo-determinate-container', 'green');
+        } else {
+          progressBarEl = app.progressbar.show(0, app.theme === 'md' ? 'yellow' : 'green');
+        }
+        let progress = 0;
+        function simulateLoading() {
+          setTimeout(() => {
+            const progressBefore = progress;
+            progress += Math.random() * 20;
+            app.progressbar.set(progressBarEl, progress);
+            if (progressBefore < 100) {
+              simulateLoading(); // keep "loading"
+            } else {
+              self.determinateLoading = false;
+              app.progressbar.hide(progressBarEl); // hide
+            }
+          }, Math.random() * 200 + 200);
+        }
+        simulateLoading();
+      },
   }
 }
+
 </script>
