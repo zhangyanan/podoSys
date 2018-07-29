@@ -392,6 +392,7 @@ $$('#my-range').on('range:change', function (e, range) {
     color: #000000;
     height:100%;
 }
+
 .md .list .divresponse .inputnum {
     position: absolute;
     right:12px;
@@ -777,7 +778,7 @@ div.gap{
     font-size: 22px;
     color: #FFFFFF;
     letter-spacing: 3px;
-    margin-top: 210px;
+    margin-top: 20%;
   }
 
   .md .list .activity_mybox .select-box .item-content {
@@ -806,113 +807,67 @@ div.gap{
 </style>
 <template>
   <f7-page class="activity-page">
-      <v-addinfo :title='l_title_name'></v-addinfo>
-      <f7-block class="back-ground">
-        <!--<f7-row no-gap class="activity-row-header">
-                <f7-col class="activity-col-header" width="20">
-                    <f7-list class = "liststyle">
-                    <f7-list-item class = "liststyle-item">
-                        <f7-link class = "link-item" href = "#" @click="goBack()">
-                        <img src="@/assets/icon_all/back_white.png"/>
-                        </f7-link>
-                    </f7-list-item>            
-                </f7-list>
-                </f7-col>
-                <f7-col width="80">
-                    <f7-list>
-                        <f7-list-item class="activity-col-header-title">
-                            <div class="title-pos">{{l_title_name}}</div>
-                        </f7-list-item>
-                </f7-list>
-                </f7-col>
-        </f7-row>-->
-        <f7-row no-gap class="activity-row-body">
-            <div class = "activitylist">
-            <f7-list class="list-2">
-                    <f7-list-item class="list-2-item-1">
-                        <f7-label id = "menu_font_1">活动记录</f7-label>
-                    </f7-list-item>
-            </f7-list>
-            <f7-list class="list-3">
+    <v-addinfo title='添加记录'></v-addinfo>
+    <f7-list accordion class="addinfo-list">
+        <f7-list-item accordion-item title="活动记录">
+            <f7-accordion-content>
                 <f7-block>
-                                    <f7-list-item class="list3item1">  
-                                        
-                                        <div class="activity_mybox">
-                                            <div class="mylabelbox">
-                                                <f7-label><font class="mylabelfont">活动名称</font></f7-label>
-                                            </div>
-                                            <div class="myinputbox">
-
-                                                <f7-input type="text" dir="rtl" align="right" maxlength="10" :value="inputname" @input="inputname = $event.target.value" clear-button></f7-input>
-                                            </div>
-                                        </div>
-                                       
-                                    </f7-list-item>
-                                 </f7-block>
-                                    <f7-block> 
-                                        <div class="activity_mybox">
-                                            <f7-list-item smart-select :smart-select-params="{openIn: 'popover'}" title="活动类型" class="activity-type-list">
-                                                <!-- Select with values inside -->
-                                            
-                                                    <select v-model="selectOption" name="activityType">
-                                                            <option disabled>{{selectOption}}</option>
-                                                            <option v-for="itemmenu in this.l_activitytype_data"                                                        v-if="selectOption != itemmenu.value"
-                                                            :key="itemmenu.value" :value="itemmenu.value">
-                                                            {{itemmenu.value}}</option>
-                                                    </select>
-                                                
-                                            </f7-list-item>
-                                        </div>
-                                    </f7-block>
-                                    <f7-block> 
-                        <f7-list-item class="list3item1">
-                            <div class="activity_mybox">
-                                <div class="mylabelbox">
-                                    <f7-label><font class="mylabelfont">活动日期</font></f7-label>
-                                </div>
-                                <div class="myinputbox">
-                                        <f7-input type="date" dir="rtl" align="right" :value="inputdate" @input="inputdate = $event.target.value" clear-button></f7-input>
-                                </div>
-                            </div>  
-                        </f7-list-item>    
-                                    </f7-block>
-                                    <f7-block> 
+                    <div class="activity_mybox">
+                        <div class="mylabelbox">
+                            <f7-label><font class="mylabelfont">活动名称</font></f7-label>
+                        </div>
+                        <div class="myinputbox">
+                            <f7-input type="text" dir="rtl" align="right" maxlength="10" :value="inputname" @input="inputname = $event.target.value" clear-button></f7-input>
+                        </div>
+                    </div>             
+                </f7-block>
+                <f7-block>
+                    <div class="activity_mybox">
+                        <f7-list-item smart-select :smart-select-params="{openIn: 'popover'}" title="活动类型" class="activity-type-list" :smart-select-back-on-select="true">
+                        <select v-model="selectOption" name="activityType">
+                                        <option disabled>{{selectOption}}</option>
+                                        <option v-for="itemmenu in this.l_activitytype_data" 
+                                        v-if="selectOption != itemmenu.value"
+                                        :key="itemmenu.value" :value="itemmenu.value">
+                                        {{itemmenu.value}}</option>
+                                </select>                            
+                        </f7-list-item>
+                    </div>
+                 </f7-block>
+                <f7-block>
+                <f7-list-item class="list3item1">
+                    <div class="activity_mybox">
+                        <div class="mylabelbox">
+                            <f7-label><font class="mylabelfont">活动日期</font></f7-label>
+                        </div>
+                        <div class="myinputbox">
+                            <f7-input type="date" dir="rtl" align="right" :value="inputdate" @input="inputdate = $event.target.value" clear-button></f7-input>
+                        </div>
+                    </div>  
+                </f7-list-item>
+                 </f7-block>
+                <f7-block>
                     <f7-list-item class="list3item1">
                         <div class="mybox2">
-                                <div class="mylabelbox">
-                                    <f7-label><font class="mybox2labelfont">活动反馈</font></f7-label>
-                                </div>
+                            <div class="mylabelbox">
+                                <f7-label><font class="mybox2labelfont">活动反馈</font></f7-label>
+                            </div>
                         </div>  
                     </f7-list-item>
-                                    </f7-block>
-                                    <f7-block> 
+                </f7-block>
+                <f7-block>
                     <f7-list-item class="list3item2"> 
                         <div class="mybox3">
                             <div class = "divresponse"> 
-                                <!--<div textareaclass = "divresponse2">-->
-                                    <f7-input class="inputdiv" type="textarea" maxlength="100" :value="inputresponse" @input="inputresponse = $event.target.value"></f7-input>         
-                                <!--</div>-->
-                                    <f7-label class="inputnum">{{inputresponse.length + '/100'}}</f7-label>
+                                <f7-input class="inputdiv" type="textarea" maxlength="100" :value="inputresponse" @input="inputresponse = $event.target.value"></f7-input>
+                                <f7-label class="inputnum">{{inputresponse.length + '/100'}}</f7-label>
                             </div>
                         </div>
                     </f7-list-item>
-                 
-                                    </f7-block>
-
-            </f7-list>
-            <f7-list class="list-4">
-                <f7-list-item class="list4item1">   
-                        <div class="menu_foot">      
-                            <f7-link @click="comfirmActivityData()">完成</f7-link>    
-                        </div>         
-                </f7-list-item>   
-            </f7-list>
-            </div>
-        </f7-row>
-      </f7-block>
+                </f7-block>
+        </f7-accordion-content>
+        </f7-list-item>
+    </f7-list>
+    <f7-button class="finished-btn" big fill @click="submitForm()">完成</f7-button>
   </f7-page>  
 </template>
-<style lang="scss" scoped>
-
-</style>
-
