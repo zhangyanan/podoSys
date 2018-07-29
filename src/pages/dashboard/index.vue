@@ -43,7 +43,7 @@ li.being-smiler-title {
     line-height: 22px;
     font-family: PFSquareSansPro-Medium;
     letter-spacing: 2px;
-    padding-top: 20px;
+    padding-top: 30px;
     padding-left: 35px;
   }
 li.forever-live-title {
@@ -52,7 +52,7 @@ li.forever-live-title {
     line-height: 22px;
     font-family: PFSquareSansPro-Medium;
     letter-spacing: 2px;
-    padding-top: 20px;
+    padding-top: 25px;
     padding-left: 35px;
   }
   .welcome-title{
