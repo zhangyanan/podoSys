@@ -1,7 +1,26 @@
 <!-- 当前页面名称： 活动编辑-->
 <script>
-import { mapState, mapGetters, mapActions, mapMutations, Store } from 'vuex'
+import { mapState, mapGetters, mapActions, mapMutations, Store } from 'vuex';
+import {f7Page } from 'framework7-vue';
 export default {
+  on: {
+      pageInit(e) {
+        const self = this;
+        const app = self.$f7;
+        const $ = self.$$;
+        // Default
+        self.calendarDefault = app.calendar.create({
+          inputEl: '#huodong-calendar',
+          dateFormat: 'yyyy.mm.dd',
+          dayNamesShort: ['日', '一', '二', '三', '四', '五', '六'],
+          monthNames:['1', '2', '3', '4', '5', '6', '7', '8' , '9' , '10', '11', '12'],
+        });
+      },
+      pageBeforeRemove() {
+        const self = this;
+        self.calendarDefault.destroy();
+      },
+    },
   data() {
     return {
             inputname:"",
@@ -841,9 +860,9 @@ div.gap{
                             <f7-label><font class="mylabelfont">活动日期</font></f7-label>
                         </div>
                         <div class="myinputbox">
-                            <f7-input type="date" dir="rtl" align="right" :value="inputdate" @input="inputdate = $event.target.value" clear-button></f7-input>
+                            <input type="text" placeholder="" dir="rtl" align="right" readonly="readonly" id="huodong-calendar" :value="inputdate" @input="inputdate = $event.target.value" clear-button/>
                         </div>
-                    </div>  
+                    </div>
                 </f7-list-item>
                  </f7-block>
                 <f7-block>
