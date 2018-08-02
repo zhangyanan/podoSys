@@ -2,7 +2,8 @@
 <template>
 <f7-page class="gglist-page">
   <v-addinfo v-if="currentPage != '蝈蝈列表'" :title='currentPage'></v-addinfo>
-  <f7-list v-if="this.b_render == 2" media-list class="gglibrary">
+  <v-asideheader v-else addPage :title='currentPage'></v-asideheader>
+  <f7-list v-if="this.l_ret_gg_imf_s.num != null && this.l_ret_gg_imf_s.num != 0" media-list class="gglibrary">
     <f7-list-item v-for="(item, index) in this.l_ret_gg_imf_s.datas" :key="index" 
               @click="local_setSelectedGG(item.键值, index)" class="gglibrary-list-item">
        <div slot="subtitle" class="gglib-ggname">{{item.姓名}}</div>         
@@ -27,7 +28,7 @@
                 <div class="row">
                   <div class="col-20"><span :class="'phone-icon-' + item.阶段">
                     <!-- 我也不想这么写， 但是不这样应该怎么实现呢，太尴尬了，那就这样吧，一切为了效果 -->
-                    <img v-if="item.阶段 == 'SW' || item.阶段 == 'TK' || item.阶段 == 'QJ'" v-bind:src="'/static/icon_all/listicon_red1.png'"/>
+                    <img v-if="item.阶段 == 'SW' || item.阶段 == 'TK' || item.阶段 == 'QJ' || item.阶段 == 'XJ'" v-bind:src="'/static/icon_all/listicon_red1.png'"/>
                     <img v-else-if="item.阶段 == 'GD' || item.阶段 == 'FF'"  v-bind:src="'/static/icon_all/listicon_orange1.png'"/> 
                     <img v-else-if="item.阶段 == 'CJ' || item.阶段 == 'ZJ' || item.阶段 == 'GJ'"  v-bind:src="'/static/icon_all/listicon_blue1.png'"/> 
                     <img v-else-if="item.阶段 == 'BLACK'"  v-bind:src="'/static/icon_all/listicon_black1.png'"/> 
@@ -41,7 +42,7 @@
               <div class="col-20">
                 <div class="row">
                   <div class="col-50"><span :class="'gender-icon-' + item.阶段">
-                    <img v-if="item.阶段 == 'SW' || item.阶段 == 'TK' || item.阶段 == 'QJ'" v-bind:src="'/static/icon_all/listicon_red2.png'"/>
+                    <img v-if="item.阶段 == 'SW' || item.阶段 == 'TK' || item.阶段 == 'QJ' || item.阶段 == 'XJ'" v-bind:src="'/static/icon_all/listicon_red2.png'"/>
                     <img v-else-if="item.阶段 == 'GD' || item.阶段 == 'FF'"  v-bind:src="'/static/icon_all/listicon_orange2.png'"/> 
                     <img v-else-if="item.阶段 == 'CJ' || item.阶段 == 'ZJ' || item.阶段 == 'GJ'"  v-bind:src="'/static/icon_all/listicon_blue2.png'"/> 
                     <img v-else-if="item.阶段 == 'BLACK'"  v-bind:src="'/static/icon_all/listicon_black2.png'"/> 
@@ -55,7 +56,7 @@
               <div class="col-40">
                 <div class="row">
                   <div class="col-20"><span :class="'date-icon-' + item.阶段">
-                    <img v-if="item.阶段 == 'SW' || item.阶段 == 'TK' || item.阶段 == 'QJ'" v-bind:src="'/static/icon_all/listicon_red3.png'"/>
+                    <img v-if="item.阶段 == 'SW' || item.阶段 == 'TK' || item.阶段 == 'QJ' || item.阶段 == 'XJ'" v-bind:src="'/static/icon_all/listicon_red3.png'"/>
                     <img v-else-if="item.阶段 == 'GD' || item.阶段 == 'FF'"  v-bind:src="'/static/icon_all/listicon_orange3.png'"/> 
                     <img v-else-if="item.阶段 == 'CJ' || item.阶段 == 'ZJ' || item.阶段 == 'GJ'"  v-bind:src="'/static/icon_all/listicon_blue3.png'"/> 
                     <img v-else-if="item.阶段 == 'BLACK'"  v-bind:src="'/static/icon_all/listicon_black3.png'"/> 
@@ -68,12 +69,21 @@
               </div>
           </div>
        </div>
-       
+       <div slot="root-end">
+          <div class="div-border"></div>
+       </div>
     </f7-list-item>
   </f7-list>
-  <f7-list v-else-if="this.b_render == 1">
+  <!-- 没有返回数据 -->
+  <f7-list v-else-if="this.l_ret_gg_imf_s.num == null">
     <f7-list-item>
-      <f7-label>您好，您的{{jump_to}}列表为空，还需要再努力哦^_^</f7-label>
+      <f7-label>⌛️ 数据玩命加载中...^_^</f7-label>
+    </f7-list-item>
+  </f7-list>  
+  <!-- 数据为空 -->
+  <f7-list v-else>
+    <f7-list-item>
+      <f7-label>您好，您的 {{currentPage}} 数据为空，还需要再努力哦^_^</f7-label>
     </f7-list-item>
   </f7-list>  
 </f7-page>
@@ -86,20 +96,6 @@ export default {
 </script>
 
 <style>
-.md .list .gglibrary .gglibrary-item .item-content{
-    padding-left: 25px;
-}
-.md .list .item-inner:after{
-  background-color: rgba(0,0,0,0); 
-}
-.md .list .gglibrary .item-inner:after{
-  background-color: rgba(0,0,0,0); 
-  height: 0px;
-}
-div.list.gglibrary.media-list{
-  margin: 0px;
-}
-
 div .gglist-page .navbar-inner.sliding{
     background: #fff;
     color:#FFFFFF;
@@ -137,10 +133,6 @@ div .gglist-page .navbar-inner.sliding{
 .md .gglist-page .navbar .left, .navbar .right {
     padding-left: 19px;
 }
-
-.md .list .gglibrary .gglibrary-item .item-content{
-    padding-left: 0px;
-}
 /**/
 
 .md .gglist-page .navbar .right {
@@ -153,21 +145,25 @@ div .gglist-page .navbar-inner.sliding{
     margin:0px;
 }
 
-.md .list   .gglibrary-list-item .item-content{
+.md .gglist-page   .gglibrary-list-item .item-content{
     padding: 0px;
     margin:0px;
     height:104.5px;
 }
 
-.md .list   .gglibrary-list-item .item-content .item-media {
+.md .gglist-page   .gglibrary-list-item .item-content .item-media {
     padding-top: 24px;
     padding-left: 31px;
 }
 
-.md .list  .gglibrary-list-item .item-inner{
+.md .gglist-page  .gglibrary-list-item .item-inner{
     padding: 26px,0px,0px,0px;
     margin:0px;
     height:100%;
+}
+
+.md .gglist-page .navbar:after{
+  background:transparent;
 }
 
 .md .media-list .gglibrary-list-item .item-inner, .md li.media-item .gglibrary-list-item .item-inner {
@@ -175,26 +171,12 @@ div .gglist-page .navbar-inner.sliding{
     padding-left:19px;
     padding-bottom: 14px;
 }
+
 div.list.media-list.navbar-inner.sliding{
   height: 65px;
   background: #FFFFFF;
 }
 
-div.list.gglibrary.media-list ul li{
-  border: 0.5px solid #E9E9E9;
-  height: 95px;
-  padding-left: 0px;
-}
-
-label.firstcharacter{
-  margin-top: -20px;
-  margin-left: -20px;
-  font-family: PingFangSC-Semibold;
-  font-size: 24px;
-  color: #FFFFFF;
-  letter-spacing: 0;
-  line-height: 21px;
-}
 div.gglib-ggname
 {
   font-family: PingFangSC-Semibold;
@@ -396,7 +378,23 @@ span.phone-icon-red,span.phone-icon-green,span.phone-icon-orange,span.phone-icon
     background: #FF6D7F;
     border-radius: 32.4px;
 }
+.md .chip.color-QJ {
+    background: #FF6D7F;
+    border-radius: 32.4px;
+}
+.md .chip.color-TK {
+    background: #FF6D7F;
+    border-radius: 32.4px;
+}
+.md .chip.color-XJ {
+    background: #FF6D7F;
+    border-radius: 32.4px;
+}
 .md .chip.color-ST {
+    background: #54BCBF;
+    border-radius: 32.4px;
+}
+.md .chip.color-RJ {
     background: #54BCBF;
     border-radius: 32.4px;
 }
@@ -441,7 +439,39 @@ span.phone-icon-red,span.phone-icon-green,span.phone-icon-orange,span.phone-icon
     border-radius: 30px;
     display:table-cell;
   }
+  .name-bg-QJ{
+    background-color: #FF6D7F;
+    width:59px;
+    height: 59px;
+    line-height: 59px;
+    border-radius: 30px;
+    display:table-cell;
+  }
+  .name-bg-TK{
+    background-color: #FF6D7F;
+    width:59px;
+    height: 59px;
+    line-height: 59px;
+    border-radius: 30px;
+    display:table-cell;
+  }
+  .name-bg-XJ{
+    background-color: #FF6D7F;
+    width:59px;
+    height: 59px;
+    line-height: 59px;
+    border-radius: 30px;
+    display:table-cell;
+  }
   .name-bg-ST{
+    background-color: #54BCBF;
+    width:59px;
+    height: 59px;
+    line-height: 59px;
+    border-radius: 30px;
+    display:table-cell;
+  }
+  .name-bg-RJ{
     background-color: #54BCBF;
     width:59px;
     height: 59px;
@@ -590,11 +620,11 @@ export default {
     //this.get_our_gglist('cui')
     
     //设置了5s刷新
-    this.loadData(1000,false);
+    /*this.loadData(1000,false);
     this.loadData(2000,false);
     this.loadData(3000,false);
     this.loadData(4000,false);
-    this.loadData(5000,true);
+    this.loadData(5000,true);*/
     /*  this.timeout(2000).then(() => {
                 console.log('in vue.timeout')
                 if(jump.to == "收藏列表")
@@ -703,7 +733,7 @@ export default {
                 if(this.jump_to == "收藏列表")
                 {
                   console.log('in 收藏列表')
-                  if(this.l_ret_personal_favorite_list_s != null)
+                  if(this.l_ret_personal_favorite_list_s.num != null)
                   {
                     this.b_render = 2
                   }
@@ -714,7 +744,7 @@ export default {
                 else if (this.jump_to == "协力列表")
                 {
                     console.log('in 协力列表')
-                    if(this.l_ret_our_gg_imf_s != null)
+                    if(this.l_ret_our_gg_imf_s.num != null)
                     {
                       this.b_render = 2
                     }
@@ -724,7 +754,7 @@ export default {
                 else if (this.jump_to == "搜索列表")
                 {
                     console.log('in 搜索列表')
-                    if(this.l_ret_search_data != null)
+                    if(this.l_ret_search_data.num != null)
                     {
                       this.b_render = 2
                     }
@@ -733,7 +763,7 @@ export default {
                 }
                 else 
                 {
-                  if(this.l_ret_gg_imf_s != null)
+                  if(this.l_ret_gg_imf_s.num != null)
                   {
                     this.b_render = 2
                   }
