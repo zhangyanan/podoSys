@@ -112,7 +112,7 @@
                                     :key="index" :title="item.活动名称" :text="item.活动日期" @click="local_setSelectedActivity(item.键值, index)"  class="staticmsgbox">
                                 </f7-list-item>
                                 <f7-list-item @click="addActivity()" class="bottomcomfirm">
-                                    <f7-button class="addinfo-btn" big fill>添加记录</f7-button>
+                                    <f7-button class="addrecord-btn" big fill>添加记录</f7-button>
                                 </f7-list-item>
                             </f7-list>
                             <f7-list v-else-if="relation_of_this_one > -1">
@@ -413,7 +413,7 @@ div.list.baseinfo .bottomcomfirm .item-content .item-inner{
     width: 39px;
     height: 39px;    
     left:0px;
-    top:0px;
+    top:-17px;
     border: solid 0.5px;
 }
 
@@ -422,7 +422,7 @@ div.list.baseinfo .bottomcomfirm .item-content .item-inner{
     width: 27px;
     height: 26px;    
     left:6px;
-    top:25px;
+    top:5px;
     color: #54BCBF;
     font-size: 20px;
 }
@@ -433,6 +433,14 @@ div.list.baseinfo .bottomcomfirm .item-content .item-inner{
     padding-top: 6px;
     margin: 0px;
   }
+  a.addrecord-btn.button-fill.button-big.button{
+    background-color: #54BCBF;
+    height: 60px;
+    font-size: 22px;
+    padding-top: 6px;
+    margin-top: 70%;
+  }
+
 </style>
 
 <script>
