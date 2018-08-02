@@ -38,9 +38,9 @@ export const TEST_CONN_RECEIVE_SEARCH_STATUS = 'TEST_CONN_RECEIVE_SEARCH_STATUS'
 //得到用户的登陆帐户信息
 export const GET_PERSONAL_LOGIN_DATA = 'GET_PERSONAL_LOGIN_DATA'
 
-
 //实现罐装数据
 export const TRANSPORT_DATA_2_RENDER = 'TRANSPORT_DATA_2_RENDER'
+
 const state = {
     l_tempStr:"",
     l_userId:"",
@@ -140,6 +140,10 @@ const actions = {
     //data:2 协作列表 －> render
     //data:3 收藏列表 －> render
     //data:4 搜索列表 －> render
+    //data:5 蝈蝈列表 <- null
+    //data:6 协作列表 <- null
+    //data:7 收藏列表 <- null
+    //data:8 搜索列表 <- null
     transportdata2render({commit}, data){
         commit(TRANSPORT_DATA_2_RENDER, data)
     },
@@ -314,9 +318,11 @@ const actions = {
       getPersonalAccount({commit},data){
         server_db.getPersonalAccount(data).then(response => {
           //response.userId = response.userId
-          commit(GET_PERSONAL_IMF_DATA, response)
+          console.log('************')
+          console.log(response.data.datas[0])
           var ggid = response.data.datas[0].蝈蝈关联表单
-          data = data + ","
+          commit(GET_PERSONAL_IMF_DATA, response)
+          //data = data + ","
           server.getformvaluesaccurate(
             JSON.stringify({ 	
             "in_foldername":"GGAccount",
@@ -458,14 +464,23 @@ const mutations = {
     [CLEAR_USER_21_MSG](state, data){ 
       state.l_retdata =  JSON.parse(JSON.stringify({
         "keyid":data, 	
-        "name":"21项信息",
-        "num":"0"}));
+        "name":"21项信息"})); //故意不用填写num值 
 
-        console.log("state.l_retdata:" + state.l_retdata);
+        //console.log("state.l_retdata:" + state.l_retdata);
     },
 
     //gg的21项基本信息
     [TEST_CONN_RECEIVE_USER_21_MSG](state, data){ 
+      /*if(data == null)
+      {
+        
+          state.l_retdata = JSON.stringify({ 	
+          "name":"21项信息",
+          "num":"0"});
+
+          console.log("state.l_retdata:" + state.l_retdata);
+      }
+      else*/
       {
           state.l_retdata = data.data;
           var msg = data.data.datas[0];
@@ -550,6 +565,12 @@ const mutations = {
   },
 
   //实现罐装数据
+  //设置罐装数据->gglibrary
+  //data:1 蝈蝈列表 －> render
+  //data:2 协作列表 －> render
+  //data:3 收藏列表 －> render
+  //data:4 搜索列表 －> render
+  //data:5 null    -> render
   [TRANSPORT_DATA_2_RENDER](state, data){
     if(data == 1)
       state.l_ret_gg_imf_s = state.l_ret_my_gg_imf_s
@@ -559,6 +580,12 @@ const mutations = {
       state.l_ret_gg_imf_s = state.l_ret_personal_favorite_list_s
     if(data == 4)
       state.l_ret_gg_imf_s = state.l_ret_search_data
+    if(data == 5)
+    {
+      state.l_ret_search_data.num = null
+      state.l_ret_gg_imf_s.num = null
+    }
+      
   },
 }
 
