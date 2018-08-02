@@ -64,6 +64,20 @@
 </template>
 <script>
 export default {
+  data() {
+    return {
+           }
+  },
+  computed: {
+  },
+  created () {
+    
+  },
+  methods: {
+    goleft(keyid, index){
+      this.$f7router.navigate('/myItem/')
+    },
+  },
   props: {
     title: {
       type: String,

@@ -2,7 +2,7 @@
   <f7-page>
     <!-- Panels Overlay -->
   <div>
-    <span>something wrong!</span>
+    <span>非常抱歉，您当前的网络缓慢，数据无法正常返回</span>
   </div>
  
   </f7-page>

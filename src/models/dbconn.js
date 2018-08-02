@@ -44,8 +44,9 @@ export default {
 					"in_fieldnames":"个人表单,姓名,手机,微信,蝈蝈关联表单,会属,区域,生日,性别,"
 				 }))
 					.then(response => {
-						//alert(response.data.userId);, 'application/json;charset=UTF-8;Access-Control-Allow-Origin:*'
-						resolve(response.data);
+                        console.log('*********in db.getPersonalAccount*********')
+                        console.log(response)
+                        resolve(response.data);
 					})
 					.catch((error) => {
 					 console.log(error)
