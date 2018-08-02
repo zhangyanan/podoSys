@@ -1,7 +1,26 @@
 <!-- 当前页面名称： 21项表单 -->
 <script>
-import { mapState, mapGetters, mapActions, mapMutations, Store } from 'vuex'
+import { mapState, mapGetters, mapActions, mapMutations, Store } from 'vuex';
+import {f7Page } from 'framework7-vue';
 export default {
+    on: {
+      pageInit(e) {
+        const self = this;
+        const app = self.$f7;
+        const $ = self.$$;
+        // Default
+        self.calendarDefault = app.calendar.create({
+          inputEl: '#shewai-calendar',
+          dateFormat: 'yyyy.mm.dd',
+          dayNamesShort: ['日', '一', '二', '三', '四', '五', '六'],
+          monthNames:['1', '2', '3', '4', '5', '6', '7', '8' , '9' , '10', '11', '12'],
+        });
+      },
+      pageBeforeRemove() {
+        const self = this;
+        self.calendarDefault.destroy();
+      },
+    },
   data() {
     return {
             l_ggName:"",
@@ -87,10 +106,6 @@ export default {
     this.get_l_studyschedules_datalist()
     this.get_l_yearsoffaith_datalist()
     this.get_l_yesorno_datalist()
-    //this.get_l_readinghabit_datalist()
-    //this.get_l_prayers_datalist()
-    //this.get_l_selfservice_datalist()
-    //this.get_l_vigilant_datalist()
     this.get_l_occuption_datalist()
 
     //得到gg的21项数据
@@ -157,65 +172,6 @@ local_update21Data()    {
         var tempValues = ""
     
         var bUpdate = false;
-        /*
-        l_ggName:"",
-            
-            selectGender:"",
-            l_weChat:"",
-            l_phone:"",
-            selectStudyState:"",
-            l_yzName:"",
-            l_yzHs:"",
-            l_yzQy:"",
-            l_partner:"",
-            l_swDate:"",
-            selectHscontent:"",
-            selectHavesttype:"",
-            selectChurch:"",
-            l_ggBirthday:"",
-            selectMarriage:"",
-            selectHealthy:"",
-            selectEducation:"",
-            selectOccuption:"",
-            selectEmployment:"",
-            selectDebt:"",
-            selectStudySchedules:"",
-            selectYearsOfFaith:"",
-
-            selectReadingHabit:"",
-            l_reading:"",
-            selectPrayers:"",
-            l_praying:"",
-            selectSelfService:"",
-            l_service:"",
-            selectVigilant:"",
-            l_vigilant:"",
-
-            in_gg21Item:"",
-            姓名,微信,手机,引导人,状态,引导人姓名,性别,阶段,引导人会属,
-            引导人区域,管理者,涉外时间,涉外类型,涉外田地,生日,会属,婚恋,
-            学历,职业,就业,负债,健康,学习计划,信仰年数,读经情况,祷告情况,服侍情况,戒备情况,
-
-            this.l_vigilant != this.in_gg21Item.戒备情况
-            this.l_service != this.in_gg21Item.服侍情况
-            this.l_praying != this.in_gg21Item.祷告情况
-            this.l_reading != this.in_gg21Item.读经情况
-            this.selectYearsOfFaith != this.in_gg21Item.信仰年数
-            this.selectStudySchedules != this.in_gg21Item.学习计划
-            this.selectHealthy != this.in_gg21Item.健康
-            this.selectDebt != this.in_gg21Item.负债
-            this.selectEmployment != this.in_gg21Item.就业
-            this.selectOccuption != this.in_gg21Item.职业
-            this.selectEducation != this.in_gg21Item.学历
-            this.selectMarriage != this.in_gg21Item.婚恋
-            this.selectHscontent != this.in_gg21Item.会属
-            this.l_ggBirthday != this.in_gg21Item.生日
-            this.selectChurch != this.in_gg21Item.涉外田地
-            this.selectHavesttype != this.in_gg21Item.涉外类型
-            this.l_swDate != this.in_gg21Item.涉外时间
-            this.l_partner != this.in_gg21Item.管理者
-            this.selectStudyState != this.in_gg21Item.阶段
-         */
         //戒备情况修改了吗
         if(this.l_vigilant != this.in_gg21Item.戒备情况)
         {
@@ -377,14 +333,6 @@ local_update21Data()    {
             bUpdate = true
         }
 
-        //状态修改了吗
-        /*if(this.selectStudyState != this.in_gg21Item.状态)
-        {
-            tempNames = tempNames + "状态,"
-            tempValues = tempValues + this.selectStudyState + ","
-            bUpdate = true
-        }*/
-
         //手机修改了吗
         if(this.l_phone != this.in_gg21Item.手机)
         {
@@ -431,21 +379,8 @@ local_update21Data()    {
     
   }
 }
-
-/*function showValue()
-{
-  document.getElementById("price-value").value=document.getElementById("my-range").value;
-  console.log(document.getElementById("price-value").value);
-}
-var $$ = Dom7;
-$$('#my-range').on('range:change', function (e, range) {
-  $$('.price-value').text('$'+(range.value));
-});*/
 </script>
 <style>
-/*.md .list{
-    margin: 0px;
-    }*/
 .wheatlist-page .page-content{
     background: #EFF0F4;
     }
@@ -754,15 +689,14 @@ div.gap{
         <f7-list-item accordion-item title="涉外信息">
             <f7-accordion-content>
             <f7-block>
-                  <div class="mybox">
-                      <div class="mylabelbox">
-                          <f7-label><font class="mylabelfont">涉外时间</font></f7-label>
-                      </div>
-                      <div class="myinputbox">
-                          <f7-input type="date" dir="rtl" align="right" :value="l_swDate" @change="l_swDate = $event.target.value">
-                            </f7-input>
-                      </div>
-                  </div>
+                <div class="mybox">
+                    <div class="mylabelbox">
+                        <f7-label><font class="mylabelfont">涉外时间</font></f7-label>
+                    </div>                
+                    <div class="myinputbox">
+                        <input type="text" placeholder="" dir="rtl" align="right" readonly="readonly" id="shewai-calendar" :value="l_swDate" @change="l_swDate = $event.target.value"/>
+                    </div>
+                </div>
               </f7-block>
               <f7-block>
                   <div class="mybox">
@@ -796,17 +730,16 @@ div.gap{
         <f7-list-item accordion-item title="详细信息">
             <f7-accordion-content>
             <f7-block>
-                  <div class="mybox">
-                      <div class="mylabelbox">
-                          <f7-label><font class="mylabelfont">果子生日</font></f7-label>
-                      </div>
-                      <div class="myinputbox">
-                          <f7-input type="date" dir="rtl" align="right" :value="l_ggBirthday" @change="l_ggBirthday = $event.target.value">
-                            </f7-input>
-                      </div>
-                  </div>
-              </f7-block>
-              <f7-block>
+                <div class="mybox">
+                    <div class="mylabelbox">
+                        <f7-label><font class="mylabelfont">果子生日</font></f7-label>
+                    </div>                
+                    <div class="myinputbox">
+                        <input type="text" placeholder="" dir="rtl" align="right" readonly="readonly" id="" :value="l_ggBirthday" @change="l_ggBirthday = $event.target.value"/>
+                    </div>
+                </div>
+            </f7-block>            
+            <f7-block>
                   <div class="mybox">
                     <f7-list-item smart-select title="果子会属" class="select-box" :smart-select-params="{openIn: 'popover'}">
                         <select v-model="selectHscontent" name="activityType">
@@ -818,73 +751,73 @@ div.gap{
                         </select>
                     </f7-list-item>
                   </div>
-              </f7-block>
-              <f7-block>
-                  <div class="mybox">
-                    <f7-list-item smart-select title="婚恋情况" class="select-box" :smart-select-params="{openIn: 'popover'}">
-                        <select v-model="selectMarriage" name="activityType">
-                        <option disabled>{{selectMarriage}}</option>
-                        <option v-for="itemmenu in this.l_marriage_data" 
-                                                v-if="selectMarriage != itemmenu.value"
+            </f7-block>
+            <f7-block>
+                <div class="mybox">
+                <f7-list-item smart-select title="婚恋情况" class="select-box" :smart-select-params="{openIn: 'popover'}">
+                    <select v-model="selectMarriage" name="activityType">
+                    <option disabled>{{selectMarriage}}</option>
+                    <option v-for="itemmenu in this.l_marriage_data" 
+                                            v-if="selectMarriage != itemmenu.value"
+                                            :key="itemmenu.value" :value="itemmenu.value">
+                                            {{itemmenu.value}}</option>
+                    </select>
+                </f7-list-item>
+                </div>
+            </f7-block>
+            <f7-block>
+                <div class="mybox">
+                <f7-list-item smart-select title="果子学历" class="select-box" :smart-select-params="{openIn: 'popover'}">
+                    <select v-model="selectEducation" name="activityType">
+                    <option disabled>{{selectEducation}}</option>
+                    <option v-for="itemmenu in this.l_education_data" 
+                                            v-if="selectEducation != itemmenu.value"
+                                            :key="itemmenu.value" :value="itemmenu.value">
+                                            {{itemmenu.value}}</option>
+                    </select>
+                </f7-list-item>
+                </div>
+            </f7-block>
+            <f7-block>
+                <div class="mybox">
+                    <f7-list-item smart-select title="果子职业" class="select-box" :smart-select-params="{openIn: 'popover'}">
+                        <select v-model="selectOccuption" name="activityType">
+                        <option disabled>{{selectOccuption}}</option>
+                        <option v-for="itemmenu in this.l_occuption_data" 
+                                                v-if="selectOccuption != itemmenu.value"
                                                 :key="itemmenu.value" :value="itemmenu.value">
                                                 {{itemmenu.value}}</option>
                         </select>
                     </f7-list-item>
-                  </div>
-              </f7-block>
-              <f7-block>
-                      <div class="mybox">
-                        <f7-list-item smart-select title="果子学历" class="select-box" :smart-select-params="{openIn: 'popover'}">
-                            <select v-model="selectEducation" name="activityType">
-                            <option disabled>{{selectEducation}}</option>
-                            <option v-for="itemmenu in this.l_education_data" 
-                                                    v-if="selectEducation != itemmenu.value"
-                                                    :key="itemmenu.value" :value="itemmenu.value">
-                                                    {{itemmenu.value}}</option>
-                            </select>
-                        </f7-list-item>
-                      </div>
-              </f7-block>
-              <f7-block>
-                    <div class="mybox">
-                        <f7-list-item smart-select title="果子职业" class="select-box" :smart-select-params="{openIn: 'popover'}">
-                            <select v-model="selectOccuption" name="activityType">
-                            <option disabled>{{selectOccuption}}</option>
-                            <option v-for="itemmenu in this.l_occuption_data" 
-                                                    v-if="selectOccuption != itemmenu.value"
-                                                    :key="itemmenu.value" :value="itemmenu.value">
-                                                    {{itemmenu.value}}</option>
-                            </select>
-                        </f7-list-item>
-                    </div>
-              </f7-block>
-              <f7-block>
-                    <div class="mybox">
-                        <f7-list-item smart-select title="就业情况" class="select-box" :smart-select-params="{openIn: 'popover'}">
-                            <select v-model="selectEmployment" name="activityType">
-                            <option disabled>{{selectEmployment}}</option>
-                            <option v-for="itemmenu in this.l_employment_data" 
-                                                    v-if="selectEmployment != itemmenu.value"
-                                                    :key="itemmenu.value" :value="itemmenu.value">
-                                                    {{itemmenu.value}}</option>
-                            </select>
-                        </f7-list-item>
-                    </div>
-              </f7-block>
-              <f7-block>
-                    <div class="mybox">
-                        <f7-list-item smart-select title="负债情况" class="select-box" :smart-select-params="{openIn: 'popover'}">
-                            <select v-model="selectDebt" name="activityType">
-                            <option disabled>{{selectDebt}}</option>
-                            <option v-for="itemmenu in this.l_debt_data" 
-                                                    v-if="selectDebt != itemmenu.value"
-                                                    :key="itemmenu.value" :value="itemmenu.value">
-                                                    {{itemmenu.value}}</option>
-                            </select>
-                        </f7-list-item>
-                    </div>
-              </f7-block>
-              <f7-block>
+                </div>
+            </f7-block>
+            <f7-block>
+                <div class="mybox">
+                    <f7-list-item smart-select title="就业情况" class="select-box" :smart-select-params="{openIn: 'popover'}">
+                        <select v-model="selectEmployment" name="activityType">
+                        <option disabled>{{selectEmployment}}</option>
+                        <option v-for="itemmenu in this.l_employment_data" 
+                                                v-if="selectEmployment != itemmenu.value"
+                                                :key="itemmenu.value" :value="itemmenu.value">
+                                                {{itemmenu.value}}</option>
+                        </select>
+                    </f7-list-item>
+                </div>
+            </f7-block>
+            <f7-block>
+                <div class="mybox">
+                    <f7-list-item smart-select title="负债情况" class="select-box" :smart-select-params="{openIn: 'popover'}">
+                        <select v-model="selectDebt" name="activityType">
+                        <option disabled>{{selectDebt}}</option>
+                        <option v-for="itemmenu in this.l_debt_data" 
+                                                v-if="selectDebt != itemmenu.value"
+                                                :key="itemmenu.value" :value="itemmenu.value">
+                                                {{itemmenu.value}}</option>
+                        </select>
+                    </f7-list-item>
+                </div>
+            </f7-block>
+            <f7-block>
                     <div class="mybox">
                         <f7-list-item smart-select title="健康情况" class="select-box" :smart-select-params="{openIn: 'popover'}">
                             <select v-model="selectHealthy" name="activityType">
