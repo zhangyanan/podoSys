@@ -77,6 +77,7 @@
             padding: 0;
             height: 100%;
             width: 100%;
+            border-bottom: solid 0.5px #E6E6E6;
 }
 .inputform-box .img_1 {
             position:absolute;
