@@ -1,5 +1,4 @@
 <style lang="scss" scoped>
-
 div .add-info .navbar-inner.sliding{
   height: 65px;
   background: #54BCBF;
@@ -27,7 +26,7 @@ div .add-info .navbar-inner.sliding{
       <img v-if="title == '收藏列表' || title == '协力列表' || title == '搜索列表'" @click="goBack()" src="@/assets/icon_all/back_black.png">
       <img v-else @click="goBack()" src="@/assets/icon_all/back_white.png">
     </f7-nav-left>
-    <f7-nav-title class="addinfo-title">
+    <f7-nav-title>
       <label class="content-title">{{title}}</label>
     </f7-nav-title> 
   </f7-navbar>
