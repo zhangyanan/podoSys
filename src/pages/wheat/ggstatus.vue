@@ -262,12 +262,23 @@ export default {
             font-size: 16px;
             color: #4A4A4A;
 }
+
 .md .list .div_reason_box {
             height:87px;
             margin-left:32px;
             margin-right:32px;
             background: #f2f2f2
 }
+
+/*.md .list .div_reason_box input[type=text]  {
+            position: absolute;
+            width:calc(100% - 32px - 32px);
+            height: 100%;   
+            left:32px;
+            top:32.5px;
+            background: #F2F2F2;
+}*/
+
 .md .list .div_reason_box .inputnum {
     position: absolute;
     right:32px;
@@ -357,6 +368,10 @@ export default {
 
 .md .value_status .item-input-wrap:after {
     background-color: #ffffff;
+}
+
+.md .ggstatus-box .item-label {
+    top:25px;
 }
 </style>
 <template>

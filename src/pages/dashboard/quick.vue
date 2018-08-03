@@ -54,7 +54,7 @@
             </div>
             <div class="item-inner">
               <div class="item-title item-label"><span class="icon-image"><img src="@/assets/icon_all/wechat.png" /></span><label>微信ID</label></div>
-                <div class="wrong-message-icon"><f7-button @click="onSearch(s_weChat, '请输入微信号', '此微信号已重复')"><img src="@/assets/icon_all/wrong_green.png" /></f7-button></div>
+                <div class="wrong-message-icon"><f7-button  @click="showToastBottom"><img src="@/assets/icon_all/wrong_green.png" /></f7-button></div>
                 <div class="item-input-wrap">
                     <f7-input type="text" dir='rtl' align="right" placeholder="请输入" :value="s_weChat" @input="s_weChat = $event.target.value"></f7-input>
                     <span class="input-clear-button"></span>
@@ -90,8 +90,8 @@
       <div class="list links-list">
         <ul>
             <li>
-              <f7-button v-if="s_weChat.length > 0" class="finished-btn" big fill @click="submitForm()">完成</f7-button>
-              <f7-button v-else @click="openVerticalButtons('提示','请添加必要信息')" class="finished-btn" big fill>完成</f7-button>
+              <f7-button v-if="s_weChat.length > 0" class="finished-btn" big fill @click="showToastBottom">完成</f7-button>
+              <f7-button v-else @click="showToastBottom" class="finished-btn" big fill>完成</f7-button>
             </li>
         </ul>
      </div>
@@ -332,7 +332,11 @@ div.quick.list.inline-labels{
 </style>
 <script>
 import { mapState, mapGetters, mapActions, mapMutations, Store } from 'vuex'
+import { f7Navbar, f7Page, f7Block, f7Button } from 'framework7-vue';
   export default {
+     components: {
+      f7Navbar, f7Page, f7Block, f7Button,
+    },
     data() {
     return {
               male_selected:true,
@@ -359,6 +363,18 @@ import { mapState, mapGetters, mapActions, mapMutations, Store } from 'vuex'
 
     },
     methods: {
+      showToastBottom() {
+        const self = this;
+        // Create toast
+        if (!self.toastBottom) {
+          self.toastBottom = self.$f7.toast.create({
+            text: '增加成功',
+            closeTimeout: 2000,
+          });
+        }
+        // Open it
+        self.toastBottom.open();
+      },
       ...mapActions('listdata',[
       'insertformvalues'
       ]),
@@ -436,7 +452,7 @@ import { mapState, mapGetters, mapActions, mapMutations, Store } from 'vuex'
       },
 
       submitForm()  {
-          this.onSearch(this.s_weChat, '请输入微信号', '此微信号已重复')
+          //this.onSearch(this.s_weChat, '请输入微信号', '此微信号已重复')
           //this.onSearch(this.s_phone, '请输入手机号', '此手机号已重复')
           //this.onSearch(this.s_name, '请输入姓名', '此姓名已重复')
           this.b_insert = true

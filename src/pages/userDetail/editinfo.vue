@@ -470,3 +470,6 @@ div.block.first-block{
     </f7-list>
   </f7-page>  
 </template>
+<style lang="scss" scoped>
+
+</style>

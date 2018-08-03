@@ -17,6 +17,8 @@ import inputformPage from '@/pages/dashboard/inputform'
 import quickPage from '@/pages/dashboard/quick'
 
 import testPage from '@/pages/test/testlist'
+import calendarPage from '@/pages/test/calendar'
+import toastPage from '@/pages/test/toast'
 
 export default [
   {
@@ -96,7 +98,16 @@ export default [
         path: 'test/',
         component: testPage
       },
-      
+      {
+        // page: test calendar
+        path: 'calendar/',
+        component: calendarPage
+      },
+      {
+        // page: test toast
+        path: 'toast/',
+        component: toastPage
+      },  
       {
         path: '',
         component: dashboardPage
